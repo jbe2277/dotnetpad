@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:waf="http://waf.codeplex.com/schemas"
+                    xmlns:c="clr-namespace:Waf.DotNetPad.Presentation.Converters">
+
+    <waf:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+
+    <waf:InvertBooleanConverter x:Key="InvertBooleanConverter"/>
+    
+    <c:IndexToNumberConverter x:Key="IndexToNumberConverter"/>
+
+    <c:TabFileNameConverter x:Key="TabFileNameConverter"/>
+
+    <c:DocumentTypeToSyntaxHighlightingConverter x:Key="DocumentTypeToSyntaxHighlightingConverter"/>
+
+    <c:StringNullEmptyToVisibilityConverter x:Key="StringNullEmptyToVisibilityConverter"/>
+
+    <c:WindowTitleConverter x:Key="WindowTitleConverter"/>
+
+    <c:ErrorSeverityToImageConverter x:Key="ErrorSeverityToImageConverter"/>
+
+</ResourceDictionary>

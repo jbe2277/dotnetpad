@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="Waf.DotNetPad.Presentation.Views.ErrorListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dd="clr-namespace:Waf.DotNetPad.Presentation.DesignData"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleErrorListViewModel, IsDesignTimeCreatable=True}"
+             d:DesignHeight="150" d:DesignWidth="600"
+             TextElement.Foreground="{StaticResource DarkForeground}" Background="{StaticResource DarkBackground}">
+
+    <DataGrid ItemsSource="{Binding DocumentService.ActiveDocumentFile.Content.ErrorList}" SelectedItem="{Binding SelectedErrorListItem}" 
+              IsReadOnly="True" BorderThickness="0" HeadersVisibility="None" Background="{StaticResource LightBackground}"
+              VerticalScrollBarVisibility="Visible" MouseDoubleClick="ErrorListDoubleClick">
+        <DataGrid.Columns>
+            <DataGridTemplateColumn>
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <ContentControl Content="{Binding ErrorSeverity, Converter={StaticResource ErrorSeverityToImageConverter}}" Margin="3,0"
+                                        UseLayoutRounding="True"/>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            
+            <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"
+                                ElementStyle="{StaticResource TextCellElementStyle}"/>
+            <DataGridTextColumn Header="Line" Binding="{Binding StartLine, Converter={StaticResource IndexToNumberConverter}, StringFormat=Ln {0}}" Width="65"
+                                ElementStyle="{StaticResource TextCellElementStyle}"/>
+            <DataGridTextColumn Header="Column" Binding="{Binding StartColumn, Converter={StaticResource IndexToNumberConverter}, StringFormat=Col {0}}" Width="65"
+                                ElementStyle="{StaticResource TextCellElementStyle}"/>
+        </DataGrid.Columns>
+        
+        <DataGrid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Goto Error" Command="{Binding GotoErrorCommand}" FontWeight="SemiBold"/>
+                <MenuItem Header="Copy" Command="{Binding CopyErrorCommand}"/>
+            </ContextMenu>
+        </DataGrid.ContextMenu>
+    </DataGrid>
+    
+</UserControl>

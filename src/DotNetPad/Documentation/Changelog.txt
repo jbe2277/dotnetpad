@@ -1,0 +1,60 @@
+Changelog
+---------
+
+
+Version 1.1.0.100 (Release)
+- Update Roslyn to 1.1.0.
+- Update WPF Application Framework (WAF) to 3.2.0.
+- Design: Fix circular dependency between ViewModels and DataModels
+
+
+Version 1.0.0.100 (Release)
+- Update Roslyn to 1.0.0.
+- Update WPF Application Framework (WAF) to 3.1.0.
+- Add support for Windows 10 in App.manifest.
+
+
+Version 1.0.0.7 (Milestone 7)
+- Update Roslyn to 1.0.0-rc3.
+- Fix AppendText when script calls Console.WriteLine in a separate thread.
+
+
+Version 1.0.0.6 (Milestone 6)
+- Fix a crash that happens when recommendation is still working and a new document tab gets opened.
+- Restore last opened files after the application restarts.
+- Load the script files on demand to improve startup performance.
+- Add Find command in the editor context menu.
+- Support goto error and copy error in the error list view.
+- Update Roslyn to 1.0.0-rc2.
+  
+
+Version 1.0.0.5 (Milestone 5)
+- Show error markers in the code editor.
+- Improve styling of the search dialog (Ctrl+F).
+- Add context menu for cut, copy and paste.
+
+
+Version 1.0.0.4 (Milestone 4)
+- Reference more assemblies that can be used:
+  System.Xml; System.Xml.Linq; System.Runtime.Serialization; System.Collections.Immutable
+- Performance: Load xml comments async and update ToolTip after loading.
+- Parse XML comments with embedded <see> nodes.
+- Provide code samples:
+  Null-conditional operator, nameof operator, auto-property initializers and string interpolation.
+
+
+Version 1.0.0.3 (Milestone 3)
+- Show icons in error list and completion views.
+- Set start caret position in new files.
+- Improved responsiveness of the editor during completion.
+- Support stopping of scripts.
+- Fix parsing of the xml documentation string.
+- Fix: Disable close command of the running document.
+
+
+Version 1.0.0.2 (Milestone 2)
+- Fix information in Info dialog.
+
+
+Version 1.0.0.1 (Milestone 1)
+- Initial version.

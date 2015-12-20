@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="Waf.DotNetPad.Presentation.Views.CodeEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ctrl="clr-namespace:Waf.DotNetPad.Presentation.Controls"
+             xmlns:dd="clr-namespace:Waf.DotNetPad.Presentation.DesignData"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleCodeEditorViewModel, IsDesignTimeCreatable=True}"
+             d:DesignHeight="300" d:DesignWidth="600">
+
+    <ctrl:CodeEditor x:Name="codeEditor" Grid.Row="1" WorkspaceService="{Binding WorkspaceService}" DocumentFile="{Binding DocumentFile}" 
+                     SyntaxHighlighting="{Binding DocumentFile.DocumentType, Converter={StaticResource DocumentTypeToSyntaxHighlightingConverter}}" ShowLineNumbers="True">
+        <ctrl:CodeEditor.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Find" Command="Find"/>
+                <Separator/>
+                <MenuItem Header="Cut" Command="Cut" Icon="{StaticResource CutImage}"/>
+                <MenuItem Header="Copy" Command="Copy" Icon="{StaticResource CopyImage}"/>
+                <MenuItem Header="Paste" Command="Paste" Icon="{StaticResource PasteImage}"/>
+            </ContextMenu>
+        </ctrl:CodeEditor.ContextMenu>
+    </ctrl:CodeEditor>
+
+</UserControl>
