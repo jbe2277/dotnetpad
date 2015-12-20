@@ -382,7 +382,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private async void DocumentFilePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "LoadError")
+            if (e.PropertyName == nameof(DocumentFile.LoadError))
             {
                 await Task.Yield();
                 var document = ((DocumentFile)sender);
@@ -393,7 +393,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private void FileServicePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "ActiveDocumentFile")
+            if (e.PropertyName == nameof(IFileService.ActiveDocumentFile))
             {
                 if (lastActiveDocumentFile != null) { PropertyChangedEventManager.RemoveHandler(lastActiveDocumentFile, ActiveDocumentPropertyChanged, ""); }
 
@@ -403,7 +403,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
                 UpdateCommands();
             }
-            else if (e.PropertyName == "LockedDocumentFile")
+            else if (e.PropertyName == nameof(IFileService.LockedDocumentFile))
             {
                 UpdateCommands();
             }
@@ -411,7 +411,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private void ActiveDocumentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Modified")
+            if (e.PropertyName == nameof(DocumentFile.Modified))
             {
                 UpdateCommands();
             }

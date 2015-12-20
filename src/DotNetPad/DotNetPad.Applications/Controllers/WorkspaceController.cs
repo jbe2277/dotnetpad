@@ -153,7 +153,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private void DocumentServicePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "ActiveDocumentFile")
+            if (e.PropertyName == nameof(IDocumentService.ActiveDocumentFile))
             {
                 updateDiagnosticsAction.Cancel();
                 startCommand.RaiseCanExecuteChanged();

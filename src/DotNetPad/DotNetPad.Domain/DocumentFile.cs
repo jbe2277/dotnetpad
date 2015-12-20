@@ -47,7 +47,7 @@ namespace Waf.DotNetPad.Domain
                 var value = content.Value;
                 if (!wasContentLoaded && IsContentLoaded)
                 {
-                    RaisePropertyChanged("IsContentLoaded");
+                    RaisePropertyChanged(nameof(IsContentLoaded));
                 }
                 return value;
             } 
@@ -94,7 +94,7 @@ namespace Waf.DotNetPad.Domain
 
         private void ContentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Code")
+            if (e.PropertyName == nameof(DocumentContent.Code))
             {
                 Modified = true;
             }

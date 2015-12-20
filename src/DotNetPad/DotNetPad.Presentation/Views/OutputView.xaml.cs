@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using Waf.DotNetPad.Applications.Services;
 using Waf.DotNetPad.Applications.ViewModels;
 using Waf.DotNetPad.Applications.Views;
 using Waf.DotNetPad.Domain;
@@ -96,7 +97,7 @@ namespace Waf.DotNetPad.Presentation.Views
 
         private void DocumentServicePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "ActiveDocumentFile")
+            if (e.PropertyName == nameof(IDocumentService.ActiveDocumentFile))
             {
                 outputDocument.Blocks.Clear();
                 if (ViewModel.DocumentService.ActiveDocumentFile != null)

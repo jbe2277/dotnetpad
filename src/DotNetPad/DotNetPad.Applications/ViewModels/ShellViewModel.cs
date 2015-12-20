@@ -166,16 +166,16 @@ namespace Waf.DotNetPad.Applications.ViewModels
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             base.OnPropertyChanged(e);
-            if (e.PropertyName == "CurrentStatusView")
+            if (e.PropertyName == nameof(CurrentStatusView))
             {
-                RaisePropertyChanged("IsErrorListViewVisible");
-                RaisePropertyChanged("IsOutputViewVisible");
+                RaisePropertyChanged(nameof(IsErrorListViewVisible));
+                RaisePropertyChanged(nameof(IsOutputViewVisible));
             }
         }
 
         private void FileServicePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "ActiveDocumentFile")
+            if (e.PropertyName == nameof(IFileService.ActiveDocumentFile))
             {
                 ActiveDocumentDataModel = DocumentDataModels.FirstOrDefault(x => x.DocumentFile == FileService.ActiveDocumentFile);
             }

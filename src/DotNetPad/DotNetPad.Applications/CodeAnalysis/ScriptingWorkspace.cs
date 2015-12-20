@@ -38,7 +38,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
 
         public ScriptingWorkspace() : base(MefHostServices.DefaultHost, WorkspaceKind.Host)
         {
-            this.documentationProviders = new ConcurrentDictionary<string, DocumentationProvider>();
+            documentationProviders = new ConcurrentDictionary<string, DocumentationProvider>();
         }
 
 

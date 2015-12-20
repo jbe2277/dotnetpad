@@ -161,7 +161,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         
         private void DocumentContentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "ErrorList")
+            if (e.PropertyName == nameof(DocumentContent.ErrorList))
             {
                 UpdateErrorMarkers();
             }

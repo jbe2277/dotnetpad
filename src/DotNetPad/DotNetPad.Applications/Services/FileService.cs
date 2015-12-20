@@ -29,8 +29,8 @@ namespace Waf.DotNetPad.Applications.Services
         [ImportingConstructor]
         public FileService()
         {
-            this.documentFiles = new ObservableCollection<DocumentFile>();
-            this.readOnlyDocumentFiles = new ReadOnlyObservableList<DocumentFile>(documentFiles);
+            documentFiles = new ObservableCollection<DocumentFile>();
+            readOnlyDocumentFiles = new ReadOnlyObservableList<DocumentFile>(documentFiles);
         }
 
 
