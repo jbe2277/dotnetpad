@@ -15,10 +15,6 @@ namespace Waf.DotNetPad.Applications.ViewModels
     [Export]
     public class ShellViewModel : ViewModel<IShellView>
     {
-        private readonly IShellService shellService;
-        private readonly IFileService fileService;
-        private readonly ICSharpSampleService csharpSampleService;
-        private readonly IVisualBasicSampleService visualBasicSampleService;
         private readonly AppSettings settings;
         private readonly DelegateCommand garbageCollectorCommand;
         private object errorListView;
@@ -38,12 +34,12 @@ namespace Waf.DotNetPad.Applications.ViewModels
             IVisualBasicSampleService visualBasicSampleService)
             : base(view)
         {
-            this.shellService = shellService;
-            this.fileService = fileService;
-            this.csharpSampleService = csharpSampleService;
-            this.visualBasicSampleService = visualBasicSampleService;
+            this.ShellService = shellService;
+            this.FileService = fileService;
+            this.CSharpSampleService = csharpSampleService;
+            this.VisualBasicSampleService = visualBasicSampleService;
             this.settings = shellService.Settings;
-            this.garbageCollectorCommand = new DelegateCommand(() => GC.Collect());
+            this.garbageCollectorCommand = new DelegateCommand(GC.Collect);
             this.statusText = Resources.Ready;
             
             PropertyChangedEventManager.AddHandler(fileService, FileServicePropertyChanged, "");
@@ -66,13 +62,13 @@ namespace Waf.DotNetPad.Applications.ViewModels
         
         public string Title { get { return ApplicationInfo.ProductName; } }
 
-        public IShellService ShellService { get { return shellService; } }
+        public IShellService ShellService { get; }
 
-        public IFileService FileService { get { return fileService; } }
+        public IFileService FileService { get; }
 
-        public ICSharpSampleService CSharpSampleService { get { return csharpSampleService; } }
+        public ICSharpSampleService CSharpSampleService { get; }
 
-        public IVisualBasicSampleService VisualBasicSampleService { get { return visualBasicSampleService; } }
+        public IVisualBasicSampleService VisualBasicSampleService { get; }
 
         public object ErrorListView
         {
@@ -181,7 +177,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
         {
             if (e.PropertyName == "ActiveDocumentFile")
             {
-                ActiveDocumentDataModel = DocumentDataModels.FirstOrDefault(x => x.DocumentFile == fileService.ActiveDocumentFile);
+                ActiveDocumentDataModel = DocumentDataModels.FirstOrDefault(x => x.DocumentFile == FileService.ActiveDocumentFile);
             }
         }
 

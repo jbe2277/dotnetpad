@@ -67,7 +67,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             this.newVisualBasicFromClipboardCommand = new DelegateCommand(NewVisualBasicFromClipboard, CanNewFromClipboard);
             this.openCommand = new DelegateCommand(OpenFile);
             this.closeCommand = new DelegateCommand(CloseFile, CanCloseFile);
-            this.closeAllCommand = new DelegateCommand(() => CloseAll(), CanCloseAll);
+            this.closeAllCommand = new DelegateCommand(CloseAll, CanCloseAll);
             this.saveCommand = new DelegateCommand(SaveFile, CanSaveFile);
             this.saveAsCommand = new DelegateCommand(SaveAsFile, CanSaveAsFile);
 
@@ -252,11 +252,9 @@ namespace Waf.DotNetPad.Applications.Controllers
 
             if (ActiveDocumentFile == document)
             {
-                var nextDocument = CollectionHelper.GetNextElementOrDefault(fileService.DocumentFiles, ActiveDocumentFile);
-                if (nextDocument == null)
-                {
-                    nextDocument = fileService.DocumentFiles.Take(fileService.DocumentFiles.Count - 1).LastOrDefault();
-                }
+                var nextDocument = CollectionHelper.GetNextElementOrDefault(fileService.DocumentFiles, ActiveDocumentFile)
+                    ?? fileService.DocumentFiles.Take(fileService.DocumentFiles.Count - 1).LastOrDefault();
+                
                 ActiveDocumentFile = nextDocument;
             }
             fileService.RemoveDocument(document);
@@ -432,7 +430,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             e.Cancel = !PrepareToClose(fileService.DocumentFiles);
             if (!e.Cancel)
             {
-                shellService.Settings.LastOpenedFiles = fileService.DocumentFiles.Select(x => x.FileName).Where(x => Path.IsPathRooted(x)).ToArray();
+                shellService.Settings.LastOpenedFiles = fileService.DocumentFiles.Select(x => x.FileName).Where(Path.IsPathRooted).ToArray();
             }
         }
     }

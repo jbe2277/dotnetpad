@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Waf.Foundation;
 using System.Windows.Input;
 using Waf.DotNetPad.Applications.Services;

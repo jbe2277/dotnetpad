@@ -122,7 +122,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         public async Task<IReadOnlyList<ISymbol>> GetRecommendedSymbolsAsync(DocumentFile documentFile, int position, CancellationToken cancellationToken)
         {
-            using (var p = new PerformanceTrace("GetRecommendedSymbolsAsync", documentFile))
+            using (new PerformanceTrace("GetRecommendedSymbolsAsync", documentFile))
             {
                 var documentId = documentIds[documentFile];
                 return await workspace.GetRecommendedSymbolsAsync(documentId, position, cancellationToken).ConfigureAwait(false);
@@ -132,7 +132,7 @@ namespace Waf.DotNetPad.Applications.Controllers
         private async void AddProject(DocumentFile documentFile)
         {
             await TaskHelper.WaitForProperty(documentFile, x => x.IsContentLoaded);
-            using (var p = new PerformanceTrace("AddProjectWithDocument", documentFile))
+            using (new PerformanceTrace("AddProjectWithDocument", documentFile))
             {
                 var documentId = workspace.AddProjectWithDocument(documentFile.FileName, documentFile.Content != null ? documentFile.Content.Code : "");
                 documentIds.Add(documentFile, documentId);
@@ -191,23 +191,20 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private async void UpdateDiagnostics()
         {
-            if (updateDiagnosticsCancellation != null)
-            {
-                updateDiagnosticsCancellation.Cancel();
-            }
+            updateDiagnosticsCancellation?.Cancel();
 
             updateDiagnosticsCancellation = new CancellationTokenSource();
             var token = updateDiagnosticsCancellation.Token;
             try
             {
                 var documentFile = documentService.ActiveDocumentFile;
-                if (documentFile == null || documentFile.Content == null)
+                if (documentFile?.Content == null)
                 {
                     return;
                 }
 
                 token.ThrowIfCancellationRequested();
-                using (var p = new PerformanceTrace("GetDiagnosticsAsync", documentFile))
+                using (new PerformanceTrace("GetDiagnosticsAsync", documentFile))
                 {
                     var diagnostics = await workspace.GetDiagnosticsAsync(documentIds[documentFile], token);
                     token.ThrowIfCancellationRequested();
@@ -241,7 +238,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
             if (lastBuildResult == null || lastBuildResult.Item1 != documentFile)
             {
-                using (var p = new PerformanceTrace("BuildAsync", documentFile))
+                using (new PerformanceTrace("BuildAsync", documentFile))
                 {
                     var result = await workspace.BuildAsync(documentIds[documentFile], CancellationToken.None);
                     documentFile.Content.ErrorList = result.Diagnostic.Where(x => x.Severity != DiagnosticSeverity.Hidden).Select(CreateErrorListItem).ToArray();
@@ -258,7 +255,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             
             if (lastBuildResult != null)
             {
-                using (var p = new PerformanceTrace("RunScriptAsync", documentFile))
+                using (new PerformanceTrace("RunScriptAsync", documentFile))
                 {
                     var buildResult = lastBuildResult.Item2;
                     try

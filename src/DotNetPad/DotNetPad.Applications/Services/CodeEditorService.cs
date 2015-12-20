@@ -18,31 +18,25 @@ namespace Waf.DotNetPad.Applications.Services
 
         protected virtual void OnRequestSetCaret(SetCaretEventArgs e)
         {
-            var handler = RequestSetCaret;
-            if (handler != null) { handler(this, e); }
+            RequestSetCaret?.Invoke(this, e);
         }
     }
 
 
     public class SetCaretEventArgs : EventArgs
     {
-        private readonly DocumentFile documentFile;
-        private readonly int line;
-        private readonly int column;
-
-
         public SetCaretEventArgs(DocumentFile documentFile, int line, int column)
         {
-            this.documentFile = documentFile;
-            this.line = line;
-            this.column = column;
+            DocumentFile = documentFile;
+            Line = line;
+            Column = column;
         }
 
 
-        public DocumentFile DocumentFile { get { return documentFile; } }
+        public DocumentFile DocumentFile { get; }
 
-        public int Line { get { return line; } }
+        public int Line { get; }
 
-        public int Column { get { return column; } }
+        public int Column { get; }
     }
 }

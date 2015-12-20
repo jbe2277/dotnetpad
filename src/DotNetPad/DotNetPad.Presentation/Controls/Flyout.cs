@@ -62,7 +62,7 @@ namespace Waf.DotNetPad.Presentation.Controls
                     SetBaseHorizontalOffset(-target.ActualWidth + child.ActualWidth + HorizontalOffset);
                 }
             }
-            else if (HorizontalFlyoutAlignment == Controls.HorizontalFlyoutAlignment.Right)
+            else if (HorizontalFlyoutAlignment == HorizontalFlyoutAlignment.Right)
             {
                 if (!SystemParameters.MenuDropAlignment)
                 {

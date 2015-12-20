@@ -115,7 +115,7 @@ namespace Waf.DotNetPad.Presentation
             if (!isTerminating)
             {
                 MessageBox.Show(string.Format(CultureInfo.CurrentCulture,
-                        Waf.DotNetPad.Presentation.Properties.Resources.UnknownError, e.ToString()),
+                        Presentation.Properties.Resources.UnknownError, e),
                     ApplicationInfo.ProductName, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

@@ -11,7 +11,7 @@ namespace Waf.DotNetPad.Presentation.Converters
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             var stringList = values.OfType<string>().Where(x => !string.IsNullOrEmpty(x)).ToArray();
-            if (stringList.Count() == 2)
+            if (stringList.Length == 2)
             {
                 stringList = new[] { Path.GetFileName(stringList[0]), stringList[1] };
             }

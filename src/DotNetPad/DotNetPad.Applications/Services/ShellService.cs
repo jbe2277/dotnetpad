@@ -64,7 +64,7 @@ namespace Waf.DotNetPad.Applications.Services
 
         protected virtual void OnClosing(CancelEventArgs e)
         {
-            if (closing != null) { closing(this, e); }
+            closing?.Invoke(this, e);
         }
 
         private void InitializeClosingEvent()

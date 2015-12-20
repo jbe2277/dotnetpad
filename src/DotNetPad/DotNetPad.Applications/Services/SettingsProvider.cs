@@ -13,8 +13,8 @@ namespace Waf.DotNetPad.Applications.Services
 
         public T LoadSettings<T>(string fileName) where T : class, new()
         {
-            if (string.IsNullOrEmpty(fileName)) { throw new ArgumentException("String must not be null or empty.", "fileName"); }
-            if (!Path.IsPathRooted(fileName)) { throw new ArgumentException("Invalid path. The path must be rooted.", "fileName"); }
+            if (string.IsNullOrEmpty(fileName)) { throw new ArgumentException("String must not be null or empty.", nameof(fileName)); }
+            if (!Path.IsPathRooted(fileName)) { throw new ArgumentException("Invalid path. The path must be rooted.", nameof(fileName)); }
 
             if (File.Exists(fileName))
             {
@@ -29,9 +29,9 @@ namespace Waf.DotNetPad.Applications.Services
 
         public void SaveSettings(string fileName, object settings)
         {
-            if (settings == null) { throw new ArgumentNullException("settings"); }
-            if (string.IsNullOrEmpty(fileName)) { throw new ArgumentException("String must not be null or empty.", "fileName"); }
-            if (!Path.IsPathRooted(fileName)) { throw new ArgumentException("Invalid path. The path must be rooted.", "fileName"); }
+            if (settings == null) { throw new ArgumentNullException(nameof(settings)); }
+            if (string.IsNullOrEmpty(fileName)) { throw new ArgumentException("String must not be null or empty.", nameof(fileName)); }
+            if (!Path.IsPathRooted(fileName)) { throw new ArgumentException("Invalid path. The path must be rooted.", nameof(fileName)); }
 
             var directory = Path.GetDirectoryName(fileName);
             if (!Directory.Exists(directory))

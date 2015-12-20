@@ -42,10 +42,7 @@ namespace Waf.DotNetPad.Applications.Host
             
             try
             {
-                if (scriptRun != null)
-                {
-                    scriptRun.Run();
-                }
+                scriptRun?.Run();
             }
             catch (AppDomainUnloadedException)
             {

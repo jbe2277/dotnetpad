@@ -2,35 +2,27 @@
 {
     public class ErrorListItem
     {
-        private readonly ErrorSeverity errorSeverity;
-        private readonly string description;
-        private readonly int startLine;
-        private readonly int startColumn;
-        private readonly int endLine;
-        private readonly int endColumn;
-
-
         public ErrorListItem(ErrorSeverity errorSeverity, string description, int startLine, int startColumn, int endLine, int endColumn)
         {
-            this.errorSeverity = errorSeverity;
-            this.description = description;
-            this.startLine = startLine;
-            this.startColumn = startColumn;
-            this.endLine = endLine;
-            this.endColumn = endColumn;
+            ErrorSeverity = errorSeverity;
+            Description = description;
+            StartLine = startLine;
+            StartColumn = startColumn;
+            EndLine = endLine;
+            EndColumn = endColumn;
         }
 
 
-        public ErrorSeverity ErrorSeverity { get { return errorSeverity; } }
+        public ErrorSeverity ErrorSeverity { get; }
 
-        public string Description { get { return description; } }
+        public string Description { get; }
 
-        public int StartLine { get { return startLine; } }
+        public int StartLine { get; }
 
-        public int StartColumn { get { return startColumn; } }
+        public int StartColumn { get; }
 
-        public int EndLine { get { return endLine; } }
+        public int EndLine { get; }
 
-        public int EndColumn { get { return endColumn; } }
+        public int EndColumn { get; }
     }
 }

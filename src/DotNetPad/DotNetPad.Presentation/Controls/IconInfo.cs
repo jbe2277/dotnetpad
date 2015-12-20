@@ -13,7 +13,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         [AttachedPropertyBrowsableForType(typeof(Control))]
         public static object GetIcon(DependencyObject obj)
         {
-            return (object)obj.GetValue(IconProperty);
+            return obj.GetValue(IconProperty);
         }
 
         public static void SetIcon(DependencyObject obj, object value)

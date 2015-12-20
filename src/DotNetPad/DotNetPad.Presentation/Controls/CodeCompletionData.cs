@@ -16,7 +16,6 @@ namespace Waf.DotNetPad.Presentation.Controls
 {
     public class CodeCompletionData : ICompletionData
     {
-        private readonly string text;
         private readonly Lazy<CodeCompletionDescription> description;
         private readonly Lazy<ImageSource> image;
         private readonly IReadOnlyList<ISymbol> symbols;
@@ -24,7 +23,7 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         public CodeCompletionData(string text, IReadOnlyList<ISymbol> symbols)
         {
-            this.text = text;
+            this.Text = text;
             this.image = new Lazy<ImageSource>(GetImage);
             this.description = new Lazy<CodeCompletionDescription>(CreateDescription);
             this.symbols = symbols ?? new ISymbol[0];
@@ -33,7 +32,7 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         public double Priority { get { return 0; } }
 
-        public string Text { get { return text; } }
+        public string Text { get; }
 
         public object Description { get { return description.Value; } }
 
@@ -111,10 +110,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         
         private ImageSource GetImage()
         {
-            var symbol = symbols.FirstOrDefault();
-            if (symbol == null) { return null; }
-
-            var glyph = symbol.GetGlyph();
+            var glyph = symbols.FirstOrDefault()?.GetGlyph();
             if (glyph == null) { return null; }
             
             switch (glyph.Value)

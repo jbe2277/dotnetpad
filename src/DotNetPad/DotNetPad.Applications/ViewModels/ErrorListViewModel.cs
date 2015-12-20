@@ -10,7 +10,6 @@ namespace Waf.DotNetPad.Applications.ViewModels
     [Export]
     public class ErrorListViewModel : ViewModel<IErrorListView>
     {
-        private readonly IDocumentService documentService;
         private readonly ICodeEditorService codeEditorService;
         private readonly IClipboardService clipboardService;
         private readonly DelegateCommand gotoErrorCommand;
@@ -22,7 +21,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
         public ErrorListViewModel(IErrorListView view, IDocumentService documentService, ICodeEditorService codeEditorService, IClipboardService clipboardService)
             : base(view)
         {
-            this.documentService = documentService;
+            this.DocumentService = documentService;
             this.codeEditorService = codeEditorService;
             this.clipboardService = clipboardService;
             this.gotoErrorCommand = new DelegateCommand(GotoError, CanGotoError);
@@ -30,7 +29,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
         }
 
 
-        public IDocumentService DocumentService { get { return documentService; } }
+        public IDocumentService DocumentService { get; }
 
         public ICommand GotoErrorCommand { get { return gotoErrorCommand; } }
 

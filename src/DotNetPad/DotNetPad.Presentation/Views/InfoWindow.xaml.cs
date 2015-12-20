@@ -2,7 +2,6 @@
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Waf.DotNetPad.Applications.Views;

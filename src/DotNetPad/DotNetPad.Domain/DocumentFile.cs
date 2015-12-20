@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Waf.Foundation;
@@ -8,10 +7,8 @@ namespace Waf.DotNetPad.Domain
 {
     public class DocumentFile : Model
     {
-        private readonly DocumentType documentType;
         private readonly Func<DocumentFile, DocumentContent> contentFactory;
         private readonly Lazy<DocumentContent> content;
-        private readonly int startCaretPosition;
         private Exception loadError;
         private bool modified;
         private string fileName;
@@ -19,10 +16,10 @@ namespace Waf.DotNetPad.Domain
 
         public DocumentFile(DocumentType documentType, Func<DocumentFile, DocumentContent> contentFactory, int startCaretPosition = 0)
         {
-            this.documentType = documentType;
+            this.DocumentType = documentType;
             this.contentFactory = contentFactory;
             this.content = new Lazy<DocumentContent>(LoadContent);
-            this.startCaretPosition = startCaretPosition;
+            this.StartCaretPosition = startCaretPosition;
         }
 
         public DocumentFile(DocumentType documentType, string fileName, string code, int startCaretPosition = 0)
@@ -32,7 +29,7 @@ namespace Waf.DotNetPad.Domain
         }
 
 
-        public DocumentType DocumentType { get { return documentType; } }
+        public DocumentType DocumentType { get; }
 
         public bool IsContentLoaded { get { return content.IsValueCreated; } }
 
@@ -56,7 +53,7 @@ namespace Waf.DotNetPad.Domain
             } 
         }
 
-        public int StartCaretPosition { get { return startCaretPosition; } }
+        public int StartCaretPosition { get; }
 
         public bool Modified
         {

@@ -29,7 +29,7 @@ namespace Waf.DotNetPad.Presentation.Views
         private void ErrorListDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var element = e.OriginalSource as FrameworkElement;
-            if (element != null && element.DataContext is ErrorListItem)
+            if (element?.DataContext is ErrorListItem)
             {
                 ViewModel.GotoErrorCommand.Execute(null);
             }

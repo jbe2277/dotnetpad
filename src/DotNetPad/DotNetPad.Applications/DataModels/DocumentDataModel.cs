@@ -5,19 +5,15 @@ namespace Waf.DotNetPad.Applications.DataModels
 {
     public class DocumentDataModel
     {
-        private readonly DocumentFile documentFile;
-        private readonly Lazy<object> lazyCodeEditorView;
-
-
         public DocumentDataModel(DocumentFile documentFile, Lazy<object> lazyCodeEditorView)
         {
-            this.documentFile = documentFile;
-            this.lazyCodeEditorView = lazyCodeEditorView;
+            DocumentFile = documentFile;
+            LazyCodeEditorView = lazyCodeEditorView;
         }
 
 
-        public DocumentFile DocumentFile { get { return documentFile; } }
+        public DocumentFile DocumentFile { get; }
 
-        public Lazy<object> LazyCodeEditorView { get { return lazyCodeEditorView; } }
+        public Lazy<object> LazyCodeEditorView { get; }
     }
 }

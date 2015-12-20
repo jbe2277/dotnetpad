@@ -5,21 +5,17 @@ namespace Waf.DotNetPad.Presentation.Controls
 {
     public class ErrorTextMarker : TextSegment
     {
-        private readonly string message;
-        private readonly Color markerColor;
-        
-
         public ErrorTextMarker(int startOffset, int length, string message, Color markerColor)
         {
-            this.StartOffset = startOffset;
-            this.Length = length;
-            this.message = message;
-            this.markerColor = markerColor;
+            StartOffset = startOffset;
+            Length = length;
+            Message = message;
+            MarkerColor = markerColor;
         }
 
 
-        public string Message { get { return message; } }
+        public string Message { get; }
 
-        public Color MarkerColor { get { return markerColor; } }
+        public Color MarkerColor { get; }
     }
 }

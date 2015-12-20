@@ -5,18 +5,17 @@ namespace Waf.DotNetPad.Presentation.Controls
 {
     public class CodeCompletionDescription : Model
     {
-        private readonly string overloads;
         private string summary;
         
 
         public CodeCompletionDescription(Task<string> lazySummary, string overloads)
         {
-            this.overloads = overloads;
+            Overloads = overloads;
             UpdateSummary(lazySummary);
         }
 
 
-        public string Overloads { get { return overloads; } }
+        public string Overloads { get; }
 
         public string Summary
         {

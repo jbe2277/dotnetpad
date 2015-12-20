@@ -9,17 +9,14 @@ namespace Waf.DotNetPad.Applications.ViewModels
     [Export]
     public class OutputViewModel : ViewModel<IOutputView>
     {
-        private readonly IDocumentService documentService;
-        
-
         [ImportingConstructor]
         public OutputViewModel(IOutputView view, IDocumentService documentService) : base(view)
         {
-            this.documentService = documentService;
+            DocumentService = documentService;
         }
 
 
-        public IDocumentService DocumentService { get { return documentService; } }
+        public IDocumentService DocumentService { get; }
 
         
         public void AppendOutputText(DocumentFile document, string text)

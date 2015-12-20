@@ -113,11 +113,13 @@ namespace Waf.DotNetPad.Presentation.Controls
                     {
                         using (new PerformanceTrace("CompletionWindow.Show", DocumentFile))
                         {
-                            completionWindow = new CompletionWindow(TextArea);
-                            completionWindow.WindowStyle = WindowStyle.None;
-                            completionWindow.AllowsTransparency = true;
-                            completionWindow.MaxWidth = completionWindow.Width = 340;
-                            completionWindow.MaxHeight = completionWindow.Height = 206;
+                            completionWindow = new CompletionWindow(TextArea)
+                            {
+                                WindowStyle = WindowStyle.None,
+                                AllowsTransparency = true,
+                                MaxWidth = completionWindow.Width = 340,
+                                MaxHeight = completionWindow.Height = 206
+                            };
                             foreach (var symbolGroup in symbolGroups)
                             {
                                 completionWindow.CompletionList.CompletionData.Add(new CodeCompletionData(symbolGroup.Key, symbolGroup.ToArray()));
@@ -180,7 +182,7 @@ namespace Waf.DotNetPad.Presentation.Controls
                 PropertyChangedEventManager.RemoveHandler(oldDocumentFile.Content, editor.DocumentContentPropertyChanged, "");
             }
             
-            if (editor.DocumentFile != null && editor.DocumentFile.Content != null)
+            if (editor.DocumentFile?.Content != null)
             {
                 var code = editor.DocumentFile.Content.Code;
                 if (editor.Text != code)
