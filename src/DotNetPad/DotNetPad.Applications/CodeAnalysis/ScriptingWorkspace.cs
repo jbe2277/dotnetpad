@@ -117,8 +117,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
         {
             string assemblyPath = assembly.Location;
             string documentationPath = Path.ChangeExtension(assemblyPath, "xml");
-            DocumentationProvider provider;
-            provider = documentationProviders.GetOrAdd(documentationPath, path => new FileBasedXmlDocumentationProvider(path));
+            var provider = documentationProviders.GetOrAdd(documentationPath, path => new FileBasedXmlDocumentationProvider(path));
             return MetadataReference.CreateFromFile(assemblyPath, new MetadataReferenceProperties(), provider);
         }
     }

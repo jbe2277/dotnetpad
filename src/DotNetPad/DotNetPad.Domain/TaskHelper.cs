@@ -20,8 +20,7 @@ namespace Waf.DotNetPad.Domain
             }
             
             var tcs = new TaskCompletionSource<object>();
-            PropertyChangedEventHandler handler;
-            handler = (sender, e) => 
+            PropertyChangedEventHandler handler = (sender, e) => 
             {
                 if (predicate(observable))
                 {

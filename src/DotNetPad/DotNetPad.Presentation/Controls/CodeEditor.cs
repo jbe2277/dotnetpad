@@ -29,10 +29,10 @@ namespace Waf.DotNetPad.Presentation.Controls
             DependencyProperty.Register("DocumentFile", typeof(DocumentFile), typeof(CodeEditor), new FrameworkPropertyMetadata(null, DocumentFileChangedCallback));
 
 
-        private CompletionWindow completionWindow;
-        private Task updateTextTask;
-        private CancellationTokenSource recommendationCancellation;
+        private readonly Task updateTextTask;
         private readonly ErrorTextMarkerService errorMarkerService;
+        private CompletionWindow completionWindow;
+        private CancellationTokenSource recommendationCancellation;
         
 
         public CodeEditor()
