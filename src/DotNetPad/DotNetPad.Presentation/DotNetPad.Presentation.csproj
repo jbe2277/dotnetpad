@@ -18,7 +18,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <PublishUrl>..\..\Output\Publish\</PublishUrl>
+    <PublishUrl>..\..\..\..\dotnetpad-pages\clickonce\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -28,13 +28,13 @@
     <UpdatePeriodically>true</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://dotnetpad.codeplex.com/releases/clickonce/</InstallUrl>
-    <SupportUrl>http://dotnetpad.codeplex.com/</SupportUrl>
+    <InstallUrl>https://jbe2277.github.io/dotnetpad/clickonce/</InstallUrl>
+    <SupportUrl>https://jbe2277.github.io/dotnetpad</SupportUrl>
     <ProductName>Waf DotNetPad</ProductName>
     <PublisherName>Waf</PublisherName>
     <SuiteName>Waf DotNetPad</SuiteName>
     <ApplicationRevision>100</ApplicationRevision>
-    <ApplicationVersion>1.1.0.100</ApplicationVersion>
+    <ApplicationVersion>1.1.1.100</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -315,16 +315,6 @@
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
       <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
