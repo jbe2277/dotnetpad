@@ -116,10 +116,10 @@ namespace Waf.DotNetPad.Presentation.Controls
                             completionWindow = new CompletionWindow(TextArea)
                             {
                                 WindowStyle = WindowStyle.None,
-                                AllowsTransparency = true,
-                                MaxWidth = completionWindow.Width = 340,
-                                MaxHeight = completionWindow.Height = 206
+                                AllowsTransparency = true
                             };
+                            completionWindow.MaxWidth = completionWindow.Width = 340;
+                            completionWindow.MaxHeight = completionWindow.Height = 206;
                             foreach (var symbolGroup in symbolGroups)
                             {
                                 completionWindow.CompletionList.CompletionData.Add(new CodeCompletionData(symbolGroup.Key, symbolGroup.ToArray()));
