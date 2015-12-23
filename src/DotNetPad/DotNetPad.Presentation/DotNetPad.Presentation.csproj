@@ -34,7 +34,7 @@
     <PublisherName>Waf</PublisherName>
     <SuiteName>Waf DotNetPad</SuiteName>
     <ApplicationRevision>100</ApplicationRevision>
-    <ApplicationVersion>1.1.1.100</ApplicationVersion>
+    <ApplicationVersion>1.1.2.100</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -315,6 +315,11 @@
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
       <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>

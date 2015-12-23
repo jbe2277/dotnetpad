@@ -3,6 +3,7 @@
 
 # User-specific files
 *.suo
+*.user
 
 # Build results
 [Dd]ebug/
