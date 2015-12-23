@@ -13,19 +13,22 @@
     <style>
         /* Move down content because we have a fixed navbar that is 50px tall */
         body {
-          padding-top: 50px;
-          padding-bottom: 30px;
-          font-size: 16px;
+            padding-top: 50px;
+            padding-bottom: 30px;
         }
         
         .jumbotron {
-            padding-top: 15px;
+            padding-top: 10px;
             padding-bottom: 0px;
         }
 
-        div.jumbotron p {
-            margin-top: 20px;
-            margin-bottom: 40px;
+        .jumbotron h1 {
+            font-size: 47px;
+        }
+
+        .jumbotron p {
+            font-size: 16px;
+            margin-bottom: 25px;
         }
 
         li {
@@ -66,7 +69,7 @@
     <div class="container">
         <div class="row featurette">
             <div class="col-md-5">
-                <h2 class="featurette-heading">Features</h2>
+                <h3 class="featurette-heading">Features</h3>
                 <ul>
                     <li>Code editor for C# 6 and Visual Basic 14.</li>
                     <li>Supports auto completion during programming.</li>
@@ -74,7 +77,7 @@
                     <li>Try out code with console Output window.</li>
                 </ul>
                 <p><br/></p>
-                <h2>Code Samples</h2>
+                <h3>Code Samples</h3>
                 <ul>
                     <li>The application comes with code samples that shows new language features of C# 6 and Visual Basic 14. Null-conditional operator</li>
                     <li>nameof operator</li>
@@ -82,7 +85,7 @@
                     <li>String interpolation</li>
                 </ul>
                 <p><br /></p>
-                <h2>Used Components</h2>
+                <h3>Used Components</h3>
                 <ul>
                     <li><a href="https://github.com/dotnet/roslyn">Microsoft.CodeAnalysis</a> (Roslyn)</li>
                     <li><a href="http://www.avalonedit.net/">AvalonEdit</a></li>
