@@ -67,15 +67,24 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             if (File.Exists(originalPath)) { return originalPath; }
             
             var fileName = Path.GetFileName(originalPath);
-            const string netFrameworkPathPart = @"Reference Assemblies\Microsoft\Framework\.NETFramework";
+            string path = null;
+            foreach (var version in new[] { @"v4.6.1", @"v4.6", @"v4.5.2", @"v4.5.1", @"v4.5" })
+            {
+                path = GetNetFrameworkPathOrNull(fileName, version);
+                if (path != null)
+                {
+                    break;
+                }
+            }
             
-            var newPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), netFrameworkPathPart, @"v4.5.1", fileName);
-            if (File.Exists(newPath)) { return newPath; }
+            return path;
+        }
 
-            newPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), netFrameworkPathPart, @"v4.5", fileName);
-            if (File.Exists(newPath)) { return newPath; }
-
-            return null;
+        private static string GetNetFrameworkPathOrNull(string fileName, string version)
+        {
+            const string netFrameworkPathPart = @"Reference Assemblies\Microsoft\Framework\.NETFramework";
+            var newPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), netFrameworkPathPart, version, fileName);
+            return File.Exists(newPath) ? newPath : null;
         }
     }
 }
