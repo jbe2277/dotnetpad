@@ -2,12 +2,11 @@ Changelog
 ---------
 
 
-Version 1.2.0.1 (Milestone 1)
+Version 1.2.0.100 (Release)
 - Update projects to target .NET Framework 4.5.2
-
-TODOs
-- Update FileBasedXmlDocProvider to support .NET > 4.5.1
-- 
+- Update Rolsyn to 1.1.1.
+- Extend FileBasedXmlDocumentationProvider to support newer .NET Framework versions.
+- Update Urls to target the new GitHub repository.
 
 
 Version 1.1.0.100 (Release)
