@@ -34,7 +34,7 @@ namespace Waf.DotNetPad.Applications.Services
         }
 
 
-        public IReadOnlyObservableList<DocumentFile> DocumentFiles { get { return readOnlyDocumentFiles; } }
+        public IReadOnlyObservableList<DocumentFile> DocumentFiles => readOnlyDocumentFiles;
 
         public DocumentFile ActiveDocumentFile
         {

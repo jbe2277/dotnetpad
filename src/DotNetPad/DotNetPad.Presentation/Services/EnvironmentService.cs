@@ -26,10 +26,10 @@ namespace Waf.DotNetPad.Presentation.Services
         }
 
 
-        public string ProfilePath { get { return profilePath.Value; } }
+        public string ProfilePath => profilePath.Value;
 
-        public string AppSettingsPath { get { return appSettingsPath.Value; } }
+        public string AppSettingsPath => appSettingsPath.Value;
 
-        public IReadOnlyList<string> FilesToLoad { get { return filesToLoad.Value; } }
+        public IReadOnlyList<string> FilesToLoad => filesToLoad.Value;
     }
 }

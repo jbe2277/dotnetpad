@@ -29,9 +29,9 @@ namespace Waf.DotNetPad.Applications.Services
 
         public AppSettings Settings { get; set; }
         
-        public object ShellView { get { return shellView.Value; } }
+        public object ShellView => shellView.Value;
 
-        public IReadOnlyCollection<Task> TasksToCompleteBeforeShutdown { get { return tasksToCompleteBeforeShutdown; } }
+        public IReadOnlyCollection<Task> TasksToCompleteBeforeShutdown => tasksToCompleteBeforeShutdown;
 
         public int Line
         {

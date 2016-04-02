@@ -60,7 +60,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
         }
 
         
-        public string Title { get { return ApplicationInfo.ProductName; } }
+        public string Title => ApplicationInfo.ProductName;
 
         public IShellService ShellService { get; }
 
@@ -106,7 +106,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
             set { SetProperty(ref infoCommand, value); }
         }
 
-        public ICommand GarbageCollectorCommand { get { return garbageCollectorCommand; } }
+        public ICommand GarbageCollectorCommand => garbageCollectorCommand;
 
         public object CurrentStatusView
         {

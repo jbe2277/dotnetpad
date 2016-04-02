@@ -22,17 +22,17 @@ namespace Waf.DotNetPad.Applications.ViewModels
         }
 
 
-        public ICommand ShowWebsiteCommand { get { return showWebsiteCommand; } }
+        public ICommand ShowWebsiteCommand => showWebsiteCommand;
 
-        public string ProductName { get { return ApplicationInfo.ProductName; } }
+        public string ProductName => ApplicationInfo.ProductName;
 
-        public string Version { get { return ApplicationInfo.Version; } }
+        public string Version => ApplicationInfo.Version;
 
-        public string OSVersion { get { return Environment.OSVersion.ToString(); } }
+        public string OSVersion => Environment.OSVersion.ToString();
 
-        public string NetVersion { get { return Environment.Version.ToString(); } }
+        public string NetVersion => Environment.Version.ToString();
 
-        public bool Is64BitProcess { get { return Environment.Is64BitProcess; } }
+        public bool Is64BitProcess => Environment.Is64BitProcess;
 
 
         public void ShowDialog(object owner)

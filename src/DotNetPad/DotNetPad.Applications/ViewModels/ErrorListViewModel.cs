@@ -31,9 +31,9 @@ namespace Waf.DotNetPad.Applications.ViewModels
 
         public IDocumentService DocumentService { get; }
 
-        public ICommand GotoErrorCommand { get { return gotoErrorCommand; } }
+        public ICommand GotoErrorCommand => gotoErrorCommand;
 
-        public ICommand CopyErrorCommand { get { return copyErrorCommand; } }
+        public ICommand CopyErrorCommand => copyErrorCommand;
 
         public ErrorListItem SelectedErrorListItem
         {

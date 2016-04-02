@@ -31,7 +31,7 @@ namespace Waf.DotNetPad.Domain
 
         public DocumentType DocumentType { get; }
 
-        public bool IsContentLoaded { get { return content.IsValueCreated; } }
+        public bool IsContentLoaded => content.IsValueCreated;
 
         public Exception LoadError
         {

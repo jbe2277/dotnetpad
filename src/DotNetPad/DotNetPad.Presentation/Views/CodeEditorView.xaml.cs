@@ -28,7 +28,7 @@ namespace Waf.DotNetPad.Presentation.Views
         }
 
 
-        private CodeEditorViewModel ViewModel { get { return viewModel.Value; } }
+        private CodeEditorViewModel ViewModel => viewModel.Value;
 
 
         private void FirstTimeLoadedHandler(object sender, RoutedEventArgs e)

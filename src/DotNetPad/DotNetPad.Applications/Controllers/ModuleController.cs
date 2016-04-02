@@ -46,9 +46,9 @@ namespace Waf.DotNetPad.Applications.Controllers
         }
 
 
-        private ShellService ShellService { get { return shellService.Value; } }
+        private ShellService ShellService => shellService.Value;
 
-        private ShellViewModel ShellViewModel { get { return shellViewModel.Value; } }
+        private ShellViewModel ShellViewModel => shellViewModel.Value;
 
         
         public void Initialize()

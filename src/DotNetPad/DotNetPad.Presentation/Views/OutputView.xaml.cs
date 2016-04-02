@@ -34,7 +34,7 @@ namespace Waf.DotNetPad.Presentation.Views
         }
 
 
-        private OutputViewModel ViewModel { get { return viewModel.Value; } }
+        private OutputViewModel ViewModel => viewModel.Value;
 
 
         public void AppendOutputText(DocumentFile document, string text)

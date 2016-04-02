@@ -96,7 +96,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             set { fileService.ActiveDocumentFile = value; }
         }
 
-        private DocumentFile LockedDocumentFile { get { return fileService.LockedDocumentFile; } }
+        private DocumentFile LockedDocumentFile => fileService.LockedDocumentFile;
 
         public void Initialize()
         {

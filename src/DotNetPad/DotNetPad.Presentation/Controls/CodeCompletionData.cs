@@ -30,15 +30,15 @@ namespace Waf.DotNetPad.Presentation.Controls
         }
 
 
-        public double Priority { get { return 0; } }
+        public double Priority => 0;
 
         public string Text { get; }
 
-        public object Description { get { return description.Value; } }
+        public object Description => description.Value;
 
-        public object Content { get { return Text; } }
+        public object Content => Text;
 
-        public ImageSource Image { get { return image.Value; } }
+        public ImageSource Image => image.Value;
 
 
         public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs)

@@ -34,7 +34,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         }
 
         
-        public KnownLayer Layer { get { return KnownLayer.Selection; } }
+        public KnownLayer Layer => KnownLayer.Selection;
 
 
         public void Create(int offset, int length, string message)

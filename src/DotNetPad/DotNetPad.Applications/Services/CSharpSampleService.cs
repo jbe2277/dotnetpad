@@ -7,25 +7,13 @@ namespace Waf.DotNetPad.Applications.Services
     [Export(typeof(ICSharpSampleService))]
     internal class CSharpSampleService : ICSharpSampleService
     {
-        public Lazy<string> NullConditionalOperator
-        {
-            get { return new Lazy<string>(() => GetSampleCode("NullConditionalOperator.cs")); }
-        }
+        public Lazy<string> NullConditionalOperator => new Lazy<string>(() => GetSampleCode("NullConditionalOperator.cs"));
         
-        public Lazy<string> NameOfOperator
-        {
-            get { return new Lazy<string>(() => GetSampleCode("NameOfOperator.cs")); }
-        }
+        public Lazy<string> NameOfOperator => new Lazy<string>(() => GetSampleCode("NameOfOperator.cs"));
 
-        public Lazy<string> AutoPropertyInitializers
-        {
-            get { return new Lazy<string>(() => GetSampleCode("AutoPropertyInitializers.cs")); }
-        }
+        public Lazy<string> AutoPropertyInitializers => new Lazy<string>(() => GetSampleCode("AutoPropertyInitializers.cs"));
 
-        public Lazy<string> StringInterpolation
-        {
-            get { return new Lazy<string>(() => GetSampleCode("StringInterpolation.cs")); }
-        }
+        public Lazy<string> StringInterpolation => new Lazy<string>(() => GetSampleCode("StringInterpolation.cs"));
 
 
         internal static string GetSampleCode(string sampleFileName)

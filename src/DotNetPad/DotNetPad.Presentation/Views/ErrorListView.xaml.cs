@@ -23,7 +23,7 @@ namespace Waf.DotNetPad.Presentation.Views
         }
 
 
-        public ErrorListViewModel ViewModel { get { return viewModel.Value; } }
+        public ErrorListViewModel ViewModel => viewModel.Value;
 
 
         private void ErrorListDoubleClick(object sender, MouseButtonEventArgs e)

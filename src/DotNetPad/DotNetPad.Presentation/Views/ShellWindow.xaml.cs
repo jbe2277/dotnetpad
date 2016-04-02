@@ -20,9 +20,9 @@ namespace Waf.DotNetPad.Presentation.Views
         }
 
 
-        public double VirtualScreenWidth { get { return SystemParameters.VirtualScreenWidth; } }
+        public double VirtualScreenWidth => SystemParameters.VirtualScreenWidth;
 
-        public double VirtualScreenHeight { get { return SystemParameters.VirtualScreenHeight; } }
+        public double VirtualScreenHeight => SystemParameters.VirtualScreenHeight;
 
         public bool IsMaximized
         {
@@ -46,7 +46,7 @@ namespace Waf.DotNetPad.Presentation.Views
             set { bottomPanesRow.Height = new GridLength(value); }
         }
 
-        private ShellViewModel ViewModel { get { return viewModel.Value; } }
+        private ShellViewModel ViewModel => viewModel.Value;
 
 
         private void NewFileButtonClick(object sender, RoutedEventArgs e)

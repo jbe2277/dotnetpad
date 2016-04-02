@@ -59,11 +59,11 @@ namespace Waf.DotNetPad.Applications.Controllers
         }
 
 
-        private ShellViewModel ShellViewModel { get { return shellViewModel.Value; } }
+        private ShellViewModel ShellViewModel => shellViewModel.Value;
 
-        private ErrorListViewModel ErrorListViewModel { get { return errorListViewModel.Value; } }
+        private ErrorListViewModel ErrorListViewModel => errorListViewModel.Value;
 
-        private OutputViewModel OutputViewModel { get { return outputViewModel.Value; } }
+        private OutputViewModel OutputViewModel => outputViewModel.Value;
 
         private DocumentFile RunningDocument
         {

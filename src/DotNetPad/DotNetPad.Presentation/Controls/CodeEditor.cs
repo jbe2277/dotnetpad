@@ -23,10 +23,10 @@ namespace Waf.DotNetPad.Presentation.Controls
     public class CodeEditor : TextEditor
     {
         public static readonly DependencyProperty WorkspaceServiceProperty =
-            DependencyProperty.Register("WorkspaceService", typeof(IWorkspaceService), typeof(CodeEditor), new FrameworkPropertyMetadata(null));
+            DependencyProperty.Register(nameof(WorkspaceService), typeof(IWorkspaceService), typeof(CodeEditor), new FrameworkPropertyMetadata(null));
 
         public static readonly DependencyProperty DocumentFileProperty =
-            DependencyProperty.Register("DocumentFile", typeof(DocumentFile), typeof(CodeEditor), new FrameworkPropertyMetadata(null, DocumentFileChangedCallback));
+            DependencyProperty.Register(nameof(DocumentFile), typeof(DocumentFile), typeof(CodeEditor), new FrameworkPropertyMetadata(null, DocumentFileChangedCallback));
 
 
         private readonly Task updateTextTask;
