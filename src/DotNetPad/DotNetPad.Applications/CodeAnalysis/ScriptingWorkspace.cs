@@ -74,12 +74,15 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             OnDocumentTextChanged(documentId, SourceText.From(text, Encoding.UTF8), PreservationMode.PreserveValue);
         }
 
-        public async Task<IReadOnlyList<ISymbol>> GetRecommendedSymbolsAsync(DocumentId documentId, int position, CancellationToken cancellationToken)
+        public Task<IReadOnlyList<ISymbol>> GetRecommendedSymbolsAsync(DocumentId documentId, int position, CancellationToken cancellationToken)
         {
-            var document = CurrentSolution.GetDocument(documentId);
-            var semanticModel = await document.GetSemanticModelAsync(cancellationToken).ConfigureAwait(false);
-            var symbols = await Recommender.GetRecommendedSymbolsAtPositionAsync(semanticModel, position, this, null, cancellationToken).ConfigureAwait(false);
-            return symbols.ToArray();
+            return Task.Run(async () =>
+            {
+                var document = CurrentSolution.GetDocument(documentId);
+                var semanticModel = await document.GetSemanticModelAsync(cancellationToken).ConfigureAwait(false);
+                var symbols = await Recommender.GetRecommendedSymbolsAtPositionAsync(semanticModel, position, this, null, cancellationToken).ConfigureAwait(false);
+                return (IReadOnlyList<ISymbol>)symbols.ToArray();
+            }, cancellationToken);
         }
 
         public Task<IReadOnlyList<Diagnostic>> GetDiagnosticsAsync(DocumentId documentId, CancellationToken cancellationToken)
