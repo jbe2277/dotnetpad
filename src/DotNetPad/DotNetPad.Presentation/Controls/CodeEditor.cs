@@ -39,7 +39,6 @@ namespace Waf.DotNetPad.Presentation.Controls
         public CodeEditor()
         {
             HighlightingManager.Instance.RegisterHighlighting("C#", new[] { ".cs" }, CreateCSharpHighlightingDefinition);
-            TextArea.IndentationStrategy = new CSharpIndentationStrategy(Options);
             SearchPanel.Install(TextArea);
             completionCancellation = new CancellationTokenSource();
             updateTextTask = Task.FromResult((object)null);
