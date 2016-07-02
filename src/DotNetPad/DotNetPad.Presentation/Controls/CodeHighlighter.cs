@@ -13,7 +13,7 @@ using System.Windows.Threading;
 
 namespace Waf.DotNetPad.Presentation.Controls
 {
-    public class CodeHighlighter : IHighlighter
+    public sealed class CodeHighlighter : IHighlighter
     {
         private readonly SynchronizationContext synchronizationContext;
         private readonly Func<Document> getDocument;
