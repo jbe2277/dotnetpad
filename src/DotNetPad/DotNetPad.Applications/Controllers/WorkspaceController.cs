@@ -1,11 +1,14 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Host.Mef;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.Composition.Hosting;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Waf.Applications;
@@ -57,7 +60,9 @@ namespace Waf.DotNetPad.Applications.Controllers
             this.stopCommand = new DelegateCommand(StopScript, CanStopScript);
             this.documentIds = new Dictionary<DocumentFile, DocumentId>();
         }
+        
 
+        public Workspace Workspace => workspace;
 
         private ShellViewModel ShellViewModel => shellViewModel.Value;
 
@@ -92,7 +97,7 @@ namespace Waf.DotNetPad.Applications.Controllers
         {
             using (var p = new PerformanceTrace("new Workspace"))
             {
-                workspace = new ScriptingWorkspace();
+                workspace = new ScriptingWorkspace(CreateHostServices());
             }
 
             PropertyChangedEventManager.AddHandler(documentService, DocumentServicePropertyChanged, "");
@@ -109,6 +114,12 @@ namespace Waf.DotNetPad.Applications.Controllers
             ShellViewModel.IsErrorListViewVisible = true;
         }
 
+        public Document GetDocument(DocumentFile documentFile)
+        {
+            var documentId = documentIds[documentFile];
+            return workspace.CurrentSolution.GetDocument(documentId);
+        }
+
         public void UpdateText(DocumentFile documentFile, string text)
         {
             if (documentFile.Content.Code == text) { return; }
@@ -119,14 +130,18 @@ namespace Waf.DotNetPad.Applications.Controllers
             ResetBuildResult(documentFile);
             updateDiagnosticsAction.InvokeAccumulated();
         }
-
-        public async Task<IReadOnlyList<ISymbol>> GetRecommendedSymbolsAsync(DocumentFile documentFile, int position, CancellationToken cancellationToken)
+        
+        private static MefHostServices CreateHostServices()
         {
-            using (new PerformanceTrace("GetRecommendedSymbolsAsync", documentFile))
+            var assemblies = new[]
             {
-                var documentId = documentIds[documentFile];
-                return await workspace.GetRecommendedSymbolsAsync(documentId, position, cancellationToken).ConfigureAwait(false);
-            }
+                Assembly.Load("Microsoft.CodeAnalysis.CSharp.Features"),
+                Assembly.Load("Microsoft.CodeAnalysis.VisualBasic.Features")
+            };
+            var compositionHost = new ContainerConfiguration()
+                .WithAssemblies(MefHostServices.DefaultAssemblies.Concat(assemblies))
+                .CreateContainer();
+            return MefHostServices.Create(compositionHost);
         }
 
         private async void AddProject(DocumentFile documentFile)

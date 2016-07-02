@@ -1,6 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Recommendations;
+using Microsoft.CodeAnalysis.Host;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.VisualBasic;
@@ -23,20 +22,20 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
     internal class ScriptingWorkspace : Workspace
     {
         private static readonly Assembly[] defaultReferences =
-            {
-                typeof(Int32).Assembly,                                 // mscorelib
-                typeof(Uri).Assembly,                                   // System
-                typeof(Enumerable).Assembly,                            // System.Core
-                typeof(XmlReader).Assembly,                             // System.Xml
-                typeof(XDocument).Assembly,                             // System.Xml.Linq
-                typeof(DataContractSerializer).Assembly,                // System.Runtime.Serialization
-                typeof(ImmutableArray).Assembly,                        // System.Collections.Immutable
-            };
+        {
+            typeof(Int32).Assembly,                                 // mscorelib
+            typeof(Uri).Assembly,                                   // System
+            typeof(Enumerable).Assembly,                            // System.Core
+            typeof(XmlReader).Assembly,                             // System.Xml
+            typeof(XDocument).Assembly,                             // System.Xml.Linq
+            typeof(DataContractSerializer).Assembly,                // System.Runtime.Serialization
+            typeof(ImmutableArray).Assembly,                        // System.Collections.Immutable
+        };
 
         private readonly ConcurrentDictionary<string, DocumentationProvider> documentationProviders;
 
 
-        public ScriptingWorkspace() : base(MefHostServices.DefaultHost, WorkspaceKind.Host)
+        public ScriptingWorkspace(HostServices hostServices) : base(hostServices, WorkspaceKind.Host)
         {
             documentationProviders = new ConcurrentDictionary<string, DocumentationProvider>();
         }
@@ -72,17 +71,6 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
         public void UpdateText(DocumentId documentId, string text)
         {
             OnDocumentTextChanged(documentId, SourceText.From(text, Encoding.UTF8), PreservationMode.PreserveValue);
-        }
-
-        public Task<IReadOnlyList<ISymbol>> GetRecommendedSymbolsAsync(DocumentId documentId, int position, CancellationToken cancellationToken)
-        {
-            return Task.Run(async () =>
-            {
-                var document = CurrentSolution.GetDocument(documentId);
-                var semanticModel = await document.GetSemanticModelAsync(cancellationToken).ConfigureAwait(false);
-                var symbols = await Recommender.GetRecommendedSymbolsAtPositionAsync(semanticModel, position, this, null, cancellationToken).ConfigureAwait(false);
-                return (IReadOnlyList<ISymbol>)symbols.ToArray();
-            }, cancellationToken);
         }
 
         public Task<IReadOnlyList<Diagnostic>> GetDiagnosticsAsync(DocumentId documentId, CancellationToken cancellationToken)

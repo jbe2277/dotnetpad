@@ -5,6 +5,7 @@ using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using ICSharpCode.AvalonEdit.Indentation.CSharp;
 using ICSharpCode.AvalonEdit.Search;
+using Microsoft.CodeAnalysis.Completion;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -87,6 +88,23 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         private async void TextAreaTextEntered(object sender, TextCompositionEventArgs e)
         {
+            await ShowCompletionAsync(e.Text.FirstOrDefault());
+        }
+
+        protected override async void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            if (e.Key == Key.Space && e.KeyboardDevice.Modifiers.HasFlag(ModifierKeys.Control)
+                && !e.KeyboardDevice.Modifiers.HasFlag(ModifierKeys.Shift))
+            {
+                e.Handled = true;
+                await ShowCompletionAsync(null);
+            }
+        }
+
+        private async Task ShowCompletionAsync(char? triggerChar)
+        { 
             recommendationCancellation.Cancel();
             
             if (WorkspaceService == null || DocumentFile == null)
@@ -101,39 +119,45 @@ namespace Waf.DotNetPad.Presentation.Controls
                 await updateTextTask;   // Wait for a pending UpdateText before calling GetRecommendedSymbolsAsync.
                 cancellationToken.ThrowIfCancellationRequested();
 
-                if (completionWindow == null && (e.Text == "." || IsAllowedLanguageLetter(e.Text[0])))
+                if (completionWindow == null && (triggerChar == null || triggerChar == '.' || IsAllowedLanguageLetter(triggerChar.Value)))
                 {
                     var position = CaretOffset;
                     var word = GetWord(position);
 
-                    var symbols = await WorkspaceService.GetRecommendedSymbolsAsync(DocumentFile, position, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    var symbolGroups = symbols.GroupBy(x => x.Name).ToArray();
-                    if (symbolGroups.Any())
+                    var document = WorkspaceService.GetDocument(DocumentFile);
+                    var completionService = CompletionService.GetService(document);
+                    var completionList = await completionService.GetCompletionsAsync(document, position, cancellationToken: cancellationToken);
+                    if (completionList == null)
                     {
-                        using (new PerformanceTrace("CompletionWindow.Show", DocumentFile))
-                        {
-                            completionWindow = new CompletionWindow(TextArea)
-                            {
-                                WindowStyle = WindowStyle.None,
-                                AllowsTransparency = true
-                            };
-                            completionWindow.MaxWidth = completionWindow.Width = 340;
-                            completionWindow.MaxHeight = completionWindow.Height = 206;
-                            foreach (var symbolGroup in symbolGroups)
-                            {
-                                completionWindow.CompletionList.CompletionData.Add(new CodeCompletionData(symbolGroup.Key, symbolGroup.ToArray()));
-                            }
-
-                            if (IsAllowedLanguageLetter(e.Text[0]))
-                            {
-                                completionWindow.StartOffset = word.Item1;
-                                completionWindow.CompletionList.SelectItem(word.Item2);
-                            }
-                            completionWindow.Show();
-                            completionWindow.Closed += (s2, e2) => completionWindow = null;
-                        }
+                        return;
                     }
+                    
+                    cancellationToken.ThrowIfCancellationRequested();
+                    
+                    using (new PerformanceTrace("CompletionWindow.Show", DocumentFile))
+                    {
+                        completionWindow = new CompletionWindow(TextArea)
+                        {
+                            WindowStyle = WindowStyle.None,
+                            AllowsTransparency = true
+                        };
+                        completionWindow.MaxWidth = completionWindow.Width = 340;
+                        completionWindow.MaxHeight = completionWindow.Height = 206;
+                        foreach (var completionItem in completionList.Items)
+                        {
+                            completionWindow.CompletionList.CompletionData.Add(new CodeCompletionData(completionItem.DisplayText,
+                                async () => (await completionService.GetDescriptionAsync(document, completionItem, cancellationToken)).Text, completionItem.Tags));
+                        }
+
+                        if (triggerChar == null || IsAllowedLanguageLetter(triggerChar.Value))
+                        {
+                            completionWindow.StartOffset = word.Item1;
+                            completionWindow.CompletionList.SelectItem(word.Item2);
+                        }
+                        completionWindow.Show();
+                        completionWindow.Closed += (s2, e2) => completionWindow = null;
+                    }
+                    
                 }
             }
             catch (OperationCanceledException)
