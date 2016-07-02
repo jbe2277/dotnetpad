@@ -167,15 +167,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controls\CodeHighlightColors.cs" />
     <Compile Include="Controls\CodeCompletionData.cs" />
     <Compile Include="Controls\CodeCompletionDescription.cs" />
     <Compile Include="Controls\CodeEditor.cs" />
+    <Compile Include="Controls\CodeHighlighter.cs" />
     <Compile Include="Controls\ErrorTextMarker.cs" />
     <Compile Include="Controls\Flyout.cs" />
     <Compile Include="Controls\HorizontalFlyoutAlignment.cs" />
     <Compile Include="Controls\ErrorTextMarkerService.cs" />
     <Compile Include="Controls\IconInfo.cs" />
-    <Compile Include="Converters\DocumentTypeToSyntaxHighlightingConverter.cs" />
+    <Compile Include="Controls\CodeHighlightingColorizer.cs" />
     <Compile Include="Converters\ErrorSeverityToImageConverter.cs" />
     <Compile Include="Converters\IndexToNumberConverter.cs" />
     <Compile Include="Converters\StringNullEmptyToVisibilityConverter.cs" />
@@ -248,7 +250,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <Resource Include="Resources\Highlighting\CSharp-Mode.xshd" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

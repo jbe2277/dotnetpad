@@ -11,8 +11,6 @@
 
     <c:TabFileNameConverter x:Key="TabFileNameConverter"/>
 
-    <c:DocumentTypeToSyntaxHighlightingConverter x:Key="DocumentTypeToSyntaxHighlightingConverter"/>
-
     <c:StringNullEmptyToVisibilityConverter x:Key="StringNullEmptyToVisibilityConverter"/>
 
     <c:WindowTitleConverter x:Key="WindowTitleConverter"/>

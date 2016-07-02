@@ -1,21 +1,16 @@
 ﻿using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
-using ICSharpCode.AvalonEdit.Highlighting;
-using ICSharpCode.AvalonEdit.Highlighting.Xshd;
-using ICSharpCode.AvalonEdit.Indentation.CSharp;
 using ICSharpCode.AvalonEdit.Search;
 using Microsoft.CodeAnalysis.Completion;
 using System;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Xml;
 using Waf.DotNetPad.Applications.Services;
 using Waf.DotNetPad.Domain;
 
@@ -24,7 +19,7 @@ namespace Waf.DotNetPad.Presentation.Controls
     public class CodeEditor : TextEditor
     {
         public static readonly DependencyProperty WorkspaceServiceProperty =
-            DependencyProperty.Register(nameof(WorkspaceService), typeof(IWorkspaceService), typeof(CodeEditor), new FrameworkPropertyMetadata(null));
+            DependencyProperty.Register(nameof(WorkspaceService), typeof(IWorkspaceService), typeof(CodeEditor), new FrameworkPropertyMetadata(null, WorkspaceServiceChangedCallback));
 
         public static readonly DependencyProperty DocumentFileProperty =
             DependencyProperty.Register(nameof(DocumentFile), typeof(DocumentFile), typeof(CodeEditor), new FrameworkPropertyMetadata(null, DocumentFileChangedCallback));
@@ -34,15 +29,17 @@ namespace Waf.DotNetPad.Presentation.Controls
         private readonly ErrorTextMarkerService errorMarkerService;
         private CompletionWindow completionWindow;
         private CancellationTokenSource completionCancellation;
+        private volatile IWorkspaceService workspaceService;
+        private volatile DocumentFile documentFile;
         
 
         public CodeEditor()
         {
-            HighlightingManager.Instance.RegisterHighlighting("C#", new[] { ".cs" }, CreateCSharpHighlightingDefinition);
             SearchPanel.Install(TextArea);
             completionCancellation = new CancellationTokenSource();
             updateTextTask = Task.FromResult((object)null);
 
+            TextArea.TextView.LineTransformers.Insert(0, new CodeHighlightingColorizer(() => workspaceService.GetDocument(documentFile)));
             TextArea.TextEntering += TextAreaTextEntering;
             TextArea.TextEntered += TextAreaTextEntered;
 
@@ -50,7 +47,7 @@ namespace Waf.DotNetPad.Presentation.Controls
             IsVisibleChanged += IsVisibleChangedHandler;
         }
 
-        
+
         public IWorkspaceService WorkspaceService
         {
             get { return (IWorkspaceService)GetValue(WorkspaceServiceProperty); }
@@ -196,10 +193,16 @@ namespace Waf.DotNetPad.Presentation.Controls
             if (!IsVisible) { completionCancellation.Cancel(); }
         }
 
+        private static void WorkspaceServiceChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((CodeEditor)d).workspaceService = (IWorkspaceService)e.NewValue;
+        }
+
         private static void DocumentFileChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var editor = (CodeEditor)d;
-            
+            editor.documentFile = (DocumentFile)e.NewValue;
+
             var oldDocumentFile = e.OldValue as DocumentFile;
             if (oldDocumentFile != null)
             {
@@ -227,17 +230,6 @@ namespace Waf.DotNetPad.Presentation.Controls
         private static bool IsAllowedLanguageLetter(char character)
         {
             return TextUtilities.GetCharacterClass(character) == CharacterClass.IdentifierPart;
-        }
-
-        private static IHighlightingDefinition CreateCSharpHighlightingDefinition()
-        {
-            using (Stream stream = Application.GetResourceStream(new Uri("/Resources/Highlighting/CSharp-Mode.xshd", UriKind.Relative)).Stream)
-            {
-                using (XmlReader reader = new XmlTextReader(stream))
-                {
-                    return HighlightingLoader.Load(reader, HighlightingManager.Instance);
-                }
-            }
         }
     }
 }

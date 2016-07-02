@@ -8,8 +8,7 @@
              mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleCodeEditorViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="300" d:DesignWidth="600">
 
-    <ctrl:CodeEditor x:Name="codeEditor" WorkspaceService="{Binding WorkspaceService}" DocumentFile="{Binding DocumentFile}" 
-                     SyntaxHighlighting="{Binding DocumentFile.DocumentType, Converter={StaticResource DocumentTypeToSyntaxHighlightingConverter}}" ShowLineNumbers="True">
+    <ctrl:CodeEditor x:Name="codeEditor" WorkspaceService="{Binding WorkspaceService}" DocumentFile="{Binding DocumentFile}" ShowLineNumbers="True">
         <ctrl:CodeEditor.ContextMenu>
             <ContextMenu>
                 <MenuItem Header="Find" Command="Find"/>
