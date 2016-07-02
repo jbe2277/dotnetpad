@@ -126,7 +126,9 @@ namespace Waf.DotNetPad.Presentation.Controls
 
                     var document = WorkspaceService.GetDocument(DocumentFile);
                     var completionService = CompletionService.GetService(document);
-                    var completionList = await completionService.GetCompletionsAsync(document, position, cancellationToken: cancellationToken);
+
+                    var completionList = await Task.Run(async () => 
+                            await completionService.GetCompletionsAsync(document, position, cancellationToken: cancellationToken), cancellationToken);
                     if (completionList == null)
                     {
                         return;
