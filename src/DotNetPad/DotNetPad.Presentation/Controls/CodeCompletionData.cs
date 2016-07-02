@@ -1,6 +1,7 @@
 ﻿using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
+using Microsoft.CodeAnalysis.Completion;
 using System;
 using System.Collections.Immutable;
 using System.Linq;
@@ -57,35 +58,35 @@ namespace Waf.DotNetPad.Presentation.Controls
             
             switch (tag)
             {
-                case "Class":
+                case CompletionTags.Class:
                     return GetImage("ClassImageSource");
-                case "Constant":
+                case CompletionTags.Constant:
                     return GetImage("ConstantImageSource");
-                case "Delegate":
+                case CompletionTags.Delegate:
                     return GetImage("DelegateImageSource");
-                case "Enum":
+                case CompletionTags.Enum:
                     return GetImage("EnumImageSource");
-                case "EnumMember":
+                case CompletionTags.EnumMember:
                     return GetImage("EnumItemImageSource");
-                case "Event":
+                case CompletionTags.Event:
                     return GetImage("EventImageSource");    
-                case "ExtensionMethod":
+                case CompletionTags.ExtensionMethod:
                     return GetImage("ExtensionMethodImageSource");
-                case "Field":
+                case CompletionTags.Field:
                     return GetImage("FieldImageSource");
-                case "Interface":
+                case CompletionTags.Interface:
                     return GetImage("InterfaceImageSource");
-                case "Keyword":
+                case CompletionTags.Keyword:
                     return GetImage("KeywordImageSource");
-                case "Method":
+                case CompletionTags.Method:
                     return GetImage("MethodImageSource");
-                case "Module":
+                case CompletionTags.Module:
                     return GetImage("ModuleImageSource");
-                case "Namespace":
+                case CompletionTags.Namespace:
                     return GetImage("NamespaceImageSource");
-                case "Property":
+                case CompletionTags.Property:
                     return GetImage("PropertyImageSource");
-                case "Structure":
+                case CompletionTags.Structure:
                     return GetImage("StructureImageSource");
             }
             return null;
