@@ -16,22 +16,6 @@
         <StackPanel>
             <TextBlock x:Name="summaryBlock" Text="{Binding Summary}" 
                        Visibility="{Binding Summary, Converter={StaticResource StringNullEmptyToVisibilityConverter}}"/>
-            <Control Height="7">
-                <Control.Style>
-                    <Style TargetType="Control">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Visibility, ElementName=summaryBlock}" Value="Collapsed">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Visibility, ElementName=overloadsBlock}" Value="Collapsed">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Control.Style>
-            </Control>
-            <TextBlock x:Name="overloadsBlock" Text="{Binding Overloads}"
-                       Visibility="{Binding Overloads, Converter={StaticResource StringNullEmptyToVisibilityConverter}}"/>
         </StackPanel>
     </DataTemplate>
 

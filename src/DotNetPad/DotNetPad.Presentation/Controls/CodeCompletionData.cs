@@ -46,7 +46,7 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         private CodeCompletionDescription CreateDescription()
         {
-            var result = new CodeCompletionDescription(getDescriptionFunc(), "");  // TODO: Remove overloads
+            var result = new CodeCompletionDescription(getDescriptionFunc());
             return result;
         }
 

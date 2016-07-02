@@ -33,7 +33,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         private readonly Task updateTextTask;
         private readonly ErrorTextMarkerService errorMarkerService;
         private CompletionWindow completionWindow;
-        private CancellationTokenSource recommendationCancellation;
+        private CancellationTokenSource completionCancellation;
         
 
         public CodeEditor()
@@ -41,7 +41,7 @@ namespace Waf.DotNetPad.Presentation.Controls
             HighlightingManager.Instance.RegisterHighlighting("C#", new[] { ".cs" }, CreateCSharpHighlightingDefinition);
             TextArea.IndentationStrategy = new CSharpIndentationStrategy(Options);
             SearchPanel.Install(TextArea);
-            recommendationCancellation = new CancellationTokenSource();
+            completionCancellation = new CancellationTokenSource();
             updateTextTask = Task.FromResult((object)null);
 
             TextArea.TextEntering += TextAreaTextEntering;
@@ -105,18 +105,18 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         private async Task ShowCompletionAsync(char? triggerChar)
         { 
-            recommendationCancellation.Cancel();
+            completionCancellation.Cancel();
             
             if (WorkspaceService == null || DocumentFile == null)
             {
                 return;
             }
 
-            recommendationCancellation = new CancellationTokenSource();
-            var cancellationToken = recommendationCancellation.Token;
+            completionCancellation = new CancellationTokenSource();
+            var cancellationToken = completionCancellation.Token;
             try
             {
-                await updateTextTask;   // Wait for a pending UpdateText before calling GetRecommendedSymbolsAsync.
+                await updateTextTask;   // Wait for a pending UpdateText before calling GetCompletionsAsync.
                 cancellationToken.ThrowIfCancellationRequested();
 
                 if (completionWindow == null && (triggerChar == null || triggerChar == '.' || IsAllowedLanguageLetter(triggerChar.Value)))
@@ -157,7 +157,6 @@ namespace Waf.DotNetPad.Presentation.Controls
                         completionWindow.Show();
                         completionWindow.Closed += (s2, e2) => completionWindow = null;
                     }
-                    
                 }
             }
             catch (OperationCanceledException)
@@ -193,7 +192,7 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         private void IsVisibleChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (!IsVisible) { recommendationCancellation.Cancel(); }
+            if (!IsVisible) { completionCancellation.Cancel(); }
         }
 
         private static void DocumentFileChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)

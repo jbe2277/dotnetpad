@@ -95,7 +95,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         public void Initialize()
         {
-            using (var p = new PerformanceTrace("new Workspace"))
+            using (new PerformanceTrace("new Workspace"))
             {
                 workspace = new ScriptingWorkspace(CreateHostServices());
             }

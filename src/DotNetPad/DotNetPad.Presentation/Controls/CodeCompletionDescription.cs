@@ -8,14 +8,11 @@ namespace Waf.DotNetPad.Presentation.Controls
         private string summary;
         
 
-        public CodeCompletionDescription(Task<string> lazySummary, string overloads)
+        public CodeCompletionDescription(Task<string> lazySummary)
         {
-            Overloads = overloads;
             UpdateSummary(lazySummary);
         }
 
-
-        public string Overloads { get; }
 
         public string Summary
         {
