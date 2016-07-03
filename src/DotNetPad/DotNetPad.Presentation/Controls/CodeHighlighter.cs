@@ -73,7 +73,7 @@ namespace Waf.DotNetPad.Presentation.Controls
             }
             
             
-            var newLine = new VersionedHighlightedLine(Document, documentLine, Document.Version);
+            var newLine = new VersionedHighlightedLine(Document, documentLine, Document.Version, cachedLine);
             queue.Add(newLine);
             cachedLines.Add(newLine);
             return newLine;
@@ -101,12 +101,16 @@ namespace Waf.DotNetPad.Presentation.Controls
                     var documentLine = line.DocumentLine;
 
                     var spans = await GetClassifiedSpansAsync(documentLine, cancellationToken).ConfigureAwait(false);
+                    foreach (var section in line.Sections.ToArray().OfType<HighlightedSection>())
+                    {
+                        line.Sections.Remove(section);
+                    }
                     foreach (var classifiedSpan in spans)
                     {
-                        if (IsOutsideLine(classifiedSpan, documentLine))
+                        if (IsOutsideLine(documentLine, classifiedSpan.TextSpan.Start, classifiedSpan.TextSpan.Length))
                         {
                             continue;
-                        }
+                        }   
                         line.Sections.Add(new HighlightedSection
                             {
                                 Color = CodeHighlightColors.GetColor(classifiedSpan.ClassificationType),
@@ -128,11 +132,9 @@ namespace Waf.DotNetPad.Presentation.Controls
             synchronizationContext.Post(state => HighlightingStateChanged?.Invoke(fromLineNumber, toLineNumber), null);
         }
 
-        private static bool IsOutsideLine(ClassifiedSpan classifiedSpan, IDocumentLine documentLine)
+        private static bool IsOutsideLine(IDocumentLine documentLine, int offset, int length)
         {
-            return classifiedSpan.TextSpan.Start < documentLine.Offset 
-                || classifiedSpan.TextSpan.Start > documentLine.EndOffset 
-                || classifiedSpan.TextSpan.End > documentLine.EndOffset;
+            return offset < documentLine.Offset || offset + length > documentLine.EndOffset;
         }
         
         private async Task<IEnumerable<ClassifiedSpan>> GetClassifiedSpansAsync(IDocumentLine documentLine, CancellationToken cancellationToken)
@@ -180,9 +182,26 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         private sealed class VersionedHighlightedLine : HighlightedLine
         {
-            public VersionedHighlightedLine(IDocument document, IDocumentLine documentLine, ITextSourceVersion version) : base(document, documentLine)
+            public VersionedHighlightedLine(IDocument document, IDocumentLine documentLine, ITextSourceVersion version, VersionedHighlightedLine oldVersion) 
+                : base(document, documentLine)
             {
                 Version = version;
+                if (oldVersion != null)
+                {
+                    foreach (var oldSection in oldVersion.Sections.OfType<HighlightedSection>())
+                    {
+                        if (IsOutsideLine(documentLine, oldSection.Offset, oldSection.Length))
+                        {
+                            continue;
+                        }
+                        Sections.Add(new HighlightedSection
+                        {
+                            Color = oldSection.Color,
+                            Offset = oldSection.Offset,
+                            Length = oldSection.Length
+                        });
+                    }
+                }
             }
 
             public ITextSourceVersion Version { get; }
