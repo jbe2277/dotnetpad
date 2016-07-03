@@ -17,8 +17,8 @@ namespace Waf.DotNetPad.Presentation.Controls
     {
         private readonly SynchronizationContext synchronizationContext;
         private readonly Func<Document> getDocument;
-        private readonly List<CachedLine> cachedLines;
-        private readonly BlockingCollection<HighlightedLine> queue;
+        private readonly List<VersionedHighlightedLine> cachedLines;
+        private readonly BlockingCollection<VersionedHighlightedLine> queue;
         private readonly CancellationTokenSource cancellationTokenSource;
 
 
@@ -28,8 +28,8 @@ namespace Waf.DotNetPad.Presentation.Controls
 
             Document = document;
             this.getDocument = getDocument;
-            queue = new BlockingCollection<HighlightedLine>();
-            cachedLines = new List<CachedLine>();
+            queue = new BlockingCollection<VersionedHighlightedLine>();
+            cachedLines = new List<VersionedHighlightedLine>();
             cancellationTokenSource = new CancellationTokenSource();
             StartWorker(cancellationTokenSource.Token);
         }
@@ -46,8 +46,8 @@ namespace Waf.DotNetPad.Presentation.Controls
         public HighlightedLine HighlightLine(int lineNumber)
         {
             var documentLine = Document.GetLineByNumber(lineNumber);
-            var newVersion = Document.Version;
-            CachedLine cachedLine = null;
+            var currentVersion = Document.Version;
+            VersionedHighlightedLine cachedLine = null;
             
             for (var i = 0; i < cachedLines.Count; i++)
             {
@@ -56,7 +56,7 @@ namespace Waf.DotNetPad.Presentation.Controls
                 {
                     continue;
                 }
-                if (newVersion == null || !newVersion.BelongsToSameDocumentAs(line.TextSourceVersion))
+                if (currentVersion == null || !currentVersion.BelongsToSameDocumentAs(line.Version))
                 {
                     cachedLines.RemoveAt(i);
                 }
@@ -66,16 +66,16 @@ namespace Waf.DotNetPad.Presentation.Controls
                 }
             }
 
-            if (cachedLine != null && newVersion.CompareAge(cachedLine.TextSourceVersion) == 0 
+            if (cachedLine != null && currentVersion.CompareAge(cachedLine.Version) == 0 
                 && cachedLine.DocumentLine.Length == documentLine.Length)
             {
-                return cachedLine.HighlightedLine;
+                return cachedLine;
             }
             
             
-            var newLine = new HighlightedLine(Document, documentLine);
+            var newLine = new VersionedHighlightedLine(Document, documentLine, Document.Version);
             queue.Add(newLine);
-            CacheLine(newLine);
+            cachedLines.Add(newLine);
             return newLine;
         }
         
@@ -92,6 +92,12 @@ namespace Waf.DotNetPad.Presentation.Controls
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     var line = queue.Take(cancellationToken);
+                    var currentVersion = Document.Version;
+                    if (line.Version == null || !currentVersion.BelongsToSameDocumentAs(line.Version) || currentVersion.CompareAge(line.Version) != 0)
+                    {
+                        continue;
+                    }
+
                     var documentLine = line.DocumentLine;
 
                     var spans = await GetClassifiedSpansAsync(documentLine, cancellationToken).ConfigureAwait(false);
@@ -127,15 +133,7 @@ namespace Waf.DotNetPad.Presentation.Controls
                 || classifiedSpan.TextSpan.Start > documentLine.EndOffset 
                 || classifiedSpan.TextSpan.End > documentLine.EndOffset;
         }
-
-        private void CacheLine(HighlightedLine line)
-        {
-            if (Document.Version != null)
-            {
-                cachedLines.Add(new CachedLine(line, Document.Version));
-            }
-        }
-
+        
         private async Task<IEnumerable<ClassifiedSpan>> GetClassifiedSpansAsync(IDocumentLine documentLine, CancellationToken cancellationToken)
         {
             var document = getDocument();
@@ -179,19 +177,14 @@ namespace Waf.DotNetPad.Presentation.Controls
         }
         
 
-        private class CachedLine
+        private sealed class VersionedHighlightedLine : HighlightedLine
         {
-            public CachedLine(HighlightedLine highlightedLine, ITextSourceVersion textSourceVersion)
+            public VersionedHighlightedLine(IDocument document, IDocumentLine documentLine, ITextSourceVersion version) : base(document, documentLine)
             {
-                HighlightedLine = highlightedLine;
-                TextSourceVersion = textSourceVersion;
+                Version = version;
             }
 
-            public HighlightedLine HighlightedLine { get; }
-
-            public ITextSourceVersion TextSourceVersion { get; }
-
-            public IDocumentLine DocumentLine => HighlightedLine.DocumentLine;
+            public ITextSourceVersion Version { get; }
         }
     }
 }
