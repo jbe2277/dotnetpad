@@ -116,6 +116,7 @@ namespace Waf.DotNetPad.Presentation.Controls
                     }
 
                     RaiseHighlightingStateChanged(documentLine.LineNumber, documentLine.LineNumber);
+                    await Task.Delay(1);
                 }
             }
             catch (OperationCanceledException) { }
