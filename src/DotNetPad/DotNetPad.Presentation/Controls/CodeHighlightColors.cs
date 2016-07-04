@@ -7,56 +7,72 @@ namespace Waf.DotNetPad.Presentation.Controls
 {
     internal static class CodeHighlightColors
     {
-        public static HighlightingColor DefaultColor { get; } = new HighlightingColor { Foreground = new SimpleHighlightingBrush(Colors.Black) }.AsFrozen();
+        private static readonly CachedHighlightingColor defaultHighlightingColor = new CachedHighlightingColor(Colors.Black);
+        private static readonly CachedHighlightingColor typeHighlightingColor = new CachedHighlightingColor(Colors.Teal);
+        private static readonly CachedHighlightingColor commentHighlightingColor = new CachedHighlightingColor(Colors.Green);
+        private static readonly CachedHighlightingColor xmlCommentHighlightingColor = new CachedHighlightingColor(Colors.Gray);
+        private static readonly CachedHighlightingColor keywordHighlightingColor = new CachedHighlightingColor(Colors.Blue);
+        private static readonly CachedHighlightingColor preprocessorKeywordHighlightingColor = new CachedHighlightingColor(Colors.Gray);
+        private static readonly CachedHighlightingColor stringHighlightingColor = new CachedHighlightingColor(Colors.Maroon);
 
-        private static readonly HighlightingColor TypeColor = new HighlightingColor { Foreground = new SimpleHighlightingBrush(Colors.Teal) }.AsFrozen();
-        private static readonly HighlightingColor CommentColor = new HighlightingColor { Foreground = new SimpleHighlightingBrush(Colors.Green) }.AsFrozen();
-        private static readonly HighlightingColor XmlCommentColor = new HighlightingColor { Foreground = new SimpleHighlightingBrush(Colors.Gray) }.AsFrozen();
-        private static readonly HighlightingColor KeywordColor = new HighlightingColor { Foreground = new SimpleHighlightingBrush(Colors.Blue) }.AsFrozen();
-        private static readonly HighlightingColor PreprocessorKeywordColor = new HighlightingColor { Foreground = new SimpleHighlightingBrush(Colors.Gray) }.AsFrozen();
-        private static readonly HighlightingColor StringColor = new HighlightingColor { Foreground = new SimpleHighlightingBrush(Colors.Maroon) }.AsFrozen();
-
-        private static readonly Dictionary<string, HighlightingColor> map = new Dictionary<string, HighlightingColor>
+        private static readonly Dictionary<string, CachedHighlightingColor> highlightingColorsMap = new Dictionary<string, CachedHighlightingColor>
         {
-            [ClassificationTypeNames.ClassName] = TypeColor,
-            [ClassificationTypeNames.StructName] = TypeColor,
-            [ClassificationTypeNames.InterfaceName] = TypeColor,
-            [ClassificationTypeNames.DelegateName] = TypeColor,
-            [ClassificationTypeNames.EnumName] = TypeColor,
-            [ClassificationTypeNames.ModuleName] = TypeColor,
-            [ClassificationTypeNames.TypeParameterName] = TypeColor,
-            [ClassificationTypeNames.Comment] = CommentColor,
-            [ClassificationTypeNames.XmlDocCommentAttributeName] = XmlCommentColor,
-            [ClassificationTypeNames.XmlDocCommentAttributeQuotes] = XmlCommentColor,
-            [ClassificationTypeNames.XmlDocCommentAttributeValue] = XmlCommentColor,
-            [ClassificationTypeNames.XmlDocCommentCDataSection] = XmlCommentColor,
-            [ClassificationTypeNames.XmlDocCommentComment] = XmlCommentColor,
-            [ClassificationTypeNames.XmlDocCommentDelimiter] = XmlCommentColor,
-            [ClassificationTypeNames.XmlDocCommentEntityReference] = XmlCommentColor,
-            [ClassificationTypeNames.XmlDocCommentName] = XmlCommentColor,
-            [ClassificationTypeNames.XmlDocCommentProcessingInstruction] = XmlCommentColor,
-            [ClassificationTypeNames.XmlDocCommentText] = CommentColor,
-            [ClassificationTypeNames.Keyword] = KeywordColor,
-            [ClassificationTypeNames.PreprocessorKeyword] = PreprocessorKeywordColor,
-            [ClassificationTypeNames.StringLiteral] = StringColor,
-            [ClassificationTypeNames.VerbatimStringLiteral] = StringColor
+            [ClassificationTypeNames.ClassName] = typeHighlightingColor,
+            [ClassificationTypeNames.StructName] = typeHighlightingColor,
+            [ClassificationTypeNames.InterfaceName] = typeHighlightingColor,
+            [ClassificationTypeNames.DelegateName] = typeHighlightingColor,
+            [ClassificationTypeNames.EnumName] = typeHighlightingColor,
+            [ClassificationTypeNames.ModuleName] = typeHighlightingColor,
+            [ClassificationTypeNames.TypeParameterName] = typeHighlightingColor,
+            [ClassificationTypeNames.Comment] = commentHighlightingColor,
+            [ClassificationTypeNames.XmlDocCommentAttributeName] = xmlCommentHighlightingColor,
+            [ClassificationTypeNames.XmlDocCommentAttributeQuotes] = xmlCommentHighlightingColor,
+            [ClassificationTypeNames.XmlDocCommentAttributeValue] = xmlCommentHighlightingColor,
+            [ClassificationTypeNames.XmlDocCommentCDataSection] = xmlCommentHighlightingColor,
+            [ClassificationTypeNames.XmlDocCommentComment] = xmlCommentHighlightingColor,
+            [ClassificationTypeNames.XmlDocCommentDelimiter] = xmlCommentHighlightingColor,
+            [ClassificationTypeNames.XmlDocCommentEntityReference] = xmlCommentHighlightingColor,
+            [ClassificationTypeNames.XmlDocCommentName] = xmlCommentHighlightingColor,
+            [ClassificationTypeNames.XmlDocCommentProcessingInstruction] = xmlCommentHighlightingColor,
+            [ClassificationTypeNames.XmlDocCommentText] = commentHighlightingColor,
+            [ClassificationTypeNames.Keyword] = keywordHighlightingColor,
+            [ClassificationTypeNames.PreprocessorKeyword] = preprocessorKeywordHighlightingColor,
+            [ClassificationTypeNames.StringLiteral] = stringHighlightingColor,
+            [ClassificationTypeNames.VerbatimStringLiteral] = stringHighlightingColor
         };
 
 
-        public static HighlightingColor GetColor(string classificationTypeName)
+        public static HighlightingColor DefaultHighlightingColor => defaultHighlightingColor;
+
+
+        public static Color GetColor(string classificationTypeName)
         {
-            HighlightingColor color;
-            map.TryGetValue(classificationTypeName, out color);
-            return color ?? DefaultColor;
+            return GetHighlightingColorCore(classificationTypeName).Color;
         }
 
-        private static HighlightingColor AsFrozen(this HighlightingColor color)
+        public static HighlightingColor GetHighlightingColor(string classificationTypeName)
         {
-            if (!color.IsFrozen)
+            return GetHighlightingColorCore(classificationTypeName);
+        }
+
+        private static CachedHighlightingColor GetHighlightingColorCore(string classificationTypeName)
+        {
+            CachedHighlightingColor color;
+            highlightingColorsMap.TryGetValue(classificationTypeName, out color);
+            return color ?? defaultHighlightingColor;
+        }
+
+
+        private sealed class CachedHighlightingColor : HighlightingColor
+        {
+            public CachedHighlightingColor(Color color)
             {
-                color.Freeze();
+                Color = color;
+                Foreground = new SimpleHighlightingBrush(color);
+                Freeze();
             }
-            return color;
+
+            public Color Color { get; }
         }
     }
 }

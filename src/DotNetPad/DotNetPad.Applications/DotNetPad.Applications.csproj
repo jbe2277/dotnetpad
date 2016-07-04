@@ -121,6 +121,7 @@
     </Compile>
     <Compile Include="AppSettings.cs" />
     <Compile Include="CodeAnalysis\BuildResult.cs" />
+    <Compile Include="CodeAnalysis\ClassificationTags.cs" />
     <Compile Include="CodeAnalysis\FileBasedXmlDocumentationProvider.cs" />
     <Compile Include="CodeAnalysis\Glyph.cs" />
     <Compile Include="CodeAnalysis\SymbolHelper.cs" />

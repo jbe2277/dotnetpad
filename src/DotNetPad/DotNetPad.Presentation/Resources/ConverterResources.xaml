@@ -6,15 +6,15 @@
     <waf:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
     <waf:InvertBooleanConverter x:Key="InvertBooleanConverter"/>
-    
+
     <c:IndexToNumberConverter x:Key="IndexToNumberConverter"/>
 
     <c:TabFileNameConverter x:Key="TabFileNameConverter"/>
 
-    <c:StringNullEmptyToVisibilityConverter x:Key="StringNullEmptyToVisibilityConverter"/>
-
     <c:WindowTitleConverter x:Key="WindowTitleConverter"/>
 
     <c:ErrorSeverityToImageConverter x:Key="ErrorSeverityToImageConverter"/>
+
+    <c:TaggedTextListConverter x:Key="TaggedTextListConverter"/>
 
 </ResourceDictionary>

@@ -37,7 +37,7 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         public IDocument Document { get; }
 
-        public HighlightingColor DefaultTextColor => CodeHighlightColors.DefaultColor;
+        public HighlightingColor DefaultTextColor => CodeHighlightColors.DefaultHighlightingColor;
 
 
         public event HighlightingStateChangedEventHandler HighlightingStateChanged;
@@ -48,7 +48,7 @@ namespace Waf.DotNetPad.Presentation.Controls
             var documentLine = Document.GetLineByNumber(lineNumber);
             var currentVersion = Document.Version;
             VersionedHighlightedLine cachedLine = null;
-            
+
             for (var i = 0; i < cachedLines.Count; i++)
             {
                 var line = cachedLines[i];
@@ -66,19 +66,19 @@ namespace Waf.DotNetPad.Presentation.Controls
                 }
             }
 
-            if (cachedLine != null && currentVersion.CompareAge(cachedLine.Version) == 0 
+            if (cachedLine != null && currentVersion.CompareAge(cachedLine.Version) == 0
                 && cachedLine.DocumentLine.Length == documentLine.Length)
             {
                 return cachedLine;
             }
-            
-            
+
+
             var newLine = new VersionedHighlightedLine(Document, documentLine, Document.Version, cachedLine);
             queue.Add(newLine);
             cachedLines.Add(newLine);
             return newLine;
         }
-        
+
         private async void StartWorker(CancellationToken cancellationToken)
         {
             await Dispatcher.CurrentDispatcher.InvokeAsync(() => { }, DispatcherPriority.Background);
@@ -110,13 +110,13 @@ namespace Waf.DotNetPad.Presentation.Controls
                         if (IsOutsideLine(documentLine, classifiedSpan.TextSpan.Start, classifiedSpan.TextSpan.Length))
                         {
                             continue;
-                        }   
+                        }
                         line.Sections.Add(new HighlightedSection
-                            {
-                                Color = CodeHighlightColors.GetColor(classifiedSpan.ClassificationType),
-                                Offset = classifiedSpan.TextSpan.Start,
-                                Length = classifiedSpan.TextSpan.Length
-                            });
+                        {
+                            Color = CodeHighlightColors.GetHighlightingColor(classifiedSpan.ClassificationType),
+                            Offset = classifiedSpan.TextSpan.Start,
+                            Length = classifiedSpan.TextSpan.Length
+                        });
                     }
 
                     RaiseHighlightingStateChanged(documentLine.LineNumber, documentLine.LineNumber);
@@ -136,19 +136,19 @@ namespace Waf.DotNetPad.Presentation.Controls
         {
             return offset < documentLine.Offset || offset + length > documentLine.EndOffset;
         }
-        
+
         private async Task<IEnumerable<ClassifiedSpan>> GetClassifiedSpansAsync(IDocumentLine documentLine, CancellationToken cancellationToken)
         {
             var document = getDocument();
             var text = await document.GetTextAsync().ConfigureAwait(false);
             if (text.Length >= documentLine.Offset + documentLine.TotalLength)
             {
-                return await Classifier.GetClassifiedSpansAsync(document, 
+                return await Classifier.GetClassifiedSpansAsync(document,
                     new TextSpan(documentLine.Offset, documentLine.TotalLength), cancellationToken).ConfigureAwait(false);
             }
             return Enumerable.Empty<ClassifiedSpan>();
         }
-        
+
         public void BeginHighlighting()
         {
         }
@@ -178,11 +178,11 @@ namespace Waf.DotNetPad.Presentation.Controls
             queue.Dispose();
             cachedLines.Clear();
         }
-        
+
 
         private sealed class VersionedHighlightedLine : HighlightedLine
         {
-            public VersionedHighlightedLine(IDocument document, IDocumentLine documentLine, ITextSourceVersion version, VersionedHighlightedLine oldVersion) 
+            public VersionedHighlightedLine(IDocument document, IDocumentLine documentLine, ITextSourceVersion version, VersionedHighlightedLine oldVersion)
                 : base(document, documentLine)
             {
                 Version = version;

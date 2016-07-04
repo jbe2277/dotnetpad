@@ -31,7 +31,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         private CancellationTokenSource completionCancellation;
         private volatile IWorkspaceService workspaceService;
         private volatile DocumentFile documentFile;
-        
+
 
         public CodeEditor()
         {
@@ -100,9 +100,9 @@ namespace Waf.DotNetPad.Presentation.Controls
         }
 
         private async Task ShowCompletionAsync(char? triggerChar)
-        { 
+        {
             completionCancellation.Cancel();
-            
+
             if (WorkspaceService == null || DocumentFile == null)
             {
                 return;
@@ -123,15 +123,15 @@ namespace Waf.DotNetPad.Presentation.Controls
                     var document = WorkspaceService.GetDocument(DocumentFile);
                     var completionService = CompletionService.GetService(document);
 
-                    var completionList = await Task.Run(async () => 
+                    var completionList = await Task.Run(async () =>
                             await completionService.GetCompletionsAsync(document, position, cancellationToken: cancellationToken), cancellationToken);
                     if (completionList == null)
                     {
                         return;
                     }
-                    
+
                     cancellationToken.ThrowIfCancellationRequested();
-                    
+
                     using (new PerformanceTrace("CompletionWindow.Show", DocumentFile))
                     {
                         completionWindow = new CompletionWindow(TextArea)
@@ -144,7 +144,7 @@ namespace Waf.DotNetPad.Presentation.Controls
                         foreach (var completionItem in completionList.Items)
                         {
                             completionWindow.CompletionList.CompletionData.Add(new CodeCompletionData(completionItem.DisplayText,
-                                async () => (await completionService.GetDescriptionAsync(document, completionItem, cancellationToken)).Text, completionItem.Tags));
+                                async () => (await completionService.GetDescriptionAsync(document, completionItem, cancellationToken)).TaggedParts, completionItem.Tags));
                         }
 
                         if (triggerChar == null || IsAllowedLanguageLetter(triggerChar.Value))
@@ -179,7 +179,7 @@ namespace Waf.DotNetPad.Presentation.Controls
                 errorMarkerService.Create(startOffset, endOffset - startOffset, errorListItem.Description);
             }
         }
-        
+
         private void DocumentContentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(DocumentContent.ErrorList))
@@ -208,7 +208,7 @@ namespace Waf.DotNetPad.Presentation.Controls
             {
                 PropertyChangedEventManager.RemoveHandler(oldDocumentFile.Content, editor.DocumentContentPropertyChanged, "");
             }
-            
+
             if (editor.DocumentFile?.Content != null)
             {
                 var code = editor.DocumentFile.Content.Code;

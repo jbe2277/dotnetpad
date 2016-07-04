@@ -8,21 +8,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using Microsoft.CodeAnalysis;
 
 namespace Waf.DotNetPad.Presentation.Controls
 {
     public class CodeCompletionData : ICompletionData
     {
-        private readonly Lazy<CodeCompletionDescription> description;
-        private readonly Func<Task<string>> getDescriptionFunc;
+        private readonly Lazy<object> description;
+        private readonly Func<Task<ImmutableArray<TaggedText>>> getDescriptionFunc;
         private readonly ImmutableArray<string> tags;
         private readonly Lazy<ImageSource> image;
-        
 
-        public CodeCompletionData(string text, Func<Task<string>> getDescriptionFunc, ImmutableArray<string> tags)
+
+        public CodeCompletionData(string text, Func<Task<ImmutableArray<TaggedText>>> getDescriptionFunc, ImmutableArray<string> tags)
         {
             this.Text = text;
-            this.description = new Lazy<CodeCompletionDescription>(CreateDescription);
+            this.description = new Lazy<object>(CreateDescription);
             this.getDescriptionFunc = getDescriptionFunc;
             this.tags = tags;
             this.image = new Lazy<ImageSource>(GetImage);
@@ -45,7 +46,7 @@ namespace Waf.DotNetPad.Presentation.Controls
             textArea.Document.Replace(completionSegment, Text);
         }
 
-        private CodeCompletionDescription CreateDescription()
+        private object CreateDescription()
         {
             var result = new CodeCompletionDescription(getDescriptionFunc());
             return result;
@@ -55,7 +56,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         {
             var tag = tags.FirstOrDefault();
             if (tag == null) { return null; }
-            
+
             switch (tag)
             {
                 case CompletionTags.Class:
@@ -69,7 +70,7 @@ namespace Waf.DotNetPad.Presentation.Controls
                 case CompletionTags.EnumMember:
                     return GetImage("EnumItemImageSource");
                 case CompletionTags.Event:
-                    return GetImage("EventImageSource");    
+                    return GetImage("EventImageSource");
                 case CompletionTags.ExtensionMethod:
                     return GetImage("ExtensionMethodImageSource");
                 case CompletionTags.Field:

@@ -180,8 +180,8 @@
     <Compile Include="Controls\CodeHighlightingColorizer.cs" />
     <Compile Include="Converters\ErrorSeverityToImageConverter.cs" />
     <Compile Include="Converters\IndexToNumberConverter.cs" />
-    <Compile Include="Converters\StringNullEmptyToVisibilityConverter.cs" />
     <Compile Include="Converters\TabFileNameConverter.cs" />
+    <Compile Include="Converters\TaggedTextListConverter.cs" />
     <Compile Include="Converters\WindowTitleConverter.cs" />
     <Compile Include="DesignData\MockDocumentService.cs" />
     <Compile Include="DesignData\MockShellService.cs" />
