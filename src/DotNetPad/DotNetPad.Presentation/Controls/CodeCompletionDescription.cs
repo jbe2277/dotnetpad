@@ -19,7 +19,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         public ImmutableArray<TaggedText> Summary
         {
             get { return summary; }
-            set { SetProperty(ref summary, value); }
+            private set { SetProperty(ref summary, value); }
         }
 
 

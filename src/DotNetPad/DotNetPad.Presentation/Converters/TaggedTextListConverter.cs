@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis;
+using System;
 using System.Collections.Immutable;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
-using Microsoft.CodeAnalysis;
-using Waf.DotNetPad.Presentation.Controls;
 using Waf.DotNetPad.Applications.CodeAnalysis;
-using System.Windows;
+using Waf.DotNetPad.Presentation.Controls;
 
 namespace Waf.DotNetPad.Presentation.Converters
 {
@@ -29,7 +29,7 @@ namespace Waf.DotNetPad.Presentation.Converters
             throw new NotSupportedException();
         }
 
-        public static TextBlock CreateTextBlock(ImmutableArray<TaggedText> text)
+        private static TextBlock CreateTextBlock(ImmutableArray<TaggedText> text)
         {
             var textBlock = new TextBlock() { MaxWidth = 600, TextWrapping = TextWrapping.Wrap };
             foreach (var part in text)
@@ -39,7 +39,7 @@ namespace Waf.DotNetPad.Presentation.Converters
             return textBlock;
         }
 
-        public static Run CreateRun(TaggedText text)
+        private static Run CreateRun(TaggedText text)
         {
             var run = new Run(text.ToString());
             var classificationTypeName = ClassificationTags.GetClassificationTypeName(text.Tag);
