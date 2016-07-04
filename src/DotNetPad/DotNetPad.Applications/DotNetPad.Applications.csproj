@@ -123,8 +123,6 @@
     <Compile Include="CodeAnalysis\BuildResult.cs" />
     <Compile Include="CodeAnalysis\ClassificationTags.cs" />
     <Compile Include="CodeAnalysis\FileBasedXmlDocumentationProvider.cs" />
-    <Compile Include="CodeAnalysis\Glyph.cs" />
-    <Compile Include="CodeAnalysis\SymbolHelper.cs" />
     <Compile Include="CodeAnalysis\ScriptingWorkspace.cs" />
     <Compile Include="CodeAnalysis\TemplateCode.cs" />
     <Compile Include="Controllers\FileController.cs" />
