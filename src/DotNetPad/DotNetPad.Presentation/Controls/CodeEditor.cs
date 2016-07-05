@@ -4,6 +4,7 @@ using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Search;
 using Microsoft.CodeAnalysis.Completion;
 using System;
+using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
+using Microsoft.CodeAnalysis;
 using Waf.DotNetPad.Applications.Services;
 using Waf.DotNetPad.Domain;
 
@@ -25,7 +27,6 @@ namespace Waf.DotNetPad.Presentation.Controls
             DependencyProperty.Register(nameof(DocumentFile), typeof(DocumentFile), typeof(CodeEditor), new FrameworkPropertyMetadata(null, DocumentFileChangedCallback));
 
 
-        private readonly Task updateTextTask;
         private readonly ErrorTextMarkerService errorMarkerService;
         private CompletionWindow completionWindow;
         private CancellationTokenSource completionCancellation;
@@ -37,7 +38,6 @@ namespace Waf.DotNetPad.Presentation.Controls
         {
             SearchPanel.Install(TextArea);
             completionCancellation = new CancellationTokenSource();
-            updateTextTask = Task.FromResult((object)null);
 
             TextArea.TextView.LineTransformers.Insert(0, new CodeHighlightingColorizer(() => workspaceService.GetDocument(documentFile)));
             TextArea.TextEntering += TextAreaTextEntering;
@@ -112,9 +112,6 @@ namespace Waf.DotNetPad.Presentation.Controls
             var cancellationToken = completionCancellation.Token;
             try
             {
-                await updateTextTask;   // Wait for a pending UpdateText before calling GetCompletionsAsync.
-                cancellationToken.ThrowIfCancellationRequested();
-
                 if (completionWindow == null && (triggerChar == null || triggerChar == '.' || IsAllowedLanguageLetter(triggerChar.Value)))
                 {
                     var position = CaretOffset;
@@ -144,7 +141,7 @@ namespace Waf.DotNetPad.Presentation.Controls
                         foreach (var completionItem in completionList.Items)
                         {
                             completionWindow.CompletionList.CompletionData.Add(new CodeCompletionData(completionItem.DisplayText,
-                                async () => (await completionService.GetDescriptionAsync(document, completionItem, cancellationToken)).TaggedParts, completionItem.Tags));
+                                () => GetDescriptionAsync(completionService, document, completionItem), completionItem.Tags));
                         }
 
                         if (triggerChar == null || IsAllowedLanguageLetter(triggerChar.Value))
@@ -160,6 +157,11 @@ namespace Waf.DotNetPad.Presentation.Controls
             catch (OperationCanceledException)
             {
             }
+        }
+
+        private static async Task<ImmutableArray<TaggedText>> GetDescriptionAsync(CompletionService completionService, Document document, CompletionItem completionItem)
+        {
+            return (await Task.Run(async () => await completionService.GetDescriptionAsync(document, completionItem))).TaggedParts;
         }
 
         private Tuple<int, string> GetWord(int position)
