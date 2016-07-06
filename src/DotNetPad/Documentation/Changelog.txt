@@ -2,6 +2,10 @@ Changelog
 ---------
 
 
+Version 2.0.1.100 (Release)
+- Fix an exception that could occur in CodeHighlighter because of multi-threaded access of the Sections list
+
+
 Version 2.0.0.100 (Release)
 - Update Microsoft.CodeAnalysis (Roslyn) to 1.3.2
 - Replace the GetRecommendedSymbolsAtPositionAsync call with the CompletionService
