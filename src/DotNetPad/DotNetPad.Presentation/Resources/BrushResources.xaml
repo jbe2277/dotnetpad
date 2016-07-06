@@ -7,17 +7,17 @@
 
     <SolidColorBrush x:Key="LightForeground" Color="{StaticResource {x:Static SystemColors.ControlTextColorKey}}"/>
 
-    
+
     <SolidColorBrush x:Key="DefaultBackground" Color="{StaticResource {x:Static SystemColors.ControlColorKey}}"/>
 
-    
-    <SolidColorBrush x:Key="DarkForeground" Color="{StaticResource {x:Static SystemColors.HighlightTextColorKey}}"/>
-    
-    <SolidColorBrush x:Key="DarkBackground" Color="{StaticResource {x:Static SystemColors.ControlDarkColorKey}}"/>
 
-    <SolidColorBrush x:Key="DarkBorderBrush" Color="{StaticResource {x:Static SystemColors.ControlLightColorKey}}"/>
+    <SolidColorBrush x:Key="DarkForeground" Color="{StaticResource {x:Static SystemColors.ControlTextColorKey}}"/>
 
-    
+    <SolidColorBrush x:Key="DarkBackground" Color="#FFEEEEF2"/>
+
+    <SolidColorBrush x:Key="DarkBorderBrush" Color="#FFCCCEDB"/>
+
+
     <SolidColorBrush x:Key="ActiveBackground" Color="{StaticResource {x:Static SystemColors.ActiveCaptionColorKey}}"/>
 
     <SolidColorBrush x:Key="ActiveForeground" Color="{StaticResource {x:Static SystemColors.ActiveCaptionTextColorKey}}"/>

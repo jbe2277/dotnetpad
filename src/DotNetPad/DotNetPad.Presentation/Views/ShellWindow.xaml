@@ -39,11 +39,11 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            
+
             <StackPanel Grid.Column="0" Background="{StaticResource DarkBorderBrush}" Orientation="Horizontal" HorizontalAlignment="Left">
                 <Button x:Name="newFileButton" Click="NewFileButtonClick" Content="New" Style="{StaticResource MenuButton}"/>
                 <ctrl:Flyout x:Name="newFilePopup" PlacementTarget="{Binding ElementName=newFileButton}" Placement="Bottom"
-                             Opened="NewFilePopupOpened">
+                                Opened="NewFilePopupOpened">
                     <Border Background="{StaticResource DarkBackground}">
                         <StackPanel Background="{StaticResource DarkBorderBrush}">
                             <Button Command="{Binding FileService.NewCSharpCommand}" Click="CloseFilePopup"
@@ -82,7 +82,7 @@
                                     <Setter Property="Margin" Value="0,0,1,1"/>
                                 </Style>
                             </Grid.Resources>
-                            
+
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="160"/>
                                 <ColumnDefinition Width="74"/>
@@ -129,9 +129,9 @@
                         </Grid>
                     </Border>
                 </ctrl:Flyout>
-                
+
                 <Button Command="{Binding InfoCommand}" Content="Info" Style="{StaticResource MenuButton}"/>
-                
+
                 <Button x:Name="moreButton" Content=". . ." Click="MoreButtonClick" Style="{StaticResource MenuButton}" Margin="0"/>
                 <ctrl:Flyout x:Name="morePopup" PlacementTarget="{Binding ElementName=moreButton}" Placement="Bottom" HorizontalOffset="-77">
                     <Border Background="{StaticResource DarkBackground}">
@@ -146,7 +146,7 @@
             </StackPanel>
         </Grid>
 
-        <TabControl Grid.Row="1" ItemsSource="{Binding DocumentDataModels}" SelectedItem="{Binding ActiveDocumentDataModel}" Padding="0" BorderThickness="0,1,0,0">
+        <TabControl Grid.Row="1" ItemsSource="{Binding DocumentDataModels}" SelectedItem="{Binding ActiveDocumentDataModel}" Margin="0,2,0,0" Padding="0" BorderThickness="0,1,0,0">
             <TabControl.ItemContainerStyle>
                 <Style TargetType="TabItem">
                     <Setter Property="HeaderTemplate">
@@ -191,7 +191,8 @@
             </TabControl.ItemContainerStyle>
         </TabControl>
 
-        <GridSplitter Grid.Row="2" Background="{StaticResource DarkBackground}" Height="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        <GridSplitter Grid.Row="2" Background="{StaticResource DarkBackground}" BorderBrush="{StaticResource DarkBorderBrush}" BorderThickness="0,1"
+                      Height="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 
         <ContentControl Grid.Row="3" Content="{Binding OutputView}" Visibility="{Binding IsOutputViewVisible, Converter={StaticResource BoolToVisibilityConverter}}" 
                         Focusable="False"/>
