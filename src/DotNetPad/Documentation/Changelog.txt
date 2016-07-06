@@ -2,6 +2,15 @@ Changelog
 ---------
 
 
+Version 2.0.0.100 (Release)
+- Update Microsoft.CodeAnalysis (Roslyn) to 1.3.2
+- Replace the GetRecommendedSymbolsAtPositionAsync call with the CompletionService
+- Show syntax highlighting in the description of code completion
+- Implement an AvalonEdit Highlighter which uses the Classifier.GetClassifiedSpansAsync
+- Remove CSharpIndentationStrategy because it does not work as expected
+- New color theme
+
+
 Version 1.3.3.100 (Release)
 - Update Microsoft.CodeAnalysis (Roslyn) to 1.3.0
 
