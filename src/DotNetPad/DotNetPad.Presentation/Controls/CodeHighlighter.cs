@@ -101,22 +101,22 @@ namespace Waf.DotNetPad.Presentation.Controls
                     var documentLine = line.DocumentLine;
 
                     var spans = await GetClassifiedSpansAsync(documentLine, cancellationToken).ConfigureAwait(false);
-                    foreach (var section in line.Sections.ToArray().OfType<HighlightedSection>())
+                    lock (line.Sections)
                     {
-                        line.Sections.Remove(section);
-                    }
-                    foreach (var classifiedSpan in spans)
-                    {
-                        if (IsOutsideLine(documentLine, classifiedSpan.TextSpan.Start, classifiedSpan.TextSpan.Length))
+                        line.Sections.Clear();
+                        foreach (var classifiedSpan in spans)
                         {
-                            continue;
+                            if (IsOutsideLine(documentLine, classifiedSpan.TextSpan.Start, classifiedSpan.TextSpan.Length))
+                            {
+                                continue;
+                            }
+                            line.Sections.Add(new HighlightedSection
+                            {
+                                Color = CodeHighlightColors.GetHighlightingColor(classifiedSpan.ClassificationType),
+                                Offset = classifiedSpan.TextSpan.Start,
+                                Length = classifiedSpan.TextSpan.Length
+                            });
                         }
-                        line.Sections.Add(new HighlightedSection
-                        {
-                            Color = CodeHighlightColors.GetHighlightingColor(classifiedSpan.ClassificationType),
-                            Offset = classifiedSpan.TextSpan.Start,
-                            Length = classifiedSpan.TextSpan.Length
-                        });
                     }
 
                     RaiseHighlightingStateChanged(documentLine.LineNumber, documentLine.LineNumber);
@@ -188,18 +188,21 @@ namespace Waf.DotNetPad.Presentation.Controls
                 Version = version;
                 if (oldVersion != null)
                 {
-                    foreach (var oldSection in oldVersion.Sections.OfType<HighlightedSection>())
+                    lock (oldVersion.Sections)
                     {
-                        if (IsOutsideLine(documentLine, oldSection.Offset, oldSection.Length))
+                        foreach (var oldSection in oldVersion.Sections)
                         {
-                            continue;
+                            if (IsOutsideLine(documentLine, oldSection.Offset, oldSection.Length))
+                            {
+                                continue;
+                            }
+                            Sections.Add(new HighlightedSection
+                            {
+                                Color = oldSection.Color,
+                                Offset = oldSection.Offset,
+                                Length = oldSection.Length
+                            });
                         }
-                        Sections.Add(new HighlightedSection
-                        {
-                            Color = oldSection.Color,
-                            Offset = oldSection.Offset,
-                            Length = oldSection.Length
-                        });
                     }
                 }
             }
