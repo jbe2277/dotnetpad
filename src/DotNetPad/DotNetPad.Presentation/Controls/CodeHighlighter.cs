@@ -61,7 +61,7 @@ namespace Waf.DotNetPad.Presentation.Controls
             cachedLines[lineNumber]?.Cancel();
             var newLine = new VersionedHighlightedLine(Document, documentLine, Document.Version, cachedLine);
             cachedLines[lineNumber] = newLine;
-            UpdateHighlightLine(newLine);
+            UpdateHighlightLineAsync(newLine);
 
             foreach (var line in cachedLines.ToArray().Reverse())
             {
@@ -75,11 +75,11 @@ namespace Waf.DotNetPad.Presentation.Controls
             return newLine;
         }
 
-        private void UpdateHighlightLine(VersionedHighlightedLine line)
+        private async void UpdateHighlightLineAsync(VersionedHighlightedLine line)
         {
             try
             {
-                Task.Run(async () =>
+                await Task.Run(async () =>
                 {
                     await initialDelayTask.ConfigureAwait(false);
                     line.CancellationToken.ThrowIfCancellationRequested();
