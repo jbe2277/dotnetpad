@@ -39,7 +39,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         public event HighlightingStateChangedEventHandler HighlightingStateChanged;
 
 
-        private async Task CreateInitialDelayTask()
+        private static async Task CreateInitialDelayTask()
         {
             await Dispatcher.CurrentDispatcher.InvokeAsync(() => { }, DispatcherPriority.Background);
         }
@@ -165,7 +165,7 @@ namespace Waf.DotNetPad.Presentation.Controls
             cachedLines.Clear();
         }
 
-        public static void EnlargeList<T>(List<T> list, int newCount)
+        private static void EnlargeList<T>(List<T> list, int newCount)
         {
             if (newCount > list.Count)
             {
