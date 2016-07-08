@@ -4,34 +4,30 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Classification;
 using Microsoft.CodeAnalysis.Text;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using Waf.DotNetPad.Domain;
 
 namespace Waf.DotNetPad.Presentation.Controls
 {
     public sealed class CodeHighlighter : IHighlighter
     {
-        private readonly SynchronizationContext synchronizationContext;
+        private readonly TaskScheduler uiTaskScheduler;
         private readonly Func<Document> getDocument;
         private readonly List<VersionedHighlightedLine> cachedLines;
-        private readonly BlockingCollection<VersionedHighlightedLine> queue;
-        private readonly CancellationTokenSource cancellationTokenSource;
+        private readonly Task initialDelayTask;
 
 
         public CodeHighlighter(IDocument document, Func<Document> getDocument)
         {
-            synchronizationContext = SynchronizationContext.Current;
-
+            uiTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             Document = document;
             this.getDocument = getDocument;
-            queue = new BlockingCollection<VersionedHighlightedLine>();
             cachedLines = new List<VersionedHighlightedLine>();
-            cancellationTokenSource = new CancellationTokenSource();
-            StartWorker(cancellationTokenSource.Token);
+            initialDelayTask = CreateInitialDelayTask();
         }
 
 
@@ -43,66 +39,67 @@ namespace Waf.DotNetPad.Presentation.Controls
         public event HighlightingStateChangedEventHandler HighlightingStateChanged;
 
 
+        private async Task CreateInitialDelayTask()
+        {
+            await Dispatcher.CurrentDispatcher.InvokeAsync(() => { }, DispatcherPriority.Background);
+        }
+
         public HighlightedLine HighlightLine(int lineNumber)
         {
             var documentLine = Document.GetLineByNumber(lineNumber);
             var currentVersion = Document.Version;
-            VersionedHighlightedLine cachedLine = null;
 
-            for (var i = 0; i < cachedLines.Count; i++)
-            {
-                var line = cachedLines[i];
-                if (line.DocumentLine != documentLine)
-                {
-                    continue;
-                }
-                if (currentVersion == null || !currentVersion.BelongsToSameDocumentAs(line.Version))
-                {
-                    cachedLines.RemoveAt(i);
-                }
-                else
-                {
-                    cachedLine = line;
-                }
-            }
+            EnlargeList(cachedLines, lineNumber + 1);
+            var cachedLine = cachedLines[lineNumber];
 
-            if (cachedLine != null && currentVersion.CompareAge(cachedLine.Version) == 0
-                && cachedLine.DocumentLine.Length == documentLine.Length)
+            if (cachedLine != null && currentVersion != null && cachedLine.Version.CompareAge(currentVersion) == 0
+                && currentVersion.BelongsToSameDocumentAs(cachedLine.Version))
             {
                 return cachedLine;
             }
 
-
+            cachedLines[lineNumber]?.Cancel();
             var newLine = new VersionedHighlightedLine(Document, documentLine, Document.Version, cachedLine);
-            queue.Add(newLine);
-            cachedLines.Add(newLine);
+            cachedLines[lineNumber] = newLine;
+            UpdateHighlightLine(newLine);
+
+            foreach (var line in cachedLines.ToArray().Reverse())
+            {
+                if (!line?.DocumentLine?.IsDeleted == true)
+                {
+                    break;
+                }
+                cachedLines.Remove(line);
+            }
+
             return newLine;
         }
 
-        private async void StartWorker(CancellationToken cancellationToken)
-        {
-            await Dispatcher.CurrentDispatcher.InvokeAsync(() => { }, DispatcherPriority.Background);
-            await Task.Run(() => Worker(cancellationToken), cancellationToken);
-        }
-
-        private async Task Worker(CancellationToken cancellationToken)
+        private void UpdateHighlightLine(VersionedHighlightedLine line)
         {
             try
             {
-                while (!cancellationToken.IsCancellationRequested)
+                Task.Run(async () =>
                 {
-                    var line = queue.Take(cancellationToken);
+                    await initialDelayTask.ConfigureAwait(false);
+                    line.CancellationToken.ThrowIfCancellationRequested();
+
+                    var documentLine = line.DocumentLine;
                     var currentVersion = Document.Version;
                     if (line.Version == null || !currentVersion.BelongsToSameDocumentAs(line.Version) || currentVersion.CompareAge(line.Version) != 0)
                     {
-                        continue;
+                        return;
                     }
+                    var spans = await GetClassifiedSpansAsync(documentLine, line.CancellationToken).ConfigureAwait(false);
+                    line.CancellationToken.ThrowIfCancellationRequested();
 
-                    var documentLine = line.DocumentLine;
-
-                    var spans = await GetClassifiedSpansAsync(documentLine, cancellationToken).ConfigureAwait(false);
-                    lock (line.Sections)
+                    await TaskHelper.Run(() =>
                     {
+                        if (line.CancellationToken.IsCancellationRequested)
+                        {
+                            return;
+                        }
+
                         line.Sections.Clear();
                         foreach (var classifiedSpan in spans)
                         {
@@ -117,19 +114,11 @@ namespace Waf.DotNetPad.Presentation.Controls
                                 Length = classifiedSpan.TextSpan.Length
                             });
                         }
-                    }
-
-                    RaiseHighlightingStateChanged(documentLine.LineNumber, documentLine.LineNumber);
-                    await Task.Delay(1);
-                }
+                        HighlightingStateChanged?.Invoke(documentLine.LineNumber, documentLine.LineNumber);
+                    }, uiTaskScheduler).ConfigureAwait(false);
+                }, line.CancellationToken);
             }
             catch (OperationCanceledException) { }
-            catch (ObjectDisposedException) { }
-        }
-
-        private void RaiseHighlightingStateChanged(int fromLineNumber, int toLineNumber)
-        {
-            synchronizationContext.Post(state => HighlightingStateChanged?.Invoke(fromLineNumber, toLineNumber), null);
         }
 
         private static bool IsOutsideLine(IDocumentLine documentLine, int offset, int length)
@@ -173,41 +162,55 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         public void Dispose()
         {
-            cancellationTokenSource.Cancel();
-            cancellationTokenSource.Dispose();
-            queue.Dispose();
             cachedLines.Clear();
+        }
+
+        public static void EnlargeList<T>(List<T> list, int newCount)
+        {
+            if (newCount > list.Count)
+            {
+                list.AddRange(Enumerable.Repeat(default(T), newCount - list.Count));
+            }
         }
 
 
         private sealed class VersionedHighlightedLine : HighlightedLine
         {
+            private readonly CancellationTokenSource cancellationTokenSource;
+
             public VersionedHighlightedLine(IDocument document, IDocumentLine documentLine, ITextSourceVersion version, VersionedHighlightedLine oldVersion)
                 : base(document, documentLine)
             {
                 Version = version;
+                cancellationTokenSource = new CancellationTokenSource();
+                CancellationToken = cancellationTokenSource.Token;
                 if (oldVersion != null)
                 {
-                    lock (oldVersion.Sections)
+                    foreach (var oldSection in oldVersion.Sections)
                     {
-                        foreach (var oldSection in oldVersion.Sections)
+                        if (IsOutsideLine(documentLine, oldSection.Offset, oldSection.Length))
                         {
-                            if (IsOutsideLine(documentLine, oldSection.Offset, oldSection.Length))
-                            {
-                                continue;
-                            }
-                            Sections.Add(new HighlightedSection
-                            {
-                                Color = oldSection.Color,
-                                Offset = oldSection.Offset,
-                                Length = oldSection.Length
-                            });
+                            continue;
                         }
+                        Sections.Add(new HighlightedSection
+                        {
+                            Color = oldSection.Color,
+                            Offset = oldSection.Offset,
+                            Length = oldSection.Length
+                        });
                     }
                 }
             }
 
             public ITextSourceVersion Version { get; }
+
+            public CancellationToken CancellationToken { get; }
+
+
+            public void Cancel()
+            {
+                cancellationTokenSource.Cancel();
+            }
         }
     }
 }
