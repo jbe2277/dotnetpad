@@ -2,6 +2,10 @@ Changelog
 ---------
 
 
+Version 2.0.2.100 (Release)
+- CodeHighlighter: Use faster approach; fix cleaning up the cache
+
+
 Version 2.0.1.100 (Release)
 - Fix an exception that could occur in CodeHighlighter because of multi-threaded access of the Sections list
 
