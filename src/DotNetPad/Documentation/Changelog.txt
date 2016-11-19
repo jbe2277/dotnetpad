@@ -2,6 +2,11 @@ Changelog
 ---------
 
 
+Version 2.1.0.100 (Release)
+- Update TargetFrameworkVersion to 4.6.1
+- Update Microsoft.CodeAnalysis to 2.0.0 RC (Support for C# 7.0 and VB 15.0)
+
+
 Version 2.0.2.100 (Release)
 - CodeHighlighter: Use faster approach; fix cleaning up the cache
 
