@@ -23,13 +23,14 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
     {
         private static readonly Assembly[] defaultReferences =
         {
-            typeof(Int32).Assembly,                                 // mscorelib
+            typeof(object).Assembly,                                // mscorelib
             typeof(Uri).Assembly,                                   // System
             typeof(Enumerable).Assembly,                            // System.Core
             typeof(XmlReader).Assembly,                             // System.Xml
             typeof(XDocument).Assembly,                             // System.Xml.Linq
             typeof(DataContractSerializer).Assembly,                // System.Runtime.Serialization
             typeof(ImmutableArray).Assembly,                        // System.Collections.Immutable
+            typeof(ValueTuple).Assembly                             // System.ValueTuple
         };
 
         private readonly ConcurrentDictionary<string, DocumentationProvider> documentationProviders;
@@ -50,6 +51,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             var projectId = ProjectId.CreateNewId();
             
             var references = defaultReferences.Select(CreateReference).ToList();
+            references.Add(CreateReference(Assembly.Load("System.Runtime, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")));
             if (language == LanguageNames.VisualBasic) { references.Add(CreateReference(typeof(VBMath).Assembly)); }
             else if (language == LanguageNames.CSharp) { references.Add(CreateReference(typeof(RuntimeBinderException).Assembly)); }
 
