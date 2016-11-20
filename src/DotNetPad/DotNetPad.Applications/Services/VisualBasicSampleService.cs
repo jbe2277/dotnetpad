@@ -6,6 +6,8 @@ namespace Waf.DotNetPad.Applications.Services
     [Export(typeof(IVisualBasicSampleService))]
     internal class VisualBasicSampleService : IVisualBasicSampleService
     {
+        public Lazy<string> Tuples => new Lazy<string>(() => GetSampleCode("Tuples.vb"));
+
         public Lazy<string> NullConditionalOperator => new Lazy<string>(() => GetSampleCode("NullConditionalOperator.vb"));
         
         public Lazy<string> NameOfOperator => new Lazy<string>(() => GetSampleCode("NameOfOperator.vb"));
