@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="DotNetPad.exe" version="2.1.0.100" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="DotNetPad.exe" version="2.2.0.100" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="Resources\Images\DotNetPad.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="DotNetPad" version="2.1.0.100" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="DotNetPad" version="2.2.0.100" language="neutral" processorArchitecture="msil" />
     <commandLine file="DotNetPad.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DotNetPad.exe" size="220160">
-      <assemblyIdentity name="DotNetPad" version="2.1.0.100" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DotNetPad.exe" size="221184">
+      <assemblyIdentity name="DotNetPad" version="2.2.0.100" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>7hnMvGmnjbf11VTAZo3txrCo1/HbcgniriN/pM4Pawk=</dsig:DigestValue>
+        <dsig:DigestValue>LLQPbmu4KMps1jIepFJw4pkzlxX/QLc0uIpc0oaVeJw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -439,6 +439,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.ValueTuple.dll" size="77672">
+      <assemblyIdentity name="System.ValueTuple" version="4.0.1.0" publicKeyToken="CC7B13FFCD2DDD51" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>FYoYWZ6Nq90pJWPqBfiF5W+L+LI8fv0pL3g/usWnGyI=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Xml.XmlDocument.dll" size="23256">
       <assemblyIdentity name="System.Xml.XmlDocument" version="4.0.1.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -475,26 +487,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Waf.DotNetPad.Applications.dll" size="86528">
-      <assemblyIdentity name="Waf.DotNetPad.Applications" version="2.1.0.100" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Waf.DotNetPad.Applications.dll" size="93696">
+      <assemblyIdentity name="Waf.DotNetPad.Applications" version="2.2.0.100" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>poc+CKYnMStMYShv2QahoErqkzvU2Mrzrzdh33gUXf8=</dsig:DigestValue>
+        <dsig:DigestValue>c6Bx2TZruvh7fWqKqGuakoAX8xCYZcx6JXHaLF/hh5Q=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Waf.DotNetPad.Domain.dll" size="11776">
-      <assemblyIdentity name="Waf.DotNetPad.Domain" version="2.1.0.100" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="Waf.DotNetPad.Domain" version="2.2.0.100" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>gpjWGd/yJHxOfR+ae/9XDDFyy+FqrYCvF4SVGXqEUJw=</dsig:DigestValue>
+        <dsig:DigestValue>t3+1vXgDlwTJ4l9JyTp5dh38/HZGrKkf+3XFk67WM1E=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -516,7 +528,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>2qo0ThGeQitmbwtwmvdPMJXz7mIWCa+71O2Utwj3BLw=</dsig:DigestValue>
+      <dsig:DigestValue>ZoIuzE/WnE6gkN4HFusHM7d1R+eKXk+OcOVytLYlns8=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Resources\Images\DotNetPad.ico" size="50135">
