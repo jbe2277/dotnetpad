@@ -1,9 +1,9 @@
 ﻿using System;
 using static System.Console;
 
-namespace Sample
+namespace Waf.DotNetPad.Samples
 {
-    internal static class Program
+    internal static class LocalFunctions
     {
         internal static void Main()
         {

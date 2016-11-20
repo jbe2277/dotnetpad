@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Sample
+namespace Waf.DotNetPad.Samples
 {
-    internal static class Program
+    internal static class OutVariables
     {
         internal static void Main()
         {
