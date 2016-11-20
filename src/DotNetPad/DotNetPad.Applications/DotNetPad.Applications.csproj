@@ -212,6 +212,10 @@
     <EmbeddedResource Include="Samples\NullConditionalOperator.cs" />
     <EmbeddedResource Include="Samples\AutoPropertyInitializers.cs" />
     <EmbeddedResource Include="Samples\StringInterpolation.cs" />
+    <EmbeddedResource Include="Samples\OutVariables.cs" />
+    <EmbeddedResource Include="Samples\Tuples.cs" />
+    <EmbeddedResource Include="Samples\PatternMatching.cs" />
+    <EmbeddedResource Include="Samples\LocalFunctions.cs" />
     <Compile Include="Services\CodeEditorService.cs" />
     <Compile Include="Services\CSharpSampleService.cs" />
     <Compile Include="Services\FileService.cs" />
