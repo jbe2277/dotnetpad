@@ -100,21 +100,26 @@ namespace Waf.DotNetPad.Presentation.Controls
                             return;
                         }
 
-                        line.Sections.Clear();
+                        var newLineSections = new List<HighlightedSection>();
                         foreach (var classifiedSpan in spans)
                         {
                             if (IsOutsideLine(documentLine, classifiedSpan.TextSpan.Start, classifiedSpan.TextSpan.Length))
                             {
                                 continue;
                             }
-                            line.Sections.Add(new HighlightedSection
+                            newLineSections.Add(new HighlightedSection
                             {
                                 Color = CodeHighlightColors.GetHighlightingColor(classifiedSpan.ClassificationType),
                                 Offset = classifiedSpan.TextSpan.Start,
                                 Length = classifiedSpan.TextSpan.Length
                             });
                         }
-                        HighlightingStateChanged?.Invoke(documentLine.LineNumber, documentLine.LineNumber);
+                        if (!line.Sections.SequenceEqual(newLineSections, HighlightedSectionComparer.Default))
+                        {
+                            line.Sections.Clear();
+                            foreach (var newSection in newLineSections) { line.Sections.Add(newSection); }
+                            HighlightingStateChanged?.Invoke(documentLine.LineNumber, documentLine.LineNumber);
+                        }
                     }, uiTaskScheduler).ConfigureAwait(false);
                 }, line.CancellationToken);
             }
@@ -125,7 +130,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         {
             return offset < documentLine.Offset || offset + length > documentLine.EndOffset;
         }
-
+        
         private async Task<IEnumerable<ClassifiedSpan>> GetClassifiedSpansAsync(IDocumentLine documentLine, CancellationToken cancellationToken)
         {
             var document = getDocument();
@@ -210,6 +215,24 @@ namespace Waf.DotNetPad.Presentation.Controls
             public void Cancel()
             {
                 cancellationTokenSource.Cancel();
+            }
+        }
+
+        private sealed class HighlightedSectionComparer : IEqualityComparer<HighlightedSection>
+        {
+            public static HighlightedSectionComparer Default { get; } = new HighlightedSectionComparer();
+
+            public bool Equals(HighlightedSection x, HighlightedSection y)
+            {
+                if (x == y) { return true; }
+                if (x == null || y == null) { return false; }
+                return Equals(x.Color, y.Color) && x.Length == y.Length && x.Offset == y.Offset;
+            }
+
+            public int GetHashCode(HighlightedSection obj)
+            {
+                if (obj == null) { return 0; }
+                return (obj.Color?.GetHashCode() ?? 0) ^ obj.Length.GetHashCode() ^ obj.Offset.GetHashCode();
             }
         }
     }
