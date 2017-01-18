@@ -6,7 +6,7 @@ using System.Resources;
 
 [assembly: AssemblyCompany("Waf")]
 [assembly: AssemblyProduct("Waf DotNetPad")]
-[assembly: AssemblyCopyright("Copyright © 2016")]
+[assembly: AssemblyCopyright("Copyright © 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -17,5 +17,5 @@ using System.Resources;
 [assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.MainAssembly)]
 
 
-[assembly: AssemblyVersion("2.2.0.100")]
-[assembly: AssemblyFileVersion("2.2.0.100")]
+[assembly: AssemblyVersion("2.2.1.100")]
+[assembly: AssemblyFileVersion("2.2.1.100")]
