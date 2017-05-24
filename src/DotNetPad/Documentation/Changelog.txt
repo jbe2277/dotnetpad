@@ -1,6 +1,9 @@
 Changelog
 ---------
 
+Version 2.3.0.100 (Release)
+- Update Microsoft.CodeAnalysis to 2.1.0
+
 
 Version 2.2.1.100 (Release)
 - Improve responsiveness of typing when the document has a lot of lines (Issue #6)
