@@ -133,14 +133,7 @@ namespace Waf.DotNetPad.Applications.Controllers
         
         private static MefHostServices CreateHostServices()
         {
-            var assemblies = new[]
-            {
-                Assembly.Load("Microsoft.CodeAnalysis.CSharp.Features"),
-                Assembly.Load("Microsoft.CodeAnalysis.VisualBasic.Features")
-            };
-            var compositionHost = new ContainerConfiguration()
-                .WithAssemblies(MefHostServices.DefaultAssemblies.Concat(assemblies))
-                .CreateContainer();
+            var compositionHost = new ContainerConfiguration().WithAssemblies(MefHostServices.DefaultAssemblies).CreateContainer();
             return MefHostServices.Create(compositionHost);
         }
 
