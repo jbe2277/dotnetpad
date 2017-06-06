@@ -13,15 +13,16 @@ namespace Waf.DotNetPad.Applications.Host
         private byte[] loadedAssembly;
         private AppDomain scriptAppDomain;
         private RemoteScriptRun remoteScriptRun;
+        private string oldCurrentDirectory;
 
 
-        public async Task RunScriptAsync(byte[] inMemoryAssembly, byte[] inMemorySymbolStore, TextWriter outputTextWriter, TextWriter errorTextWriter, CancellationToken cancellationToken)
+        public async Task RunScriptAsync(byte[] inMemoryAssembly, byte[] inMemorySymbolStore, TextWriter outputTextWriter, TextWriter errorTextWriter, string newCurrentDirectory, CancellationToken cancellationToken)
         {
             cancellationToken.Register(StopScriptCore);
-            await Task.Run(() => RunScriptCore(inMemoryAssembly, inMemorySymbolStore, outputTextWriter, errorTextWriter), cancellationToken);
+            await Task.Run(() => RunScriptCore(inMemoryAssembly, inMemorySymbolStore, outputTextWriter, errorTextWriter, newCurrentDirectory), cancellationToken);
         }
 
-        private void RunScriptCore(byte[] inMemoryAssembly, byte[] inMemorySymbolStore, TextWriter outputTextWriter, TextWriter errorTextWriter)
+        private void RunScriptCore(byte[] inMemoryAssembly, byte[] inMemorySymbolStore, TextWriter outputTextWriter, TextWriter errorTextWriter, string newCurrentDirectory)
         {
             RemoteScriptRun scriptRun;
             lock (fieldsLock)
@@ -38,14 +39,26 @@ namespace Waf.DotNetPad.Applications.Host
                     loadedAssembly = inMemoryAssembly;
                 }
                 scriptRun = remoteScriptRun;
+                if (newCurrentDirectory != null)
+                {
+                    oldCurrentDirectory = Directory.GetCurrentDirectory();
+                    Directory.SetCurrentDirectory(newCurrentDirectory);
+                }
             }
-            
+
             try
             {
                 scriptRun?.Run();
             }
             catch (AppDomainUnloadedException)
             {
+            }
+            finally
+            {
+                if (newCurrentDirectory != null)
+                {
+                    Directory.SetCurrentDirectory(oldCurrentDirectory);
+                }
             }
         }
 
@@ -59,6 +72,11 @@ namespace Waf.DotNetPad.Applications.Host
                     scriptAppDomain = null;
                     loadedAssembly = null;
                     remoteScriptRun = null;
+                    if (oldCurrentDirectory != null)
+                    {
+                        Directory.SetCurrentDirectory(oldCurrentDirectory);
+                        oldCurrentDirectory = null;
+                    }
                 }
             }
         }

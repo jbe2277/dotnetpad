@@ -268,7 +268,12 @@ namespace Waf.DotNetPad.Applications.Controllers
                     var buildResult = lastBuildResult.Item2;
                     try
                     {
-                        await host.RunScriptAsync(buildResult.InMemoryAssembly, buildResult.InMemorySymbolStore, outputTextWriter, errorTextWriter, cancellationToken);
+                        string documentDirectory = null;
+                        if (Path.IsPathRooted(documentFile.FileName))
+                        {
+                            documentDirectory = Path.GetDirectoryName(documentFile.FileName);
+                        }
+                        await host.RunScriptAsync(buildResult.InMemoryAssembly, buildResult.InMemorySymbolStore, outputTextWriter, errorTextWriter, documentDirectory, cancellationToken);
                     }
                     catch (OperationCanceledException)
                     {
