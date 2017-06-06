@@ -304,6 +304,7 @@ namespace Waf.DotNetPad.Applications.Controllers
                 };
 
                 fileService.AddDocument(document);
+                documentCounter++;
             }
 
             if (setActiveDocument) { ActiveDocumentFile = document; }
