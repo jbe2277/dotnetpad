@@ -217,7 +217,8 @@ namespace Waf.DotNetPad.Applications.Controllers
             if (string.IsNullOrEmpty(code))
             {
                 code = documentType == DocumentType.CSharp ? TemplateCode.InitialCSharpCode : TemplateCode.InitialVisualBasicCode;
-                startCaretPosition = documentType == DocumentType.CSharp ? TemplateCode.StartCaretPositionCSharp : TemplateCode.StartCaretPositionVisualBasic;
+                startCaretPosition = code.IndexOf(TemplateCode.StartCaretIndicator);
+                code = code.Replace(TemplateCode.StartCaretIndicator, "");
             }
             string fileName = "Script" + (documentCounter + 1) + (documentType == DocumentType.CSharp ? ".cs" : ".vb");
             var document = new DocumentFile(documentType, fileName, code, startCaretPosition);

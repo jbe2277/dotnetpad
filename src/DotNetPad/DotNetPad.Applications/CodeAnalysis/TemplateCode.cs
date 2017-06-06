@@ -2,13 +2,25 @@
 {
     internal static class TemplateCode
     {
+        public static string StartCaretIndicator
+        {
+            get
+            {
+                return "@StartCaretPosition@";
+            }
+        }
+
         public static string InitialCSharpCode
         {
             get
             {
                 return
                     @"using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
 
 namespace Sample
 {
@@ -16,14 +28,12 @@ namespace Sample
     {
         internal static void Main()
         {
-            
+            @StartCaretPosition@
         }
     }
 }";
             }
         }
-
-        public static int StartCaretPositionCSharp { get { return 160; } }
 
         public static string InitialVisualBasicCode
         {
@@ -31,18 +41,20 @@ namespace Sample
             {
                 return
                     @"Imports System
+Imports System.Collections.Generic
 Imports System.Linq
+Imports System.Text
+Imports System.Threading.Tasks
+Imports System.IO
 
 Namespace Sample
     Module Program
         Sub Main()
-            
+            @StartCaretPosition@
         End Sub
     End Module
 End Namespace";
             }
         }
-
-        public static int StartCaretPositionVisualBasic { get { return 110; } }
     }
 }
