@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+Version 2.4.0.100 (Release)
+- Update Microsoft.CodeAnalysis to 2.2.0
+- Fix issue with the ValueTuple reference when running on .NET Framework 4.7+
+
+
 Version 2.3.0.100 (Release)
 - Update Microsoft.CodeAnalysis to 2.1.0
 
