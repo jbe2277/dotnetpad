@@ -42,6 +42,12 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
         }
 
 
+        public override bool CanApplyChange(ApplyChangesKind feature)
+        {
+            return feature == ApplyChangesKind.ChangeDocument || base.CanApplyChange(feature);
+        }
+
+
         public DocumentId AddProjectWithDocument(string documentFileName, string text)
         {
             var fileName = Path.GetFileName(documentFileName);
@@ -104,6 +110,21 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             }, cancellationToken);
         }
         
+        public Task FormatDocumentAsync(DocumentId documentId)
+        {
+            return Task.Run(async () =>
+            {
+                var formattedDocument = await Microsoft.CodeAnalysis.Formatting.Formatter.FormatAsync(
+                        CurrentSolution.GetDocument(documentId)).ConfigureAwait(false);
+                TryApplyChanges(formattedDocument.Project.Solution);
+            });
+        }
+
+        protected override void ApplyDocumentTextChanged(DocumentId documentId, SourceText text)
+        {
+            OnDocumentTextChanged(documentId, text, PreservationMode.PreserveValue);
+        }
+
         private MetadataReference CreateReference(Assembly assembly)
         {
             string assemblyPath = assembly.Location;

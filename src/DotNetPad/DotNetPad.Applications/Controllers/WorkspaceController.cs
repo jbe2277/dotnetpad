@@ -8,7 +8,6 @@ using System.ComponentModel.Composition;
 using System.Composition.Hosting;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Waf.Applications;
@@ -35,6 +34,7 @@ namespace Waf.DotNetPad.Applications.Controllers
         private readonly DelegateTextWriter errorTextWriter;
         private readonly DelegateCommand startCommand;
         private readonly DelegateCommand stopCommand;
+        private readonly DelegateCommand formatDocumentCommand;
         private readonly Dictionary<DocumentFile, DocumentId> documentIds;
         private Tuple<DocumentFile, BuildResult> lastBuildResult;
         private ScriptingWorkspace workspace;
@@ -53,12 +53,13 @@ namespace Waf.DotNetPad.Applications.Controllers
             this.errorListViewModel = errorListViewModel;
             this.outputViewModel = outputViewModel;
             this.host = host;
-            this.updateDiagnosticsAction = new ThrottledAction(UpdateDiagnostics, ThrottledActionMode.InvokeOnlyIfIdleForDelayTime, TimeSpan.FromSeconds(2));
-            this.outputTextWriter = new DelegateTextWriter(AppendOutputText);
-            this.errorTextWriter = new DelegateTextWriter(AppendErrorText);
-            this.startCommand = new DelegateCommand(StartScript, CanStartScript);
-            this.stopCommand = new DelegateCommand(StopScript, CanStopScript);
-            this.documentIds = new Dictionary<DocumentFile, DocumentId>();
+            updateDiagnosticsAction = new ThrottledAction(UpdateDiagnostics, ThrottledActionMode.InvokeOnlyIfIdleForDelayTime, TimeSpan.FromSeconds(2));
+            outputTextWriter = new DelegateTextWriter(AppendOutputText);
+            errorTextWriter = new DelegateTextWriter(AppendErrorText);
+            startCommand = new DelegateCommand(StartScript, CanStartScript);
+            stopCommand = new DelegateCommand(StopScript, CanStopScript);
+            formatDocumentCommand = new DelegateCommand(FormatDocument, CanFormatDocument);
+            documentIds = new Dictionary<DocumentFile, DocumentId>();
         }
         
 
@@ -88,6 +89,9 @@ namespace Waf.DotNetPad.Applications.Controllers
                     {
                         ShellViewModel.StatusText = null;
                     }
+                    startCommand.RaiseCanExecuteChanged();
+                    stopCommand.RaiseCanExecuteChanged();
+                    formatDocumentCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -98,6 +102,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             using (new PerformanceTrace("new Workspace"))
             {
                 workspace = new ScriptingWorkspace(CreateHostServices());
+                workspace.WorkspaceChanged += WorkspaceChanged;
             }
 
             PropertyChangedEventManager.AddHandler(documentService, DocumentServicePropertyChanged, "");
@@ -109,6 +114,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             
             ShellViewModel.StartCommand = startCommand;
             ShellViewModel.StopCommand = stopCommand;
+            ShellViewModel.FormatDocumentCommand = formatDocumentCommand;
             ShellViewModel.ErrorListView = ErrorListViewModel.View;
             ShellViewModel.OutputView = OutputViewModel.View;
             ShellViewModel.IsErrorListViewVisible = true;
@@ -123,14 +129,30 @@ namespace Waf.DotNetPad.Applications.Controllers
         public void UpdateText(DocumentFile documentFile, string text)
         {
             if (documentFile.Content.Code == text) { return; }
-
             var documentId = documentIds[documentFile];
             workspace.UpdateText(documentId, text);
-            documentFile.Content.Code = text;
-            ResetBuildResult(documentFile);
-            updateDiagnosticsAction.InvokeAccumulated();
         }
-        
+
+        private void WorkspaceChanged(object sender, WorkspaceChangeEventArgs e)
+        {
+            if (e.Kind == WorkspaceChangeKind.DocumentChanged)
+            {
+                TaskHelper.Run(async () =>
+                {
+                    var documentFile = documentIds.SingleOrDefault(x => x.Value == e.DocumentId).Key;
+                    if (documentFile == null) return;
+                    var sourceText = await GetDocument(documentFile).GetTextAsync();
+                    documentFile.Content.Code = sourceText.ToString();
+
+                    if (documentService.ActiveDocumentFile == documentFile)
+                    {
+                        ResetBuildResult(documentFile);
+                        updateDiagnosticsAction.InvokeAccumulated();
+                    }
+                }, taskScheduler);
+            }
+        }
+
         private static MefHostServices CreateHostServices()
         {
             var compositionHost = new ContainerConfiguration().WithAssemblies(MefHostServices.DefaultAssemblies).CreateContainer();
@@ -165,6 +187,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             {
                 updateDiagnosticsAction.Cancel();
                 startCommand.RaiseCanExecuteChanged();
+                formatDocumentCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -239,8 +262,6 @@ namespace Waf.DotNetPad.Applications.Controllers
             runScriptCancellation = new CancellationTokenSource();
             var cancellationToken = runScriptCancellation.Token;
             RunningDocument = documentFile;
-            startCommand.RaiseCanExecuteChanged();
-            stopCommand.RaiseCanExecuteChanged();
 
             OutputViewModel.ClearOutput(documentFile);
 
@@ -283,8 +304,6 @@ namespace Waf.DotNetPad.Applications.Controllers
 
             RunningDocument = null;
             runScriptCancellation = null;
-            startCommand.RaiseCanExecuteChanged();
-            stopCommand.RaiseCanExecuteChanged();
         }
 
         private bool CanStopScript()
@@ -295,8 +314,17 @@ namespace Waf.DotNetPad.Applications.Controllers
         private void StopScript()
         {
             runScriptCancellation.Cancel();
-            stopCommand.RaiseCanExecuteChanged();
             ShellViewModel.StatusText = "Stopping the execution of " + Path.GetFileName(runningDocument.FileName) + "...";
+        }
+
+        private bool CanFormatDocument()
+        {
+            return RunningDocument == null && documentService.ActiveDocumentFile != null;
+        }
+
+        private void FormatDocument()
+        {
+            workspace.FormatDocumentAsync(documentIds[documentService.ActiveDocumentFile]);
         }
 
         private void AppendOutputText(string text)

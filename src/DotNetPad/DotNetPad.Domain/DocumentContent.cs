@@ -11,7 +11,7 @@ namespace Waf.DotNetPad.Domain
 
         public DocumentContent()
         {
-            this.errorList = new ErrorListItem[0];
+            errorList = new ErrorListItem[0];
         }
         
 

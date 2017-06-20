@@ -69,7 +69,8 @@
             </Grid>
 
             <StackPanel Grid.Column="2" Background="{StaticResource DarkBorderBrush}" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="samplesButton" Content="Samples" Click="SamplesButtonClick" Style="{StaticResource MenuButton}" Margin="1,0"/>
+                <Button Command="{Binding FormatDocumentCommand}" Content="Format" Style="{StaticResource MenuButton}" Margin="1,0"/>
+                <Button x:Name="samplesButton" Content="Samples" Click="SamplesButtonClick" Style="{StaticResource MenuButton}" Margin="0,0,1,0"/>
                 <ctrl:Flyout x:Name="samplesPopup" PlacementTarget="{Binding ElementName=samplesButton}" Placement="Bottom" HorizontalOffset="-160">
                     <Border Background="{StaticResource DarkBackground}">
                         <Grid Background="{StaticResource DarkBorderBrush}">

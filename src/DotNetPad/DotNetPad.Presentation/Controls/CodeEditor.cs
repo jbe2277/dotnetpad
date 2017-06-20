@@ -184,7 +184,11 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         private void DocumentContentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(DocumentContent.ErrorList))
+            if (e.PropertyName == nameof(DocumentContent.Code))
+            {
+                UpdateCode();
+            }
+            else if (e.PropertyName == nameof(DocumentContent.ErrorList))
             {
                 UpdateErrorMarkers();
             }
@@ -193,6 +197,17 @@ namespace Waf.DotNetPad.Presentation.Controls
         private void IsVisibleChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (!IsVisible) { completionCancellation.Cancel(); }
+        }
+
+        private bool UpdateCode()
+        {
+            var code = DocumentFile.Content.Code;
+            if (Text != code)
+            {
+                Text = code;
+                return true;
+            }
+            return false;
         }
 
         private static void WorkspaceServiceChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -213,13 +228,10 @@ namespace Waf.DotNetPad.Presentation.Controls
 
             if (editor.DocumentFile?.Content != null)
             {
-                var code = editor.DocumentFile.Content.Code;
-                if (editor.Text != code)
+                if (editor.UpdateCode())
                 {
-                    editor.Text = code;
                     editor.CaretOffset = editor.DocumentFile.StartCaretPosition;
                 }
-
                 PropertyChangedEventManager.AddHandler(editor.DocumentFile.Content, editor.DocumentContentPropertyChanged, "");
                 editor.UpdateErrorMarkers();
             }

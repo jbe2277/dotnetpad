@@ -21,6 +21,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
         private object outputView;
         private ICommand startCommand;
         private ICommand stopCommand;
+        private ICommand formatDocumentCommand;
         private bool isScriptRunning;
         private ICommand infoCommand;
         private object currentStatusView;
@@ -94,6 +95,12 @@ namespace Waf.DotNetPad.Applications.ViewModels
             set { SetProperty(ref stopCommand, value); }
         }
 
+        public ICommand FormatDocumentCommand
+        {
+            get { return formatDocumentCommand; }
+            set { SetProperty(ref formatDocumentCommand, value); }
+        }
+        
         public bool IsScriptRunning
         {
             get { return isScriptRunning; }
