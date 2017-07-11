@@ -82,23 +82,14 @@ namespace Waf.DotNetPad.Presentation.Controls
                 await Task.Run(async () =>
                 {
                     await initialDelayTask.ConfigureAwait(false);
-                    line.CancellationToken.ThrowIfCancellationRequested();
+                    if (CancelUpdate(Document, line)) return;
 
                     var documentLine = line.DocumentLine;
-                    var currentVersion = Document.Version;
-                    if (line.Version == null || !currentVersion.BelongsToSameDocumentAs(line.Version) || currentVersion.CompareAge(line.Version) != 0)
-                    {
-                        return;
-                    }
                     var spans = await GetClassifiedSpansAsync(documentLine, line.CancellationToken).ConfigureAwait(false);
-                    line.CancellationToken.ThrowIfCancellationRequested();
 
                     await TaskHelper.Run(() =>
                     {
-                        if (line.CancellationToken.IsCancellationRequested)
-                        {
-                            return;
-                        }
+                        if (CancelUpdate(Document, line)) return;
 
                         var newLineSections = new List<HighlightedSection>();
                         foreach (var classifiedSpan in spans)
@@ -124,6 +115,12 @@ namespace Waf.DotNetPad.Presentation.Controls
                 }, line.CancellationToken);
             }
             catch (OperationCanceledException) { }
+        }
+
+        private static bool CancelUpdate(IDocument document, VersionedHighlightedLine line)
+        {
+            var currentVersion = document.Version;
+            return line.CancellationToken.IsCancellationRequested || line.Version == null || !currentVersion.BelongsToSameDocumentAs(line.Version) || currentVersion.CompareAge(line.Version) != 0;
         }
 
         private static bool IsOutsideLine(IDocumentLine documentLine, int offset, int length)
