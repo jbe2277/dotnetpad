@@ -8,7 +8,9 @@
             {
                 return
                     @"using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sample
 {
@@ -23,7 +25,7 @@ namespace Sample
             }
         }
 
-        public static int StartCaretPositionCSharp { get { return 160; } }
+        public static int StartCaretPositionCSharp { get { return 226; } }
 
         public static string InitialVisualBasicCode
         {
@@ -31,7 +33,9 @@ namespace Sample
             {
                 return
                     @"Imports System
+Imports System.Collections.Generic
 Imports System.Linq
+Imports System.Threading.Tasks
 
 Namespace Sample
     Module Program
@@ -43,6 +47,6 @@ End Namespace";
             }
         }
 
-        public static int StartCaretPositionVisualBasic { get { return 110; } }
+        public static int StartCaretPositionVisualBasic { get { return 177; } }
     }
 }
