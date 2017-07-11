@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+Version 2.4.1.100 (Release)
+- Add format document feature
+- Fix a race condition that could happen when using CTRL+X in a large document (Issue #9)
+- Add two popular namespaces to the default templates #8
+
+
 Version 2.4.0.100 (Release)
 - Update Microsoft.CodeAnalysis to 2.2.0
 - Fix issue with the ValueTuple reference when running on .NET Framework 4.7+
