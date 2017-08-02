@@ -10,6 +10,11 @@ namespace Waf.DotNetPad.Samples
             {
                 Console.WriteLine($"Result: {result}");
             }
+
+            if (int.TryParse("42", out _))  // ignore value with '_'
+            {
+                Console.WriteLine("This is a number");
+            }
         }
     }
 }

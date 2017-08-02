@@ -23,6 +23,8 @@ namespace Waf.DotNetPad.Samples
             var point1 = new Point(1.1, 1.2);
             (double a, double b) = point1;
             WriteLine($"X: {a}; Y: {b}");
+            var (a2, _) = point1;  // ignore value with '_'
+            WriteLine($"X: {a2}");
         }
 
         private static (int min, int max) Range(IEnumerable<int> numbers)
