@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Host;
 using Microsoft.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.VisualBasic;
 using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.VisualBasic;
 using System;
@@ -64,7 +65,8 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             else if (language == LanguageNames.CSharp) { references.Add(CreateReference(typeof(RuntimeBinderException).Assembly)); }
 
             var projectInfo = ProjectInfo.Create(projectId, VersionStamp.Default, name, name + ".dll", language, metadataReferences: references,
-                parseOptions: new CSharpParseOptions(languageVersion: LanguageVersion.Latest));
+                parseOptions: language == LanguageNames.CSharp ? (ParseOptions)new CSharpParseOptions(languageVersion: Microsoft.CodeAnalysis.CSharp.LanguageVersion.Latest) 
+                    : new VisualBasicParseOptions(Microsoft.CodeAnalysis.VisualBasic.LanguageVersion.Latest));
             OnProjectAdded(projectInfo);
 
             var documentId = DocumentId.CreateNewId(projectId);
