@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime;
 using System.Waf;
 using System.Waf.Applications;
+using System.Waf.Presentation;
 using System.Windows;
 using System.Windows.Threading;
 using Waf.DotNetPad.Applications.Services;

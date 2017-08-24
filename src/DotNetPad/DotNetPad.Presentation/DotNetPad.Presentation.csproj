@@ -262,7 +262,6 @@
     <Compile Include="DesignData\SampleOutputViewModel.cs" />
     <Compile Include="DesignData\SampleSaveChangesViewModel.cs" />
     <Compile Include="DesignData\SampleShellViewModel.cs" />
-    <Compile Include="DispatcherHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Services\ClipboardService.cs" />
     <Compile Include="Services\EnvironmentService.cs" />
@@ -436,12 +435,12 @@
   <ItemGroup>
     <PublishFile Include="System.Threading.Tasks.Dataflow">
       <Visible>False</Visible>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Exclude</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
   </ItemGroup>
