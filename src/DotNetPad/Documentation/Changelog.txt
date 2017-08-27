@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+Version 2.5.1.100 (Release)
+- Update WAF to 4.1.0-rc1
+
+
 Version 2.5.0.100 (Release)
 - Enable C# 7.1 and latest Visual Basic support
 - Update Microsoft.CodeAnalysis to 2.3.1
