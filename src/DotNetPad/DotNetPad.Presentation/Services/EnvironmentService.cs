@@ -18,11 +18,11 @@ namespace Waf.DotNetPad.Presentation.Services
 
         public EnvironmentService()
         {
-            this.profilePath = new Lazy<string>(() =>
+            profilePath = new Lazy<string>(() =>
                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ApplicationInfo.Company, ApplicationInfo.ProductName, "ProfileOptimization"));
-            this.appSettingsPath = new Lazy<string>(() =>
+            appSettingsPath = new Lazy<string>(() =>
                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ApplicationInfo.Company, ApplicationInfo.ProductName, "Settings"));
-            this.filesToLoad = new Lazy<IReadOnlyList<string>>(() => Environment.GetCommandLineArgs().Skip(1).ToArray());
+            filesToLoad = new Lazy<IReadOnlyList<string>>(() => Environment.GetCommandLineArgs().Skip(1).ToArray());
         }
 
 

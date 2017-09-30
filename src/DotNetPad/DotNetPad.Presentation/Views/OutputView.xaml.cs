@@ -17,7 +17,7 @@ using Waf.DotNetPad.Domain;
 namespace Waf.DotNetPad.Presentation.Views
 {
     [Export(typeof(IOutputView))]
-    public partial class OutputView : UserControl, IOutputView
+    public partial class OutputView : IOutputView
     {
         private readonly Lazy<OutputViewModel> viewModel;
         private readonly Dictionary<DocumentFile, Paragraph> outputParagraphs;
@@ -26,7 +26,7 @@ namespace Waf.DotNetPad.Presentation.Views
         public OutputView()
         {
             InitializeComponent();
-            viewModel = new Lazy<OutputViewModel>(() => ViewHelper.GetViewModel<OutputViewModel>(this));
+            viewModel = new Lazy<OutputViewModel>(() => this.GetViewModel<OutputViewModel>());
             outputParagraphs = new Dictionary<DocumentFile, Paragraph>();
 
             Loaded += FirstTimeLoadedHandler;

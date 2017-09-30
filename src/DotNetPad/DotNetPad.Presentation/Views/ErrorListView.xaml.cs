@@ -2,7 +2,6 @@
 using System.ComponentModel.Composition;
 using System.Waf.Applications;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using Waf.DotNetPad.Applications.ViewModels;
 using Waf.DotNetPad.Applications.Views;
@@ -11,7 +10,7 @@ using Waf.DotNetPad.Domain;
 namespace Waf.DotNetPad.Presentation.Views
 {
     [Export(typeof(IErrorListView))]
-    public partial class ErrorListView : UserControl, IErrorListView
+    public partial class ErrorListView : IErrorListView
     {
         private readonly Lazy<ErrorListViewModel> viewModel;
         
@@ -19,7 +18,7 @@ namespace Waf.DotNetPad.Presentation.Views
         public ErrorListView()
         {
             InitializeComponent();
-            viewModel = new Lazy<ErrorListViewModel>(() => ViewHelper.GetViewModel<ErrorListViewModel>(this));
+            viewModel = new Lazy<ErrorListViewModel>(() => this.GetViewModel<ErrorListViewModel>());
         }
 
 

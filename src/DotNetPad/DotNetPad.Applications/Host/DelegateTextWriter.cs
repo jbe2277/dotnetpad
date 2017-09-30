@@ -17,11 +17,7 @@ namespace Waf.DotNetPad.Applications.Host
         }
 
 
-        public override Encoding Encoding
-        {
-            get { return Encoding.UTF8; }
-        }
-        
+        public override Encoding Encoding => Encoding.UTF8;
         
         public override void Write(char value)
         {

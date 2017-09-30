@@ -8,7 +8,7 @@ using Waf.DotNetPad.Applications.Views;
 namespace Waf.DotNetPad.Presentation.Views
 {
     [Export(typeof(IShellView))]
-    public partial class ShellWindow : Window, IShellView
+    public partial class ShellWindow : IShellView
     {
         private readonly Lazy<ShellViewModel> viewModel;
         
@@ -16,7 +16,7 @@ namespace Waf.DotNetPad.Presentation.Views
         public ShellWindow()
         {
             InitializeComponent();
-            viewModel = new Lazy<ShellViewModel>(() => ViewHelper.GetViewModel<ShellViewModel>(this));
+            viewModel = new Lazy<ShellViewModel>(() => this.GetViewModel<ShellViewModel>());
         }
 
 

@@ -228,7 +228,6 @@ namespace Waf.DotNetPad.Presentation.Controls
 
             public int GetHashCode(HighlightedSection obj)
             {
-                if (obj == null) { return 0; }
                 return (obj.Color?.GetHashCode() ?? 0) ^ obj.Length.GetHashCode() ^ obj.Offset.GetHashCode();
             }
         }

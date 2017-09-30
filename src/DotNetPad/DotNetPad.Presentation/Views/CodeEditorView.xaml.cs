@@ -3,7 +3,6 @@ using System;
 using System.ComponentModel.Composition;
 using System.Waf.Applications;
 using System.Windows;
-using System.Windows.Controls;
 using Waf.DotNetPad.Applications.Services;
 using Waf.DotNetPad.Applications.ViewModels;
 using Waf.DotNetPad.Applications.Views;
@@ -11,7 +10,7 @@ using Waf.DotNetPad.Applications.Views;
 namespace Waf.DotNetPad.Presentation.Views
 {
     [Export(typeof(ICodeEditorView)), PartCreationPolicy(CreationPolicy.NonShared)]
-    public partial class CodeEditorView : UserControl, ICodeEditorView
+    public partial class CodeEditorView : ICodeEditorView
     {
         private readonly Lazy<CodeEditorViewModel> viewModel;
         
@@ -19,7 +18,7 @@ namespace Waf.DotNetPad.Presentation.Views
         public CodeEditorView()
         {
             InitializeComponent();
-            viewModel = new Lazy<CodeEditorViewModel>(() => ViewHelper.GetViewModel<CodeEditorViewModel>(this));
+            viewModel = new Lazy<CodeEditorViewModel>(() => this.GetViewModel<CodeEditorViewModel>());
             Loaded += FirstTimeLoadedHandler;
             Loaded += LoadedHandler;
             Unloaded += UnloadedHandler;

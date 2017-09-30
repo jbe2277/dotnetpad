@@ -19,7 +19,7 @@ using Waf.DotNetPad.Presentation.Services;
 
 namespace Waf.DotNetPad.Presentation
 {
-    public partial class App : Application
+    public partial class App
     {
         private AggregateCatalog catalog;
         private CompositionContainer container;

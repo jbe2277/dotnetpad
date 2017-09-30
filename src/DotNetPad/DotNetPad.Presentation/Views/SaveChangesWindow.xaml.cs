@@ -5,7 +5,7 @@ using Waf.DotNetPad.Applications.Views;
 namespace Waf.DotNetPad.Presentation.Views
 {
     [Export(typeof(ISaveChangesView)), PartCreationPolicy(CreationPolicy.NonShared)]
-    public partial class SaveChangesWindow : Window, ISaveChangesView
+    public partial class SaveChangesWindow : ISaveChangesView
     {
         public SaveChangesWindow()
         {

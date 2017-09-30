@@ -9,7 +9,7 @@ using Waf.DotNetPad.Applications.Views;
 namespace Waf.DotNetPad.Presentation.Views
 {
     [Export(typeof(IInfoView)), PartCreationPolicy(CreationPolicy.NonShared)]
-    public partial class InfoWindow : Window, IInfoView
+    public partial class InfoWindow : IInfoView
     {
         public InfoWindow()
         {

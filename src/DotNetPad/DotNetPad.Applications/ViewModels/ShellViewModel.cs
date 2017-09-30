@@ -35,13 +35,13 @@ namespace Waf.DotNetPad.Applications.ViewModels
             IVisualBasicSampleService visualBasicSampleService)
             : base(view)
         {
-            this.ShellService = shellService;
-            this.FileService = fileService;
-            this.CSharpSampleService = csharpSampleService;
-            this.VisualBasicSampleService = visualBasicSampleService;
-            this.settings = shellService.Settings;
-            this.garbageCollectorCommand = new DelegateCommand(GC.Collect);
-            this.statusText = Resources.Ready;
+            ShellService = shellService;
+            FileService = fileService;
+            CSharpSampleService = csharpSampleService;
+            VisualBasicSampleService = visualBasicSampleService;
+            settings = shellService.Settings;
+            garbageCollectorCommand = new DelegateCommand(GC.Collect);
+            statusText = Resources.Ready;
             
             PropertyChangedEventManager.AddHandler(fileService, FileServicePropertyChanged, "");
             view.Closed += ViewClosed;
