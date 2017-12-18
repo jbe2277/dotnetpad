@@ -1,6 +1,14 @@
 Changelog
 ---------
 
+Version 2.6.0.100 (Release)
+- Update to Microsoft.CodeAnalysis 2.6.1 (Support for C# 7.2 and VB 15.5)
+- Update AvalonEdit to 5.04
+- Update WAF to 4.1.0
+- Add new .NET versions to search for the XML documentation
+- Support .NET 4.7.1 in version detection
+
+
 Version 2.5.1.100 (Release)
 - Update WAF to 4.1.0-rc1
 
