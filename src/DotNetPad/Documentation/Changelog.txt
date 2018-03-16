@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+Version 2.6.1.100 (Release)
+- Update to Microsoft.CodeAnalysis 2.7.0
+- Update WAF to 4.2.0
+
+
 Version 2.6.0.100 (Release)
 - Update to Microsoft.CodeAnalysis 2.6.1 (Support for C# 7.2 and VB 15.5)
 - Update AvalonEdit to 5.04
