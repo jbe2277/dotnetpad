@@ -161,7 +161,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private async void AddProject(DocumentFile documentFile)
         {
-            await TaskHelper.WaitForProperty(documentFile, x => x.IsContentLoaded);
+            await TaskUtility.WaitForProperty(documentFile, x => x.IsContentLoaded);
             using (new PerformanceTrace("AddProjectWithDocument", documentFile))
             {
                 var documentId = workspace.AddProjectWithDocument(documentFile.FileName, documentFile.Content != null ? documentFile.Content.Code : "");

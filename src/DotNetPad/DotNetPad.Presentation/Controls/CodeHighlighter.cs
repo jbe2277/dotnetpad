@@ -8,8 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Waf.Foundation;
 using System.Windows.Threading;
-using Waf.DotNetPad.Domain;
 
 namespace Waf.DotNetPad.Presentation.Controls
 {
