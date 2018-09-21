@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Waf.DotNetPad.Applications.Properties;
 
 namespace Waf.DotNetPad.Applications.Services
 {

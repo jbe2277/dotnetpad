@@ -3,7 +3,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Waf.Applications;
+using System.Waf.Applications.Services;
 using Waf.DotNetPad.Applications.DataModels;
+using Waf.DotNetPad.Applications.Properties;
 using Waf.DotNetPad.Applications.Services;
 using Waf.DotNetPad.Applications.ViewModels;
 using Waf.DotNetPad.Domain;
@@ -17,7 +19,7 @@ namespace Waf.DotNetPad.Applications.Controllers
         
         private readonly Lazy<ShellService> shellService;
         private readonly IEnvironmentService environmentService;
-        private readonly ISettingsProvider settingsProvider;
+        private readonly ISettingsService settingsService;
         private readonly FileController fileController;
         private readonly WorkspaceController workspaceController;
         private readonly Lazy<ShellViewModel> shellViewModel;
@@ -25,17 +27,16 @@ namespace Waf.DotNetPad.Applications.Controllers
         private readonly ExportFactory<InfoViewModel> infoViewModelFactory;
         private readonly DelegateCommand infoCommand;
         private readonly ReadOnlyObservableCollection<DocumentDataModel> documentDataModels;
-        private AppSettings appSettings;
         
         
         [ImportingConstructor]
-        public ModuleController(Lazy<ShellService> shellService, IEnvironmentService environmentService, ISettingsProvider settingsProvider, 
+        public ModuleController(Lazy<ShellService> shellService, IEnvironmentService environmentService, ISettingsService settingsService, 
             FileController fileController, WorkspaceController workspaceController, IFileService fileService,
             Lazy<ShellViewModel> shellViewModel, ExportFactory<CodeEditorViewModel> codeEditorViewModelFactory, ExportFactory<InfoViewModel> infoViewModelFactory)
         {
             this.shellService = shellService;
             this.environmentService = environmentService;
-            this.settingsProvider = settingsProvider;
+            this.settingsService = settingsService;
             this.fileController = fileController;
             this.workspaceController = workspaceController;
             this.shellViewModel = shellViewModel;
@@ -53,9 +54,8 @@ namespace Waf.DotNetPad.Applications.Controllers
         
         public void Initialize()
         {
-            LoadSettings();
-
-            ShellService.Settings = appSettings;
+            settingsService.ErrorOccurred += (sender, e) => Logger.Error("Error in SettingsService: {0}", e.Error);
+            ShellService.Settings = settingsService.Get<AppSettings>();
 
             fileController.Initialize();
             workspaceController.Initialize();
@@ -73,32 +73,6 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         public void Shutdown()
         {
-            SaveSettings();
-        }
-
-        private void LoadSettings()
-        {
-            try
-            {
-                appSettings = settingsProvider.LoadSettings<AppSettings>(Path.Combine(environmentService.AppSettingsPath, appSettingsFileName));
-            }
-            catch (Exception ex)
-            {
-                Logger.Error("Could not read the settings file: {0}", ex);
-                appSettings = new AppSettings();
-            }
-        }
-
-        private void SaveSettings()
-        {
-            try
-            {
-                settingsProvider.SaveSettings(Path.Combine(environmentService.AppSettingsPath, appSettingsFileName), appSettings);
-            }
-            catch (Exception ex)
-            {
-                Logger.Error("Could not save the settings file: {0}", ex);
-            }
         }
 
         private void ShowInfo()

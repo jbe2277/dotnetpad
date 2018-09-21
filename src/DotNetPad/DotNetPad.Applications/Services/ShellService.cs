@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using System.Waf.Foundation;
+using Waf.DotNetPad.Applications.Properties;
 using Waf.DotNetPad.Applications.Views;
 
 namespace Waf.DotNetPad.Applications.Services

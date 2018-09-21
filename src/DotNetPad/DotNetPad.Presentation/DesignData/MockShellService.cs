@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Waf.Foundation;
-using Waf.DotNetPad.Applications;
+using Waf.DotNetPad.Applications.Properties;
 using Waf.DotNetPad.Applications.Services;
 
 namespace Waf.DotNetPad.Presentation.DesignData
