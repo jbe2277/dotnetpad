@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+Version 2.7.0.100 (Release)
+- Update to Microsoft.CodeAnalysis 2.9.0 (Support for C# 7.3 and VB 15.5)
+- Update WAF to 4.3.0
+- Use new SettingsService from WAF
+
+
 Version 2.6.1.100 (Release)
 - Update to Microsoft.CodeAnalysis 2.7.0
 - Update WAF to 4.2.0
