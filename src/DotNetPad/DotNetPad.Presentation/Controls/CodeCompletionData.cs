@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Tags;
 
 namespace Waf.DotNetPad.Presentation.Controls
 {
@@ -59,35 +60,35 @@ namespace Waf.DotNetPad.Presentation.Controls
 
             switch (tag)
             {
-                case CompletionTags.Class:
+                case WellKnownTags.Class:
                     return GetImage("ClassImageSource");
-                case CompletionTags.Constant:
+                case WellKnownTags.Constant:
                     return GetImage("ConstantImageSource");
-                case CompletionTags.Delegate:
+                case WellKnownTags.Delegate:
                     return GetImage("DelegateImageSource");
-                case CompletionTags.Enum:
+                case WellKnownTags.Enum:
                     return GetImage("EnumImageSource");
-                case CompletionTags.EnumMember:
+                case WellKnownTags.EnumMember:
                     return GetImage("EnumItemImageSource");
-                case CompletionTags.Event:
+                case WellKnownTags.Event:
                     return GetImage("EventImageSource");
-                case CompletionTags.ExtensionMethod:
+                case WellKnownTags.ExtensionMethod:
                     return GetImage("ExtensionMethodImageSource");
-                case CompletionTags.Field:
+                case WellKnownTags.Field:
                     return GetImage("FieldImageSource");
-                case CompletionTags.Interface:
+                case WellKnownTags.Interface:
                     return GetImage("InterfaceImageSource");
-                case CompletionTags.Keyword:
+                case WellKnownTags.Keyword:
                     return GetImage("KeywordImageSource");
-                case CompletionTags.Method:
+                case WellKnownTags.Method:
                     return GetImage("MethodImageSource");
-                case CompletionTags.Module:
+                case WellKnownTags.Module:
                     return GetImage("ModuleImageSource");
-                case CompletionTags.Namespace:
+                case WellKnownTags.Namespace:
                     return GetImage("NamespaceImageSource");
-                case CompletionTags.Property:
+                case WellKnownTags.Property:
                     return GetImage("PropertyImageSource");
-                case CompletionTags.Structure:
+                case WellKnownTags.Structure:
                     return GetImage("StructureImageSource");
             }
             return null;

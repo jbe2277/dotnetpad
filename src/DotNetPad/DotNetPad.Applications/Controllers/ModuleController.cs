@@ -18,7 +18,6 @@ namespace Waf.DotNetPad.Applications.Controllers
         private const string appSettingsFileName = "Settings.xml";
         
         private readonly Lazy<ShellService> shellService;
-        private readonly IEnvironmentService environmentService;
         private readonly ISettingsService settingsService;
         private readonly FileController fileController;
         private readonly WorkspaceController workspaceController;
@@ -30,12 +29,11 @@ namespace Waf.DotNetPad.Applications.Controllers
         
         
         [ImportingConstructor]
-        public ModuleController(Lazy<ShellService> shellService, IEnvironmentService environmentService, ISettingsService settingsService, 
+        public ModuleController(Lazy<ShellService> shellService, ISettingsService settingsService, 
             FileController fileController, WorkspaceController workspaceController, IFileService fileService,
             Lazy<ShellViewModel> shellViewModel, ExportFactory<CodeEditorViewModel> codeEditorViewModelFactory, ExportFactory<InfoViewModel> infoViewModelFactory)
         {
             this.shellService = shellService;
-            this.environmentService = environmentService;
             this.settingsService = settingsService;
             this.fileController = fileController;
             this.workspaceController = workspaceController;
