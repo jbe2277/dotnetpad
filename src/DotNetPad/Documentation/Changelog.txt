@@ -1,6 +1,13 @@
 Changelog
 ---------
 
+Version 2.7.1.100 (Release)
+- Add support for System.Memory (Span<T>, Memory<T>)
+- Add support for System.Buffers (ArrayPool<T>)
+- Update System.Composition to 1.2.0
+- Add recognition of .NET 4.7.2 in Info dialog
+
+
 Version 2.7.0.100 (Release)
 - Update to Microsoft.CodeAnalysis 2.9.0 (Support for C# 7.3 and VB 15.5)
 - Update WAF to 4.3.0
