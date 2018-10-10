@@ -32,6 +32,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             typeof(XDocument).Assembly,                             // System.Xml.Linq
             typeof(DataContractSerializer).Assembly,                // System.Runtime.Serialization
             typeof(ImmutableArray).Assembly,                        // System.Collections.Immutable
+            typeof(Span<>).Assembly,                                // System.Memory
             Type.GetType("System.ValueTuple", throwOnError: false)?.Assembly ?? typeof(ValueTuple).Assembly     // System.ValueTuple
         };
 
@@ -61,6 +62,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             // ValueTuple needs a separate assembly in .NET 4.6.x. But it is not needed anymore in .NET 4.7+ as it is included in mscorelib.
             var references = defaultReferences.Distinct().Select(CreateReference).ToList();
             references.Add(CreateReference(Assembly.Load("System.Runtime, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")));
+            references.Add(CreateReference(Assembly.Load("netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51")));
             if (language == LanguageNames.VisualBasic) { references.Add(CreateReference(typeof(VBMath).Assembly)); }
             else if (language == LanguageNames.CSharp) { references.Add(CreateReference(typeof(RuntimeBinderException).Assembly)); }
 
