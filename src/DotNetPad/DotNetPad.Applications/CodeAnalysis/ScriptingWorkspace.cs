@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis.VisualBasic;
 using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.VisualBasic;
 using System;
+using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -33,6 +34,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             typeof(DataContractSerializer).Assembly,                // System.Runtime.Serialization
             typeof(ImmutableArray).Assembly,                        // System.Collections.Immutable
             typeof(Span<>).Assembly,                                // System.Memory
+            typeof(ArrayPool<>).Assembly,                           // System.Buffers
             Type.GetType("System.ValueTuple", throwOnError: false)?.Assembly ?? typeof(ValueTuple).Assembly     // System.ValueTuple
         };
 
