@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetPad.Presentation", "DotNetPad.Presentation\DotNetPad.Presentation.csproj", "{27BC0A1B-0E66-4F47-B6D1-A6EDE5211184}"
 EndProject
@@ -11,15 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetPad.Domain", "DotNetP
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F396EE83-953E-41E7-BFDA-2FEA2C28BF25}"
 	ProjectSection(SolutionItems) = preProject
+		Documentation\Changelog.txt = Documentation\Changelog.txt
 		CodeAnalysisDictionary.xml = CodeAnalysisDictionary.xml
 		CodeCoverage.runsettings = CodeCoverage.runsettings
 		DotNetPad.ruleset = DotNetPad.ruleset
 		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{E38ACA1D-4AC1-4853-9FB4-2A89355798FC}"
-	ProjectSection(SolutionItems) = preProject
-		Documentation\Changelog.txt = Documentation\Changelog.txt
 	EndProjectSection
 EndProject
 Global
@@ -43,5 +39,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BA43AEC1-FCFB-4881-9D12-55F4E88B065C}
 	EndGlobalSection
 EndGlobal
