@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
-using System.IO;
 using System.Waf.Applications;
 using System.Waf.Applications.Services;
 using Waf.DotNetPad.Applications.DataModels;
@@ -15,8 +14,6 @@ namespace Waf.DotNetPad.Applications.Controllers
     [Export(typeof(IModuleController))]
     internal class ModuleController : IModuleController
     {
-        private const string appSettingsFileName = "Settings.xml";
-        
         private readonly Lazy<ShellService> shellService;
         private readonly ISettingsService settingsService;
         private readonly FileController fileController;

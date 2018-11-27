@@ -21,7 +21,7 @@ namespace Waf.DotNetPad.Applications.Host
         
         public override void Write(char value)
         {
-            appendTextAction(value.ToString());
+            appendTextAction(value.ToString(CultureInfo.CurrentCulture));
         }
 
         public override void Write(char[] buffer, int index, int count)

@@ -6,6 +6,7 @@
     <Rule Id="CA1040" Action="None" />
     <Rule Id="CA1062" Action="None" />
     <Rule Id="CA1500" Action="None" />
+    <Rule Id="CA2007" Action="None" />
     <Rule Id="CA2210" Action="None" />
   </Rules>
 </RuleSet>
