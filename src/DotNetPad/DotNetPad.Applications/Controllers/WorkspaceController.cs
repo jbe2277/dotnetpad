@@ -61,8 +61,6 @@ namespace Waf.DotNetPad.Applications.Controllers
             documentIds = new Dictionary<DocumentFile, DocumentId>();
         }
         
-        public Workspace Workspace => workspace;
-
         private ShellViewModel ShellViewModel => shellViewModel.Value;
 
         private ErrorListViewModel ErrorListViewModel => errorListViewModel.Value;
@@ -267,14 +265,7 @@ namespace Waf.DotNetPad.Applications.Controllers
                 {
                     var result = await workspace.BuildAsync(documentIds[documentFile], CancellationToken.None);
                     documentFile.Content.ErrorList = result.Diagnostic.Where(x => x.Severity != DiagnosticSeverity.Hidden).Select(CreateErrorListItem).ToArray();
-                    if (result.InMemoryAssembly != null)
-                    {
-                        lastBuildResult = new Tuple<DocumentFile, BuildResult>(documentFile, result);
-                    }
-                    else
-                    {
-                        lastBuildResult = null;
-                    }
+                    lastBuildResult = result.InMemoryAssembly == null ? null : new Tuple<DocumentFile, BuildResult>(documentFile, result);
                 }
             }
             
@@ -347,7 +338,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private void ResetBuildResult(DocumentFile documentFile)
         {
-            if (lastBuildResult != null && lastBuildResult.Item1 == documentFile) 
+            if (lastBuildResult?.Item1 == documentFile) 
             { 
                 lastBuildResult = null; 
             }

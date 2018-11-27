@@ -14,9 +14,9 @@ namespace Waf.DotNetPad.Presentation.DesignData
 
         private class MockShellView : MockView, IShellView
         {
-            public double VirtualScreenWidth { get { return 0; } }
+            public double VirtualScreenWidth => 0;
 
-            public double VirtualScreenHeight { get { return 0; } }
+            public double VirtualScreenHeight => 0;
 
             public double Left { get; set; }
 
@@ -37,10 +37,6 @@ namespace Waf.DotNetPad.Presentation.DesignData
 
 
             public void Show()
-            {
-            }
-
-            public void Close()
             {
             }
 

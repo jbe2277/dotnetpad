@@ -33,11 +33,6 @@ namespace Waf.DotNetPad.Applications.Controllers
         private readonly IClipboardService clipboardService;
         private readonly FileService fileService;
         private readonly ExportFactory<SaveChangesViewModel> saveChangesViewModelFactory;
-        private readonly DelegateCommand newCSharpCommand;
-        private readonly DelegateCommand newVisualBasicCommand;
-        private readonly DelegateCommand newCSharpFromClipboardCommand;
-        private readonly DelegateCommand newVisualBasicFromClipboardCommand;
-        private readonly DelegateCommand openCommand;
         private readonly DelegateCommand closeCommand;
         private readonly DelegateCommand closeAllCommand;
         private readonly DelegateCommand saveCommand;
@@ -60,21 +55,16 @@ namespace Waf.DotNetPad.Applications.Controllers
             this.clipboardService = clipboardService;
             this.fileService = fileService;
             this.saveChangesViewModelFactory = saveChangesViewModelFactory;
-            newCSharpCommand = new DelegateCommand(NewCSharpFile);
-            newVisualBasicCommand = new DelegateCommand(NewVisualBasicFile);
-            newCSharpFromClipboardCommand = new DelegateCommand(NewCSharpFromClipboard, CanNewFromClipboard);
-            newVisualBasicFromClipboardCommand = new DelegateCommand(NewVisualBasicFromClipboard, CanNewFromClipboard);
-            openCommand = new DelegateCommand(OpenFile);
             closeCommand = new DelegateCommand(CloseFile, CanCloseFile);
             closeAllCommand = new DelegateCommand(CloseAll, CanCloseAll);
             saveCommand = new DelegateCommand(SaveFile, CanSaveFile);
             saveAsCommand = new DelegateCommand(SaveAsFile, CanSaveAsFile);
 
-            this.fileService.NewCSharpCommand = newCSharpCommand;
-            this.fileService.NewVisualBasicCommand = newVisualBasicCommand;
-            this.fileService.NewCSharpFromClipboardCommand = newCSharpFromClipboardCommand;
-            this.fileService.NewVisualBasicFromClipboardCommand = newVisualBasicFromClipboardCommand;
-            this.fileService.OpenCommand = openCommand;
+            this.fileService.NewCSharpCommand = new DelegateCommand(NewCSharpFile);
+            this.fileService.NewVisualBasicCommand = new DelegateCommand(NewVisualBasicFile);
+            this.fileService.NewCSharpFromClipboardCommand = new DelegateCommand(NewCSharpFromClipboard, CanNewFromClipboard);
+            this.fileService.NewVisualBasicFromClipboardCommand = new DelegateCommand(NewVisualBasicFromClipboard, CanNewFromClipboard);
+            this.fileService.OpenCommand = new DelegateCommand(OpenFile);
             this.fileService.CloseCommand = closeCommand;
             this.fileService.CloseAllCommand = closeAllCommand;
             this.fileService.SaveCommand = saveCommand;
@@ -238,7 +228,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
             if (ActiveDocumentFile == document)
             {
-                var nextDocument = CollectionHelper.GetNextElementOrDefault(fileService.DocumentFiles, ActiveDocumentFile)
+                var nextDocument = fileService.DocumentFiles.GetNextElementOrDefault(ActiveDocumentFile)
                     ?? fileService.DocumentFiles.Take(fileService.DocumentFiles.Count - 1).LastOrDefault();
                 ActiveDocumentFile = nextDocument;
             }
@@ -295,7 +285,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             return document;
         }
 
-        private DocumentContent LoadDocumentContent(DocumentFile documentFile)
+        private static DocumentContent LoadDocumentContent(DocumentFile documentFile)
         {            
             Trace.WriteLine(">> Load document content: " + documentFile.FileName);
             using (var stream = new FileStream(documentFile.FileName, FileMode.Open, FileAccess.Read))

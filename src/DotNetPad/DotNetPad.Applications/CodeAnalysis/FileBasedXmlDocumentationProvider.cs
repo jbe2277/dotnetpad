@@ -55,6 +55,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             }
             catch (Exception)
             {
+                // ignore
             }
             return commentsDictionary;
         }

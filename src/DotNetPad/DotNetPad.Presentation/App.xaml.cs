@@ -69,14 +69,6 @@ namespace Waf.DotNetPad.Presentation
             // Shutdown the module controllers in reverse order
             foreach (var moduleController in moduleControllers.Reverse()) { moduleController.Shutdown(); }
 
-            // Wait until all registered tasks are finished
-            var shellService = container.GetExportedValue<IShellService>();
-            var tasksToWait = shellService.TasksToCompleteBeforeShutdown.ToArray();
-            while (tasksToWait.Any(t => !t.IsCompleted && !t.IsCanceled && !t.IsFaulted))
-            {
-                DispatcherHelper.DoEvents();
-            }
-
             // Dispose
             container.Dispose();
             catalog.Dispose();

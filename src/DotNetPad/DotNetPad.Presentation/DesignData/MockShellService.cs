@@ -18,17 +18,11 @@ namespace Waf.DotNetPad.Presentation.DesignData
         
         public object ShellView { get; set; }
 
-        public IReadOnlyCollection<Task> TasksToCompleteBeforeShutdown { get; set; }
-        
         public int Line { get; set; }
         
         public int Column { get; set; }
 
         public event CancelEventHandler Closing;
-
-        public void AddTaskToCompleteBeforeShutdown(Task task)
-        {
-        }
 
         protected virtual void OnClosing(CancelEventArgs e)
         {

@@ -137,8 +137,8 @@ namespace Waf.DotNetPad.Presentation.Controls
 
                         if (triggerChar == null || IsAllowedLanguageLetter(triggerChar.Value))
                         {
-                            completionWindow.StartOffset = word.Item1;
-                            completionWindow.CompletionList.SelectItem(word.Item2);
+                            completionWindow.StartOffset = word.wordStart;
+                            completionWindow.CompletionList.SelectItem(word.text);
                         }
                         completionWindow.Show();
                         completionWindow.Closed += (s2, e2) => completionWindow = null;
@@ -155,11 +155,11 @@ namespace Waf.DotNetPad.Presentation.Controls
             return (await Task.Run(async () => await completionService.GetDescriptionAsync(document, completionItem))).TaggedParts;
         }
 
-        private Tuple<int, string> GetWord(int position)
+        private (int wordStart, string text) GetWord(int position)
         {
             var wordStart = TextUtilities.GetNextCaretPosition(TextArea.Document, position, LogicalDirection.Backward, CaretPositioningMode.WordStart);
             var text = TextArea.Document.GetText(wordStart, position - wordStart);
-            return new Tuple<int, string>(wordStart, text);
+            return (wordStart, text);
         }
 
         private void UpdateErrorMarkers()

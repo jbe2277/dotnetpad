@@ -27,7 +27,5 @@ namespace Waf.DotNetPad.Applications.Views
         event EventHandler Closed;
 
         void Show();
-
-        void Close();
     }
 }

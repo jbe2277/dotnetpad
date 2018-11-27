@@ -12,7 +12,6 @@
             EndColumn = endColumn;
         }
 
-
         public ErrorSeverity ErrorSeverity { get; }
 
         public string Description { get; }

@@ -15,7 +15,7 @@ namespace Waf.DotNetPad.Presentation.Views
         public ShellWindow()
         {
             InitializeComponent();
-            viewModel = new Lazy<ShellViewModel>(() => this.GetViewModel<ShellViewModel>());
+            viewModel = new Lazy<ShellViewModel>(this.GetViewModel<ShellViewModel>);
         }
 
         public double VirtualScreenWidth => SystemParameters.VirtualScreenWidth;

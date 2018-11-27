@@ -26,7 +26,6 @@ namespace Waf.DotNetPad.Applications.Host
         public void Run()
         {
             if (scriptAssembly == null) { throw new InvalidOperationException("The script assembly must first be loaded."); }
-
             try
             {
                 scriptAssembly.EntryPoint.Invoke(null, null);

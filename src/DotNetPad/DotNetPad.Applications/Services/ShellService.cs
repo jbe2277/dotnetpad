@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
-using System.Threading.Tasks;
 using System.Waf.Foundation;
 using Waf.DotNetPad.Applications.Properties;
 using Waf.DotNetPad.Applications.Views;
@@ -13,7 +11,6 @@ namespace Waf.DotNetPad.Applications.Services
     internal class ShellService : Model, IShellService
     {
         private readonly Lazy<IShellView> shellView;
-        private readonly List<Task> tasksToCompleteBeforeShutdown;
         private int line;
         private int column;
         private bool isClosingEventInitialized;
@@ -23,14 +20,11 @@ namespace Waf.DotNetPad.Applications.Services
         public ShellService(Lazy<IShellView> shellView)
         {
             this.shellView = shellView;
-            tasksToCompleteBeforeShutdown = new List<Task>();
         }
 
         public AppSettings Settings { get; set; }
         
         public object ShellView => shellView.Value;
-
-        public IReadOnlyCollection<Task> TasksToCompleteBeforeShutdown => tasksToCompleteBeforeShutdown;
 
         public int Line
         {
@@ -52,11 +46,6 @@ namespace Waf.DotNetPad.Applications.Services
                 InitializeClosingEvent();
             }
             remove { closing -= value; }
-        }
-
-        public void AddTaskToCompleteBeforeShutdown(Task task)
-        {
-            tasksToCompleteBeforeShutdown.Add(task);
         }
 
         protected virtual void OnClosing(CancelEventArgs e)

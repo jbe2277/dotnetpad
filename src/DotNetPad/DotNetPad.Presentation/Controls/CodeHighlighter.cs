@@ -124,7 +124,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         private async Task<IEnumerable<ClassifiedSpan>> GetClassifiedSpansAsync(IDocumentLine documentLine, CancellationToken cancellationToken)
         {
             var document = getDocument();
-            var text = await document.GetTextAsync().ConfigureAwait(false);
+            var text = await document.GetTextAsync(cancellationToken).ConfigureAwait(false);
             if (text.Length >= documentLine.Offset + documentLine.TotalLength)
             {
                 return await Classifier.GetClassifiedSpansAsync(document,
@@ -215,12 +215,12 @@ namespace Waf.DotNetPad.Presentation.Controls
             {
                 if (x == y) { return true; }
                 if (x == null || y == null) { return false; }
-                return Equals(x.Color, y.Color) && x.Length == y.Length && x.Offset == y.Offset;
+                return (x.Color, x.Length, x.Offset).Equals((y.Color, y.Length, y.Offset));
             }
 
             public int GetHashCode(HighlightedSection obj)
             {
-                return (obj.Color?.GetHashCode() ?? 0) ^ obj.Length.GetHashCode() ^ obj.Offset.GetHashCode();
+                return (obj.Color, obj.Length, obj.Offset).GetHashCode();
             }
         }
     }
