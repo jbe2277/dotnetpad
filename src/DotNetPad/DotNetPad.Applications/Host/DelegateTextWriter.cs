@@ -10,12 +10,10 @@ namespace Waf.DotNetPad.Applications.Host
     {
         private readonly Action<string> appendTextAction;
 
-
         public DelegateTextWriter(Action<string> appendTextAction) : base(CultureInfo.CurrentCulture)
         {
             this.appendTextAction = appendTextAction;
         }
-
 
         public override Encoding Encoding => Encoding.UTF8;
         

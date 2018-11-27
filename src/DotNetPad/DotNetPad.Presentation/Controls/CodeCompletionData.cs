@@ -1,7 +1,6 @@
 ﻿using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
-using Microsoft.CodeAnalysis.Completion;
 using System;
 using System.Collections.Immutable;
 using System.Linq;
@@ -20,16 +19,14 @@ namespace Waf.DotNetPad.Presentation.Controls
         private readonly ImmutableArray<string> tags;
         private readonly Lazy<ImageSource> image;
 
-
         public CodeCompletionData(string text, Func<Task<ImmutableArray<TaggedText>>> getDescriptionFunc, ImmutableArray<string> tags)
         {
-            this.Text = text;
-            this.description = new Lazy<object>(CreateDescription);
+            Text = text;
+            description = new Lazy<object>(CreateDescription);
             this.getDescriptionFunc = getDescriptionFunc;
             this.tags = tags;
-            this.image = new Lazy<ImageSource>(GetImage);
+            image = new Lazy<ImageSource>(GetImage);
         }
-
 
         public double Priority => 0;
 
@@ -41,7 +38,6 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         public ImageSource Image => image.Value;
 
-
         public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs)
         {
             textArea.Document.Replace(completionSegment, Text);
@@ -49,15 +45,13 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         private object CreateDescription()
         {
-            var result = new CodeCompletionDescription(getDescriptionFunc());
-            return result;
+            return new CodeCompletionDescription(getDescriptionFunc());
         }
 
         private ImageSource GetImage()
         {
             var tag = tags.FirstOrDefault();
             if (tag == null) { return null; }
-
             switch (tag)
             {
                 case WellKnownTags.Class:

@@ -14,7 +14,6 @@ namespace Waf.DotNetPad.Presentation.Views
     {
         private readonly Lazy<CodeEditorViewModel> viewModel;
         
-
         public CodeEditorView()
         {
             InitializeComponent();
@@ -26,9 +25,7 @@ namespace Waf.DotNetPad.Presentation.Views
             codeEditor.TextArea.Caret.PositionChanged += CaretPositionChanged;
         }
 
-
         private CodeEditorViewModel ViewModel => viewModel.Value;
-
 
         private void FirstTimeLoadedHandler(object sender, RoutedEventArgs e)
         {

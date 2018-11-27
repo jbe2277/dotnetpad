@@ -25,7 +25,6 @@ namespace Waf.DotNetPad.Applications.Services
         private ICommand saveCommand;
         private ICommand saveAsCommand;
 
-
         [ImportingConstructor]
         public FileService()
         {
@@ -33,12 +32,11 @@ namespace Waf.DotNetPad.Applications.Services
             readOnlyDocumentFiles = new ReadOnlyObservableList<DocumentFile>(documentFiles);
         }
 
-
         public IReadOnlyObservableList<DocumentFile> DocumentFiles => readOnlyDocumentFiles;
 
         public DocumentFile ActiveDocumentFile
         {
-            get { return activeDocumentFile; }
+            get => activeDocumentFile;
             set
             {
                 if (activeDocumentFile != value)
@@ -55,64 +53,63 @@ namespace Waf.DotNetPad.Applications.Services
 
         public DocumentFile LockedDocumentFile
         {
-            get { return lockedDocumentFile; }
-            set { SetProperty(ref lockedDocumentFile, value); }
+            get => lockedDocumentFile;
+            set => SetProperty(ref lockedDocumentFile, value);
         }
 
         public ICommand NewCSharpCommand
         {
-            get { return newCSharpCommand; }
-            set { SetProperty(ref newCSharpCommand, value); }
+            get => newCSharpCommand;
+            set => SetProperty(ref newCSharpCommand, value);
         }
 
         public ICommand NewVisualBasicCommand
         {
-            get { return newVisualBasicCommand; }
-            set { SetProperty(ref newVisualBasicCommand, value); }
+            get => newVisualBasicCommand;
+            set => SetProperty(ref newVisualBasicCommand, value);
         }
 
         public DelegateCommand NewCSharpFromClipboardCommand
         {
-            get { return newCSharpFromClipboardCommand; }
-            set { SetProperty(ref newCSharpFromClipboardCommand, value); }
+            get => newCSharpFromClipboardCommand;
+            set => SetProperty(ref newCSharpFromClipboardCommand, value);
         }
 
         public DelegateCommand NewVisualBasicFromClipboardCommand
         {
-            get { return newVisualBasicFromClipboardCommand; }
-            set { SetProperty(ref newVisualBasicFromClipboardCommand, value); }
+            get => newVisualBasicFromClipboardCommand;
+            set => SetProperty(ref newVisualBasicFromClipboardCommand, value);
         }
 
         public ICommand OpenCommand
         {
-            get { return openCommand; }
-            set { SetProperty(ref openCommand, value); }
+            get => openCommand;
+            set => SetProperty(ref openCommand, value);
         }
 
         public ICommand CloseCommand
         {
-            get { return closeCommand; }
-            set { SetProperty(ref closeCommand, value); }
+            get => closeCommand;
+            set => SetProperty(ref closeCommand, value);
         }
 
         public ICommand CloseAllCommand
         {
-            get { return closeAllCommand; }
-            set { SetProperty(ref closeAllCommand, value); }
+            get => closeAllCommand;
+            set => SetProperty(ref closeAllCommand, value);
         }
 
         public ICommand SaveCommand
         {
-            get { return saveCommand; }
-            set { SetProperty(ref saveCommand, value); }
+            get => saveCommand;
+            set => SetProperty(ref saveCommand, value);
         }
 
         public ICommand SaveAsCommand
         {
-            get { return saveAsCommand; }
-            set { SetProperty(ref saveAsCommand, value); }
+            get => saveAsCommand;
+            set => SetProperty(ref saveAsCommand, value);
         }
-
 
         public void AddDocument(DocumentFile document)
         {

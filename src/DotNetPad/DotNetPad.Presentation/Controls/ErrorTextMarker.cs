@@ -13,7 +13,6 @@ namespace Waf.DotNetPad.Presentation.Controls
             MarkerColor = markerColor;
         }
 
-
         public string Message { get; }
 
         public Color MarkerColor { get; }

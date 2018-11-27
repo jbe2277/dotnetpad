@@ -29,7 +29,6 @@ namespace Waf.DotNetPad.Applications.ViewModels
         private DocumentDataModel activeDocumentDataModel;
         private string statusText;
         
-
         [ImportingConstructor]
         public ShellViewModel(IShellView view, IShellService shellService, IFileService fileService, ICSharpSampleService csharpSampleService, 
             IVisualBasicSampleService visualBasicSampleService)
@@ -60,7 +59,6 @@ namespace Waf.DotNetPad.Applications.ViewModels
             view.IsMaximized = settings.IsMaximized;
         }
 
-        
         public string Title => ApplicationInfo.ProductName;
 
         public IShellService ShellService { get; }
@@ -73,77 +71,77 @@ namespace Waf.DotNetPad.Applications.ViewModels
 
         public object ErrorListView
         {
-            get { return errorListView; }
-            set { SetProperty(ref errorListView, value); }
+            get => errorListView;
+            set => SetProperty(ref errorListView, value);
         }
 
         public object OutputView
         {
-            get { return outputView; }
-            set { SetProperty(ref outputView, value); }
+            get => outputView;
+            set => SetProperty(ref outputView, value);
         }
 
         public ICommand StartCommand
         {
-            get { return startCommand; }
-            set { SetProperty(ref startCommand, value); }
+            get => startCommand;
+            set => SetProperty(ref startCommand, value);
         }
 
         public ICommand StopCommand
         {
-            get { return stopCommand; }
-            set { SetProperty(ref stopCommand, value); }
+            get => stopCommand;
+            set => SetProperty(ref stopCommand, value);
         }
 
         public ICommand FormatDocumentCommand
         {
-            get { return formatDocumentCommand; }
-            set { SetProperty(ref formatDocumentCommand, value); }
+            get => formatDocumentCommand;
+            set => SetProperty(ref formatDocumentCommand, value);
         }
-        
+
         public bool IsScriptRunning
         {
-            get { return isScriptRunning; }
-            set { SetProperty(ref isScriptRunning, value); }
+            get => isScriptRunning;
+            set => SetProperty(ref isScriptRunning, value);
         }
 
         public ICommand InfoCommand
         {
-            get { return infoCommand; }
-            set { SetProperty(ref infoCommand, value); }
+            get => infoCommand;
+            set => SetProperty(ref infoCommand, value);
         }
 
         public ICommand GarbageCollectorCommand => garbageCollectorCommand;
 
         public object CurrentStatusView
         {
-            get { return currentStatusView; }
-            private set { SetProperty(ref currentStatusView, value); }
+            get => currentStatusView;
+            private set => SetProperty(ref currentStatusView, value);
         }
-        
+
         public bool IsErrorListViewVisible
         {
-            get { return CurrentStatusView == ErrorListView; }
+            get => CurrentStatusView == ErrorListView;
             set { if (value) { CurrentStatusView = ErrorListView; } }
         }
 
         public bool IsOutputViewVisible
         {
-            get { return CurrentStatusView == OutputView; }
+            get => CurrentStatusView == OutputView;
             set { if (value) { CurrentStatusView = OutputView; } }
         }
 
         public IReadOnlyList<DocumentDataModel> DocumentDataModels
         {
-            get { return documentDataModels; }
-            set { SetProperty(ref documentDataModels, value); }
+            get => documentDataModels;
+            set => SetProperty(ref documentDataModels, value);
         }
 
         public DocumentDataModel ActiveDocumentDataModel
         {
-            get { return activeDocumentDataModel; }
-            set 
-            { 
+            get => activeDocumentDataModel;
+            set
+            {
                 if (SetProperty(ref activeDocumentDataModel, value) && value != null)
                 {
                     FileService.ActiveDocumentFile = value.DocumentFile;
@@ -153,9 +151,9 @@ namespace Waf.DotNetPad.Applications.ViewModels
 
         public string StatusText
         {
-            get { return statusText; }
-            set 
-            { 
+            get => statusText;
+            set
+            {
                 if (statusText != value)
                 {
                     statusText = value ?? Resources.Ready;
@@ -163,7 +161,6 @@ namespace Waf.DotNetPad.Applications.ViewModels
                 }
             }
         }
-
 
         public void Show()
         {

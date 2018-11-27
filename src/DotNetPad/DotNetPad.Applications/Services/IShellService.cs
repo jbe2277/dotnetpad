@@ -17,9 +17,7 @@ namespace Waf.DotNetPad.Applications.Services
 
         int Column { get; set; }
 
-
         event CancelEventHandler Closing;
-
 
         void AddTaskToCompleteBeforeShutdown(Task task);
     }

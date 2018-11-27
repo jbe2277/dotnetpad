@@ -22,11 +22,9 @@ namespace Waf.DotNetPad.Applications.Views
 
         double BottomPanesHeight { get; set; }
 
-
         event CancelEventHandler Closing;
 
         event EventHandler Closed;
-
 
         void Show();
 

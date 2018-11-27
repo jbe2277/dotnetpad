@@ -13,13 +13,12 @@ namespace Waf.DotNetPad.Domain
         private bool modified;
         private string fileName;
 
-
         public DocumentFile(DocumentType documentType, Func<DocumentFile, DocumentContent> contentFactory, int startCaretPosition = 0)
         {
-            this.DocumentType = documentType;
+            DocumentType = documentType;
             this.contentFactory = contentFactory;
-            this.content = new Lazy<DocumentContent>(LoadContent);
-            this.StartCaretPosition = startCaretPosition;
+            content = new Lazy<DocumentContent>(LoadContent);
+            StartCaretPosition = startCaretPosition;
         }
 
         public DocumentFile(DocumentType documentType, string fileName, string code, int startCaretPosition = 0)
@@ -35,8 +34,8 @@ namespace Waf.DotNetPad.Domain
 
         public Exception LoadError
         {
-            get { return loadError; }
-            private set { SetProperty(ref loadError, value); }
+            get => loadError;
+            private set => SetProperty(ref loadError, value);
         }
 
         public DocumentContent Content 
@@ -57,14 +56,14 @@ namespace Waf.DotNetPad.Domain
 
         public bool Modified
         {
-            get { return modified; }
-            private set { SetProperty(ref modified, value); }
+            get => modified;
+            private set => SetProperty(ref modified, value);
         }
 
         public string FileName
         {
-            get { return fileName; }
-            set { SetProperty(ref fileName, value); }
+            get => fileName;
+            set => SetProperty(ref fileName, value);
         }
 
         public void ResetModified()

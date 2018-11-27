@@ -23,11 +23,10 @@ namespace Waf.DotNetPad.Applications.Services
 
         public Lazy<string> StringInterpolation => new Lazy<string>(() => GetSampleCode("StringInterpolation.cs"));
 
-
         internal static string GetSampleCode(string sampleFileName)
         {
-            using (Stream stream = typeof(CSharpSampleService).Assembly.GetManifestResourceStream("Waf.DotNetPad.Applications.Samples." + sampleFileName))
-            using (StreamReader reader = new StreamReader(stream))
+            using (var stream = typeof(CSharpSampleService).Assembly.GetManifestResourceStream("Waf.DotNetPad.Applications.Samples." + sampleFileName))
+            using (var reader = new StreamReader(stream))
             {
                 return reader.ReadToEnd();
             }

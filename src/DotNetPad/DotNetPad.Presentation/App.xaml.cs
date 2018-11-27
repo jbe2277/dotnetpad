@@ -25,7 +25,6 @@ namespace Waf.DotNetPad.Presentation
         private CompositionContainer container;
         private IEnumerable<IModuleController> moduleControllers;
 
-
         public App()
         {
             var environmentService = new EnvironmentService();
@@ -33,7 +32,6 @@ namespace Waf.DotNetPad.Presentation
             ProfileOptimization.SetProfileRoot(environmentService.ProfilePath);
             ProfileOptimization.StartProfile("Startup.profile");
         }
-
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -52,7 +50,7 @@ namespace Waf.DotNetPad.Presentation
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(App).Assembly));
 
             container = new CompositionContainer(catalog, CompositionOptions.DisableSilentRejection);
-            CompositionBatch batch = new CompositionBatch();
+            var batch = new CompositionBatch();
             batch.AddExportedValue(container);
             container.Compose(batch);
 
@@ -110,13 +108,10 @@ namespace Waf.DotNetPad.Presentation
         private static void HandleException(Exception e, bool isTerminating)
         {
             if (e == null) { return; }
-
             Logger.Error(e.ToString());
-
             if (!isTerminating)
             {
-                MessageBox.Show(string.Format(CultureInfo.CurrentCulture,
-                        Presentation.Properties.Resources.UnknownError, e),
+                MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Presentation.Properties.Resources.UnknownError, e),
                     ApplicationInfo.ProductName, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

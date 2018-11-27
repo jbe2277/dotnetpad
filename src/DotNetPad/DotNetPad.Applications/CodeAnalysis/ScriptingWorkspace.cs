@@ -40,18 +40,15 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
 
         private readonly ConcurrentDictionary<string, DocumentationProvider> documentationProviders;
 
-
         public ScriptingWorkspace(HostServices hostServices) : base(hostServices, WorkspaceKind.Host)
         {
             documentationProviders = new ConcurrentDictionary<string, DocumentationProvider>();
         }
 
-
         public override bool CanApplyChange(ApplyChangesKind feature)
         {
             return feature == ApplyChangesKind.ChangeDocument || base.CanApplyChange(feature);
         }
-
 
         public DocumentId AddProjectWithDocument(string documentFileName, string text)
         {

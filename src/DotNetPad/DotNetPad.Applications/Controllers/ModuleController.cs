@@ -24,7 +24,6 @@ namespace Waf.DotNetPad.Applications.Controllers
         private readonly DelegateCommand infoCommand;
         private readonly ReadOnlyObservableCollection<DocumentDataModel> documentDataModels;
         
-        
         [ImportingConstructor]
         public ModuleController(Lazy<ShellService> shellService, ISettingsService settingsService, 
             FileController fileController, WorkspaceController workspaceController, IFileService fileService,
@@ -37,16 +36,14 @@ namespace Waf.DotNetPad.Applications.Controllers
             this.shellViewModel = shellViewModel;
             this.codeEditorViewModelFactory = codeEditorViewModelFactory;
             this.infoViewModelFactory = infoViewModelFactory;
-            this.infoCommand = new DelegateCommand(ShowInfo);
-            this.documentDataModels = new SynchronizingCollection<DocumentDataModel, DocumentFile>(fileService.DocumentFiles, CreateDocumentDataModel);
+            infoCommand = new DelegateCommand(ShowInfo);
+            documentDataModels = new SynchronizingCollection<DocumentDataModel, DocumentFile>(fileService.DocumentFiles, CreateDocumentDataModel);
         }
-
 
         private ShellService ShellService => shellService.Value;
 
         private ShellViewModel ShellViewModel => shellViewModel.Value;
 
-        
         public void Initialize()
         {
             settingsService.ErrorOccurred += (sender, e) => Logger.Error("Error in SettingsService: {0}", e.Error);
@@ -62,7 +59,6 @@ namespace Waf.DotNetPad.Applications.Controllers
         public void Run()
         {
             fileController.Run();
-
             ShellViewModel.Show();
         }
 

@@ -13,18 +13,15 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
         private readonly string filePath;
         private readonly Lazy<Dictionary<string, string>> docComments;
 
-        
         public FileBasedXmlDocumentationProvider(string filePath)
         {
-            this.filePath = filePath;
+            this.filePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
             docComments = new Lazy<Dictionary<string, string>>(CreateDocComments, isThreadSafe: true);
         }
 
-
         public override bool Equals(object obj)
         {
-            var other = obj as FileBasedXmlDocumentationProvider;
-            return other != null && filePath == other.filePath;
+            return obj is FileBasedXmlDocumentationProvider other && filePath == other.filePath;
         }
 
         public override int GetHashCode()
@@ -34,8 +31,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
         
         protected override string GetDocumentationForSymbol(string documentationMemberID, CultureInfo preferredCulture, CancellationToken cancellationToken = default(CancellationToken))
         {
-            string docComment;
-            return docComments.Value.TryGetValue(documentationMemberID, out docComment) ? docComment : "";
+            return docComments.Value.TryGetValue(documentationMemberID, out var docComment) ? docComment : "";
         }
 
         private Dictionary<string, string> CreateDocComments()
@@ -46,12 +42,13 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
                 var foundPath = GetDocumentationFilePath(filePath);
                 if (!string.IsNullOrEmpty(foundPath))
                 {
-                    XDocument document = XDocument.Load(foundPath);
+                    var document = XDocument.Load(foundPath);
                     foreach (var element in document.Descendants("member"))
                     {
-                        if (element.Attribute("name") != null)
+                        var nameAttribute = element.Attribute("name");
+                        if (nameAttribute != null)
                         {
-                            commentsDictionary[element.Attribute("name").Value] = string.Concat(element.Nodes());
+                            commentsDictionary[nameAttribute.Value] = string.Concat(element.Nodes());
                         }
                     }
                 }

@@ -10,7 +10,7 @@ namespace Waf.DotNetPad.Domain
 
         public PerformanceTrace(string name)
         {
-            this.stopwatch = Stopwatch.StartNew();
+            stopwatch = Stopwatch.StartNew();
             this.name = name;
         }
 

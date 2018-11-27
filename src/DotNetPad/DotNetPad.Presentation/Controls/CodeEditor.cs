@@ -27,13 +27,11 @@ namespace Waf.DotNetPad.Presentation.Controls
         public static readonly DependencyProperty DocumentFileProperty =
             DependencyProperty.Register(nameof(DocumentFile), typeof(DocumentFile), typeof(CodeEditor), new FrameworkPropertyMetadata(null, DocumentFileChangedCallback));
 
-
         private readonly ErrorTextMarkerService errorMarkerService;
         private CompletionWindow completionWindow;
         private CancellationTokenSource completionCancellation;
         private volatile IWorkspaceService workspaceService;
         private volatile DocumentFile documentFile;
-
 
         public CodeEditor()
         {
@@ -51,24 +49,21 @@ namespace Waf.DotNetPad.Presentation.Controls
             IsVisibleChanged += IsVisibleChangedHandler;
         }
 
-
         public IWorkspaceService WorkspaceService
         {
-            get { return (IWorkspaceService)GetValue(WorkspaceServiceProperty); }
-            set { SetValue(WorkspaceServiceProperty, value); }
+            get => (IWorkspaceService)GetValue(WorkspaceServiceProperty);
+            set => SetValue(WorkspaceServiceProperty, value);
         }
 
         public DocumentFile DocumentFile
         {
-            get { return (DocumentFile)GetValue(DocumentFileProperty); }
-            set { SetValue(DocumentFileProperty, value); }
+            get => (DocumentFile)GetValue(DocumentFileProperty);
+            set => SetValue(DocumentFileProperty, value);
         }
-
 
         protected override void OnTextChanged(EventArgs e)
         {
             base.OnTextChanged(e);
-
             if (WorkspaceService != null && DocumentFile != null)
             {
                 WorkspaceService.UpdateText(DocumentFile, Text);
@@ -94,7 +89,6 @@ namespace Waf.DotNetPad.Presentation.Controls
         protected override async void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-
             if (e.Key == Key.Space && e.KeyboardDevice.Modifiers.HasFlag(ModifierKeys.Control)
                 && !e.KeyboardDevice.Modifiers.HasFlag(ModifierKeys.Shift))
             {
@@ -106,11 +100,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         private async Task ShowCompletionAsync(char? triggerChar)
         {
             completionCancellation.Cancel();
-
-            if (WorkspaceService == null || DocumentFile == null)
-            {
-                return;
-            }
+            if (WorkspaceService == null || DocumentFile == null) { return; }
 
             completionCancellation = new CancellationTokenSource();
             var cancellationToken = completionCancellation.Token;
@@ -126,10 +116,7 @@ namespace Waf.DotNetPad.Presentation.Controls
 
                     var completionList = await Task.Run(async () =>
                             await completionService.GetCompletionsAsync(document, position, cancellationToken: cancellationToken), cancellationToken);
-                    if (completionList == null)
-                    {
-                        return;
-                    }
+                    if (completionList == null) { return; }
 
                     cancellationToken.ThrowIfCancellationRequested();
 
@@ -224,8 +211,7 @@ namespace Waf.DotNetPad.Presentation.Controls
             var editor = (CodeEditor)d;
             editor.documentFile = (DocumentFile)e.NewValue;
 
-            var oldDocumentFile = e.OldValue as DocumentFile;
-            if (oldDocumentFile != null)
+            if (e.OldValue is DocumentFile oldDocumentFile)
             {
                 PropertyChangedEventManager.RemoveHandler(oldDocumentFile.Content, editor.DocumentContentPropertyChanged, "");
             }

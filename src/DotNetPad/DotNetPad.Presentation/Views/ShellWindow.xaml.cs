@@ -12,13 +12,11 @@ namespace Waf.DotNetPad.Presentation.Views
     {
         private readonly Lazy<ShellViewModel> viewModel;
         
-        
         public ShellWindow()
         {
             InitializeComponent();
             viewModel = new Lazy<ShellViewModel>(() => this.GetViewModel<ShellViewModel>());
         }
-
 
         public double VirtualScreenWidth => SystemParameters.VirtualScreenWidth;
 
@@ -26,7 +24,7 @@ namespace Waf.DotNetPad.Presentation.Views
 
         public bool IsMaximized
         {
-            get { return WindowState == WindowState.Maximized; }
+            get => WindowState == WindowState.Maximized;
             set
             {
                 if (value)
@@ -42,12 +40,11 @@ namespace Waf.DotNetPad.Presentation.Views
 
         public double BottomPanesHeight
         {
-            get { return bottomPanesRow.Height.Value; }
-            set { bottomPanesRow.Height = new GridLength(value); }
+            get => bottomPanesRow.Height.Value;
+            set => bottomPanesRow.Height = new GridLength(value);
         }
 
         private ShellViewModel ViewModel => viewModel.Value;
-
 
         private void NewFileButtonClick(object sender, RoutedEventArgs e)
         {

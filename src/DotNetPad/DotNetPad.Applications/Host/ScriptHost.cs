@@ -14,7 +14,6 @@ namespace Waf.DotNetPad.Applications.Host
         private AppDomain scriptAppDomain;
         private RemoteScriptRun remoteScriptRun;
 
-
         public async Task RunScriptAsync(byte[] inMemoryAssembly, byte[] inMemorySymbolStore, TextWriter outputTextWriter, TextWriter errorTextWriter, CancellationToken cancellationToken)
         {
             cancellationToken.Register(StopScriptCore);

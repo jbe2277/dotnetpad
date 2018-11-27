@@ -14,14 +14,12 @@ namespace Waf.DotNetPad.Applications.ViewModels
     {
         private readonly DelegateCommand showWebsiteCommand;
 
-
         [ImportingConstructor]
         public InfoViewModel(IInfoView view)
             : base(view)
         {
             showWebsiteCommand = new DelegateCommand(ShowWebsite);
         }
-
 
         public ICommand ShowWebsiteCommand => showWebsiteCommand;
 
@@ -34,7 +32,6 @@ namespace Waf.DotNetPad.Applications.ViewModels
         public string NetVersion { get; } = GetDotNetVersion();
 
         public bool Is64BitProcess => Environment.Is64BitProcess;
-
 
         public void ShowDialog(object owner)
         {

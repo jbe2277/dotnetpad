@@ -12,7 +12,6 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             InMemorySymbolStore = inMemorySymbolStore;
         }
 
-
         public IReadOnlyList<Diagnostic> Diagnostic { get; }
 
         public byte[] InMemoryAssembly { get; }

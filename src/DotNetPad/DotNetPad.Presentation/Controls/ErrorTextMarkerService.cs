@@ -17,11 +17,10 @@ namespace Waf.DotNetPad.Presentation.Controls
         private readonly TextSegmentCollection<ErrorTextMarker> markers;
         private ToolTip toolTip;
 
-
         public ErrorTextMarkerService(TextEditor textEditor)
         {
             this.textEditor = textEditor;
-            this.markers = new TextSegmentCollection<ErrorTextMarker>(textEditor.Document);
+            markers = new TextSegmentCollection<ErrorTextMarker>(textEditor.Document);
 
             TextView textView = textEditor.TextArea.TextView;
             textView.BackgroundRenderers.Add(this);
@@ -33,9 +32,7 @@ namespace Waf.DotNetPad.Presentation.Controls
             textView.VisualLinesChanged += TextViewVisualLinesChanged;
         }
 
-        
         public KnownLayer Layer => KnownLayer.Selection;
-
 
         public void Create(int offset, int length, string message)
         {
@@ -57,15 +54,10 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         public void Draw(TextView textView, DrawingContext drawingContext)
         {
-            if (!markers.Any() || !textView.VisualLinesValid)
-            {
-                return;
-            }
+            if (!markers.Any() || !textView.VisualLinesValid) return;
             var visualLines = textView.VisualLines;
-            if (visualLines.Count == 0)
-            {
-                return;
-            }
+            if (visualLines.Count == 0) return;
+            
             int viewStart = visualLines.First().FirstDocumentLine.Offset;
             int viewEnd = visualLines.Last().LastDocumentLine.EndOffset;
             foreach (ErrorTextMarker marker in markers.FindOverlappingSegments(viewStart, viewEnd - viewStart))

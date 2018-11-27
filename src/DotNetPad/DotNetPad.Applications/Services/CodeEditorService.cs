@@ -9,12 +9,10 @@ namespace Waf.DotNetPad.Applications.Services
     {
         public event EventHandler<SetCaretEventArgs> RequestSetCaret;
         
-
         public void SetCaret(DocumentFile documentFile, int line, int column)
         {
             OnRequestSetCaret(new SetCaretEventArgs(documentFile, line, column));
         }
-
 
         protected virtual void OnRequestSetCaret(SetCaretEventArgs e)
         {
@@ -31,7 +29,6 @@ namespace Waf.DotNetPad.Applications.Services
             Line = line;
             Column = column;
         }
-
 
         public DocumentFile DocumentFile { get; }
 

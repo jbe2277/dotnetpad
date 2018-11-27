@@ -7,7 +7,6 @@ namespace Waf.DotNetPad.Applications.Services
     {
         Workspace Workspace { get; }
 
-
         Document GetDocument(DocumentFile documentFile);
 
         void UpdateText(DocumentFile documentFile, string text);

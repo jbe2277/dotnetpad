@@ -11,7 +11,6 @@ namespace Waf.DotNetPad.Applications.ViewModels
     {
         private DocumentFile documentFile;
         
-
         [ImportingConstructor]
         public CodeEditorViewModel(ICodeEditorView view, IShellService shellService, IWorkspaceService workspaceService, CodeEditorService codeEditorService)
             : base(view)
@@ -21,7 +20,6 @@ namespace Waf.DotNetPad.Applications.ViewModels
             CodeEditorService = codeEditorService;
         }
 
-
         public IShellService ShellService { get; }
 
         public IWorkspaceService WorkspaceService { get; }
@@ -30,8 +28,8 @@ namespace Waf.DotNetPad.Applications.ViewModels
 
         public DocumentFile DocumentFile
         {
-            get { return documentFile; }
-            set { SetProperty(ref documentFile, value); }
+            get => documentFile;
+            set => SetProperty(ref documentFile, value);
         }
     }
 }

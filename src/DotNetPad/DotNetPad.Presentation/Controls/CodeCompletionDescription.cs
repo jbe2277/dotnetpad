@@ -9,19 +9,16 @@ namespace Waf.DotNetPad.Presentation.Controls
     {
         private ImmutableArray<TaggedText> summary;
 
-
         public CodeCompletionDescription(Task<ImmutableArray<TaggedText>> lazySummary)
         {
             UpdateSummary(lazySummary);
         }
 
-
         public ImmutableArray<TaggedText> Summary
         {
-            get { return summary; }
-            private set { SetProperty(ref summary, value); }
+            get => summary;
+            private set => SetProperty(ref summary, value);
         }
-
 
         private async void UpdateSummary(Task<ImmutableArray<TaggedText>> lazySummary)
         {

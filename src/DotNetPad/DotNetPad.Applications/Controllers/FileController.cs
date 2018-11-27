@@ -49,7 +49,6 @@ namespace Waf.DotNetPad.Applications.Controllers
         private DocumentFile lastActiveDocumentFile;
         private int documentCounter;
 
-
         [ImportingConstructor]
         public FileController(IMessageService messageService, IFileDialogService fileDialogService, IShellService shellService, IEnvironmentService environmentService, 
             IClipboardService clipboardService, FileService fileService, ExportFactory<SaveChangesViewModel> saveChangesViewModelFactory)
@@ -61,15 +60,15 @@ namespace Waf.DotNetPad.Applications.Controllers
             this.clipboardService = clipboardService;
             this.fileService = fileService;
             this.saveChangesViewModelFactory = saveChangesViewModelFactory;
-            this.newCSharpCommand = new DelegateCommand(NewCSharpFile);
-            this.newVisualBasicCommand = new DelegateCommand(NewVisualBasicFile);
-            this.newCSharpFromClipboardCommand = new DelegateCommand(NewCSharpFromClipboard, CanNewFromClipboard);
-            this.newVisualBasicFromClipboardCommand = new DelegateCommand(NewVisualBasicFromClipboard, CanNewFromClipboard);
-            this.openCommand = new DelegateCommand(OpenFile);
-            this.closeCommand = new DelegateCommand(CloseFile, CanCloseFile);
-            this.closeAllCommand = new DelegateCommand(CloseAll, CanCloseAll);
-            this.saveCommand = new DelegateCommand(SaveFile, CanSaveFile);
-            this.saveAsCommand = new DelegateCommand(SaveAsFile, CanSaveAsFile);
+            newCSharpCommand = new DelegateCommand(NewCSharpFile);
+            newVisualBasicCommand = new DelegateCommand(NewVisualBasicFile);
+            newCSharpFromClipboardCommand = new DelegateCommand(NewCSharpFromClipboard, CanNewFromClipboard);
+            newVisualBasicFromClipboardCommand = new DelegateCommand(NewVisualBasicFromClipboard, CanNewFromClipboard);
+            openCommand = new DelegateCommand(OpenFile);
+            closeCommand = new DelegateCommand(CloseFile, CanCloseFile);
+            closeAllCommand = new DelegateCommand(CloseAll, CanCloseAll);
+            saveCommand = new DelegateCommand(SaveFile, CanSaveFile);
+            saveAsCommand = new DelegateCommand(SaveAsFile, CanSaveAsFile);
 
             this.fileService.NewCSharpCommand = newCSharpCommand;
             this.fileService.NewVisualBasicCommand = newVisualBasicCommand;
@@ -81,19 +80,18 @@ namespace Waf.DotNetPad.Applications.Controllers
             this.fileService.SaveCommand = saveCommand;
             this.fileService.SaveAsCommand = saveAsCommand;
 
-            this.cSharpFileType = new FileType(Resources.CSharpFile, ".cs");
-            this.visualBasicFileType = new FileType(Resources.VisualBasicFile, ".vb");
-            this.allFilesType = new FileType(Resources.CodeFile, ".cs;*.vb");
-            this.observedDocumentFiles = new List<DocumentFile>();
+            cSharpFileType = new FileType(Resources.CSharpFile, ".cs");
+            visualBasicFileType = new FileType(Resources.VisualBasicFile, ".vb");
+            allFilesType = new FileType(Resources.CodeFile, ".cs;*.vb");
+            observedDocumentFiles = new List<DocumentFile>();
             PropertyChangedEventManager.AddHandler(fileService, FileServicePropertyChanged, "");
             shellService.Closing += ShellServiceClosing;
         }
 
-
         private DocumentFile ActiveDocumentFile
         {
-            get { return fileService.ActiveDocumentFile; }
-            set { fileService.ActiveDocumentFile = value; }
+            get => fileService.ActiveDocumentFile;
+            set => fileService.ActiveDocumentFile = value;
         }
 
         private DocumentFile LockedDocumentFile => fileService.LockedDocumentFile;
@@ -132,17 +130,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private static string TryGetCode(object commandParameter)
         {
-            string code = null;
-            var lazyParameter = commandParameter as Lazy<string>;
-            if (lazyParameter != null)
-            {
-                code = lazyParameter.Value;
-            }
-            else
-            {
-                code = commandParameter as string;
-            }
-            return code;
+            return commandParameter is Lazy<string> lazyParameter ? lazyParameter.Value : commandParameter as string;
         }
 
         private bool CanNewFromClipboard()
@@ -201,10 +189,9 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private void SaveAs(DocumentFile document)
         {
-            FileType fileType = document.DocumentType == DocumentType.CSharp ? cSharpFileType : visualBasicFileType;
-            string fileName = Path.GetFileNameWithoutExtension(document.FileName);
-
-            FileDialogResult result = fileDialogService.ShowSaveFileDialog(shellService.ShellView, fileType, fileName);
+            var fileType = document.DocumentType == DocumentType.CSharp ? cSharpFileType : visualBasicFileType;
+            var fileName = Path.GetFileNameWithoutExtension(document.FileName);
+            var result = fileDialogService.ShowSaveFileDialog(shellService.ShellView, fileType, fileName);
             if (result.IsValid)
             {
                 SaveCore(document, result.FileName);
@@ -219,7 +206,7 @@ namespace Waf.DotNetPad.Applications.Controllers
                 code = documentType == DocumentType.CSharp ? TemplateCode.InitialCSharpCode : TemplateCode.InitialVisualBasicCode;
                 startCaretPosition = documentType == DocumentType.CSharp ? TemplateCode.StartCaretPositionCSharp : TemplateCode.StartCaretPositionVisualBasic;
             }
-            string fileName = "Script" + (documentCounter + 1) + (documentType == DocumentType.CSharp ? ".cs" : ".vb");
+            var fileName = "Script" + (documentCounter + 1) + (documentType == DocumentType.CSharp ? ".cs" : ".vb");
             var document = new DocumentFile(documentType, fileName, code, startCaretPosition);
             document.ResetModified();
             fileService.AddDocument(document);
@@ -232,7 +219,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             var modifiedDocuments = documentsToClose.Where(d => d.Modified).ToArray();
             if (!modifiedDocuments.Any()) { return true; }
 
-            SaveChangesViewModel saveChangesViewModel = saveChangesViewModelFactory.CreateExport().Value;
+            var saveChangesViewModel = saveChangesViewModelFactory.CreateExport().Value;
             saveChangesViewModel.DocumentFiles = modifiedDocuments;
             bool? dialogResult = saveChangesViewModel.ShowDialog(shellService.ShellView);
             if (dialogResult == true)
@@ -242,7 +229,6 @@ namespace Waf.DotNetPad.Applications.Controllers
                     Save(document);
                 }
             }
-
             return dialogResult != null;
         }
 
@@ -254,7 +240,6 @@ namespace Waf.DotNetPad.Applications.Controllers
             {
                 var nextDocument = CollectionHelper.GetNextElementOrDefault(fileService.DocumentFiles, ActiveDocumentFile)
                     ?? fileService.DocumentFiles.Take(fileService.DocumentFiles.Count - 1).LastOrDefault();
-                
                 ActiveDocumentFile = nextDocument;
             }
             fileService.RemoveDocument(document);
@@ -272,7 +257,7 @@ namespace Waf.DotNetPad.Applications.Controllers
         {
             if (string.IsNullOrEmpty(fileName))
             {
-                FileDialogResult result = fileDialogService.ShowOpenFileDialog(shellService.ShellView, allFilesType);
+                var result = fileDialogService.ShowOpenFileDialog(shellService.ShellView, allFilesType);
                 if (result.IsValid)
                 {
                     fileName = result.FileName;
@@ -285,7 +270,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             }
 
             // Check if document is already opened
-            DocumentFile document = fileService.DocumentFiles.SingleOrDefault(d => d.FileName == fileName);
+            var document = fileService.DocumentFiles.SingleOrDefault(d => d.FileName == fileName);
             if (document == null)
             {
                 string fileExtension = Path.GetExtension(fileName);

@@ -14,21 +14,17 @@ namespace Waf.DotNetPad.Presentation.Views
     {
         private readonly Lazy<ErrorListViewModel> viewModel;
         
-
         public ErrorListView()
         {
             InitializeComponent();
             viewModel = new Lazy<ErrorListViewModel>(() => this.GetViewModel<ErrorListViewModel>());
         }
 
-
         public ErrorListViewModel ViewModel => viewModel.Value;
-
 
         private void ErrorListDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var element = e.OriginalSource as FrameworkElement;
-            if (element?.DataContext is ErrorListItem)
+            if (e.OriginalSource is FrameworkElement element && element?.DataContext is ErrorListItem)
             {
                 ViewModel.GotoErrorCommand.Execute(null);
             }

@@ -15,10 +15,8 @@ namespace Waf.DotNetPad.Applications.ViewModels
             DocumentService = documentService;
         }
 
-
         public IDocumentService DocumentService { get; }
 
-        
         public void AppendOutputText(DocumentFile document, string text)
         {
             ViewCore.AppendOutputText(document, text);

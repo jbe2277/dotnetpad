@@ -14,7 +14,6 @@ namespace Waf.DotNetPad.Presentation.DesignData
             Settings = new AppSettings();
         }
 
-        
         public AppSettings Settings { get; set; }
         
         public object ShellView { get; set; }
@@ -24,10 +23,8 @@ namespace Waf.DotNetPad.Presentation.DesignData
         public int Line { get; set; }
         
         public int Column { get; set; }
-        
 
         public event CancelEventHandler Closing;
-
 
         public void AddTaskToCompleteBeforeShutdown(Task task)
         {

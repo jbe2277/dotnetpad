@@ -12,7 +12,6 @@ namespace Waf.DotNetPad.Presentation.Views
             InitializeComponent();
         }
 
-
         public void ShowDialog(object owner)
         {
             Owner = owner as Window;

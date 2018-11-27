@@ -20,7 +20,6 @@ namespace Waf.DotNetPad.Presentation.Controls
         private readonly List<VersionedHighlightedLine> cachedLines;
         private readonly Task initialDelayTask;
 
-
         public CodeHighlighter(IDocument document, Func<Document> getDocument)
         {
             uiTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
@@ -30,14 +29,11 @@ namespace Waf.DotNetPad.Presentation.Controls
             initialDelayTask = CreateInitialDelayTask();
         }
 
-
         public IDocument Document { get; }
 
         public HighlightingColor DefaultTextColor => CodeHighlightColors.DefaultHighlightingColor;
 
-
         public event HighlightingStateChangedEventHandler HighlightingStateChanged;
-
 
         private static async Task CreateInitialDelayTask()
         {
@@ -65,10 +61,7 @@ namespace Waf.DotNetPad.Presentation.Controls
 
             foreach (var line in cachedLines.ToArray().Reverse())
             {
-                if (!line?.DocumentLine?.IsDeleted == true)
-                {
-                    break;
-                }
+                if (!line?.DocumentLine?.IsDeleted == true) { break; }
                 cachedLines.Remove(line);
             }
 
@@ -207,7 +200,6 @@ namespace Waf.DotNetPad.Presentation.Controls
             public ITextSourceVersion Version { get; }
 
             public CancellationToken CancellationToken { get; }
-
 
             public void Cancel()
             {

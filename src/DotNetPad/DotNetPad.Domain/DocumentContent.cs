@@ -9,23 +9,21 @@ namespace Waf.DotNetPad.Domain
         private string code;
         private IReadOnlyList<ErrorListItem> errorList;
 
-
         public DocumentContent()
         {
             errorList = Array.Empty<ErrorListItem>();
         }
         
-
         public string Code
         {
-            get { return code; }
-            set { SetProperty(ref code, value); }
+            get => code;
+            set => SetProperty(ref code, value);
         }
 
         public IReadOnlyList<ErrorListItem> ErrorList
         {
-            get { return errorList; }
-            set { SetProperty(ref errorList, value); }
+            get => errorList;
+            set => SetProperty(ref errorList, value);
         }
     }
 }

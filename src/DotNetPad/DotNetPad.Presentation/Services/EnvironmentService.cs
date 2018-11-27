@@ -15,7 +15,6 @@ namespace Waf.DotNetPad.Presentation.Services
         private readonly Lazy<string> appSettingsPath;
         private readonly Lazy<IReadOnlyList<string>> filesToLoad;
 
-
         public EnvironmentService()
         {
             profilePath = new Lazy<string>(() =>
@@ -24,7 +23,6 @@ namespace Waf.DotNetPad.Presentation.Services
                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ApplicationInfo.Company, ApplicationInfo.ProductName, "Settings"));
             filesToLoad = new Lazy<IReadOnlyList<string>>(() => Environment.GetCommandLineArgs().Skip(1).ToArray());
         }
-
 
         public string ProfilePath => profilePath.Value;
 

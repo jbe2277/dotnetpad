@@ -16,18 +16,16 @@ namespace Waf.DotNetPad.Applications.ViewModels
         private readonly DelegateCommand copyErrorCommand;
         private ErrorListItem selectedErrorListItem;
 
-        
         [ImportingConstructor]
         public ErrorListViewModel(IErrorListView view, IDocumentService documentService, ICodeEditorService codeEditorService, IClipboardService clipboardService)
             : base(view)
         {
-            this.DocumentService = documentService;
+            DocumentService = documentService;
             this.codeEditorService = codeEditorService;
             this.clipboardService = clipboardService;
-            this.gotoErrorCommand = new DelegateCommand(GotoError, CanGotoError);
-            this.copyErrorCommand = new DelegateCommand(CopyError, CanCopyError);
+            gotoErrorCommand = new DelegateCommand(GotoError, CanGotoError);
+            copyErrorCommand = new DelegateCommand(CopyError, CanCopyError);
         }
-
 
         public IDocumentService DocumentService { get; }
 
@@ -37,9 +35,9 @@ namespace Waf.DotNetPad.Applications.ViewModels
 
         public ErrorListItem SelectedErrorListItem
         {
-            get { return selectedErrorListItem; }
-            set 
-            { 
+            get => selectedErrorListItem;
+            set
+            {
                 if (SetProperty(ref selectedErrorListItem, value))
                 {
                     gotoErrorCommand.RaiseCanExecuteChanged();

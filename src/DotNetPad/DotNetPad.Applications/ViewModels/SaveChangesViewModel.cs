@@ -10,33 +10,28 @@ namespace Waf.DotNetPad.Applications.ViewModels
     [Export, PartCreationPolicy(CreationPolicy.NonShared)]
     public class SaveChangesViewModel : ViewModel<ISaveChangesView>
     {
-        private readonly DelegateCommand yesCommand;
-        private readonly DelegateCommand noCommand;
         private IReadOnlyList<DocumentFile> documentFiles;
         private bool? dialogResult;
-
 
         [ImportingConstructor]
         public SaveChangesViewModel(ISaveChangesView view)
             : base(view)
         {
-            this.yesCommand = new DelegateCommand(() => Close(true));
-            this.noCommand = new DelegateCommand(() => Close(false));
+            YesCommand = new DelegateCommand(() => Close(true));
+            NoCommand = new DelegateCommand(() => Close(false));
         }
-
 
         public static string Title => ApplicationInfo.ProductName;
 
-        public ICommand YesCommand => yesCommand;
+        public ICommand YesCommand { get; }
 
-        public ICommand NoCommand => noCommand;
+        public ICommand NoCommand { get; }
 
         public IReadOnlyList<DocumentFile> DocumentFiles
         {
-            get { return documentFiles; }
-            set { SetProperty(ref documentFiles, value); }
+            get => documentFiles;
+            set => SetProperty(ref documentFiles, value);
         }
-
 
         public bool? ShowDialog(object owner)
         {

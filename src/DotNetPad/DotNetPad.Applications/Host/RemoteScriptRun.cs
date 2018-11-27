@@ -8,7 +8,6 @@ namespace Waf.DotNetPad.Applications.Host
     {
         private Assembly scriptAssembly;
 
-
         public void Load(byte[] inMemoryAssembly, byte[] inMemorySymbolStore, TextWriter outputTextWriter, TextWriter errorTextWriter)
         {
             if (scriptAssembly != null) { throw new InvalidOperationException("Assembly is already loaded."); }

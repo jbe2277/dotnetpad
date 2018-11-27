@@ -19,14 +19,12 @@ namespace Waf.DotNetPad.Applications.Services
         private bool isClosingEventInitialized;
         private event CancelEventHandler closing;
 
-
         [ImportingConstructor]
         public ShellService(Lazy<IShellView> shellView)
         {
             this.shellView = shellView;
-            this.tasksToCompleteBeforeShutdown = new List<Task>();
+            tasksToCompleteBeforeShutdown = new List<Task>();
         }
-
 
         public AppSettings Settings { get; set; }
         
@@ -36,16 +34,15 @@ namespace Waf.DotNetPad.Applications.Services
 
         public int Line
         {
-            get { return line; }
-            set { SetProperty(ref line, value); }
+            get => line;
+            set => SetProperty(ref line, value);
         }
 
         public int Column
         {
-            get { return column; }
-            set { SetProperty(ref column, value); }
+            get => column;
+            set => SetProperty(ref column, value);
         }
-
 
         public event CancelEventHandler Closing
         {
@@ -56,7 +53,6 @@ namespace Waf.DotNetPad.Applications.Services
             }
             remove { closing -= value; }
         }
-
 
         public void AddTaskToCompleteBeforeShutdown(Task task)
         {

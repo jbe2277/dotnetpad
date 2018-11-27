@@ -9,12 +9,10 @@ namespace Waf.DotNetPad.Presentation.Controls
     {
         private readonly Func<Microsoft.CodeAnalysis.Document> getDocument;
 
-
         public CodeHighlightingColorizer(Func<Microsoft.CodeAnalysis.Document> getDocument)
         {
             this.getDocument = getDocument;
         }
-
 
         protected override IHighlighter CreateHighlighter(TextView textView, TextDocument document)
         {

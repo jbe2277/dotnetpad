@@ -11,7 +11,6 @@ namespace Waf.DotNetPad.Applications.DataModels
             LazyCodeEditorView = lazyCodeEditorView;
         }
 
-
         public DocumentFile DocumentFile { get; }
 
         public Lazy<object> LazyCodeEditorView { get; }

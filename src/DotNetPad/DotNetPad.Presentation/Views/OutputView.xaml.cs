@@ -22,7 +22,6 @@ namespace Waf.DotNetPad.Presentation.Views
         private readonly Lazy<OutputViewModel> viewModel;
         private readonly Dictionary<DocumentFile, Paragraph> outputParagraphs;
 
-        
         public OutputView()
         {
             InitializeComponent();
@@ -33,9 +32,7 @@ namespace Waf.DotNetPad.Presentation.Views
             outputBox.TextChanged += OutputBoxTextChanged;
         }
 
-
         private OutputViewModel ViewModel => viewModel.Value;
-
 
         public void AppendOutputText(DocumentFile document, string text)
         {
@@ -57,7 +54,7 @@ namespace Waf.DotNetPad.Presentation.Views
             Loaded -= FirstTimeLoadedHandler;
 
             CollectionChangedEventManager.AddHandler(ViewModel.DocumentService.DocumentFiles, DocumentsCollectionChanged);
-            foreach (DocumentFile documentFile in ViewModel.DocumentService.DocumentFiles)
+            foreach (var documentFile in ViewModel.DocumentService.DocumentFiles)
             {
                 outputParagraphs.Add(documentFile, new Paragraph());
             }

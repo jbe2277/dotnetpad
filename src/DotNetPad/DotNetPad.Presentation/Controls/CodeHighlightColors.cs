@@ -41,9 +41,7 @@ namespace Waf.DotNetPad.Presentation.Controls
             [ClassificationTypeNames.VerbatimStringLiteral] = stringHighlightingColor
         };
 
-
         public static HighlightingColor DefaultHighlightingColor => defaultHighlightingColor;
-
 
         public static Color GetColor(string classificationTypeName)
         {
@@ -57,8 +55,7 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         private static CachedHighlightingColor GetHighlightingColorCore(string classificationTypeName)
         {
-            CachedHighlightingColor color;
-            highlightingColorsMap.TryGetValue(classificationTypeName, out color);
+            highlightingColorsMap.TryGetValue(classificationTypeName, out var color);
             return color ?? defaultHighlightingColor;
         }
 

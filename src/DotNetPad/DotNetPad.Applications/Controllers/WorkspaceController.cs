@@ -42,7 +42,6 @@ namespace Waf.DotNetPad.Applications.Controllers
         private CancellationTokenSource runScriptCancellation;
         private DocumentFile runningDocument;
         
-
         [ImportingConstructor]
         public WorkspaceController(IDocumentService documentService, Lazy<ShellViewModel> shellViewModel, Lazy<ErrorListViewModel> errorListViewModel, 
             Lazy<OutputViewModel> outputViewModel, ScriptHost host)
@@ -62,7 +61,6 @@ namespace Waf.DotNetPad.Applications.Controllers
             documentIds = new Dictionary<DocumentFile, DocumentId>();
         }
         
-
         public Workspace Workspace => workspace;
 
         private ShellViewModel ShellViewModel => shellViewModel.Value;
@@ -73,7 +71,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private DocumentFile RunningDocument
         {
-            get { return runningDocument; }
+            get => runningDocument;
             set
             {
                 if (runningDocument != value)
@@ -95,7 +93,6 @@ namespace Waf.DotNetPad.Applications.Controllers
                 }
             }
         }
-
 
         public void Initialize()
         {
@@ -172,8 +169,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private void RemoveProject(DocumentFile documentFile)
         {
-            DocumentId documentId;
-            if (documentIds.TryGetValue(documentFile, out documentId))
+            if (documentIds.TryGetValue(documentFile, out var documentId))
             {
                 workspace.RemoveProject(documentId);
             }
