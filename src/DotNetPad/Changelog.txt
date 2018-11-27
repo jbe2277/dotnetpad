@@ -1,6 +1,13 @@
 Changelog
 ---------
 
+Version 2.8.0.100 (Release)
+- Update and simplify csproj files (e.g. PackageReference)
+- Update to Microsoft.CodeAnalysis 2.10.0
+- Update System.Buffers to 4.5.0
+- Update WAF to 5.0.0-alpha1
+
+
 Version 2.7.1.100 (Release)
 - Add support for System.Memory (Span<T>, Memory<T>)
 - Add support for System.Buffers (ArrayPool<T>)
