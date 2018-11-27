@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>Waf.DotNetPad.Applications</AssemblyName>
     <RootNamespace>Waf.DotNetPad.Applications</RootNamespace>
-    <TargetFrameworks>net461</TargetFrameworks>
+    <TargetFramework>net461</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <CodeAnalysisRuleSet>..\DotNetPad.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
