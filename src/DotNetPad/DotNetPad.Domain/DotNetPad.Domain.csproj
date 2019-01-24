@@ -3,15 +3,10 @@
   <PropertyGroup>
     <AssemblyName>Waf.DotNetPad.Domain</AssemblyName>
     <RootNamespace>Waf.DotNetPad.Domain</RootNamespace>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <CodeAnalysisRuleSet>..\DotNetPad.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Waf.Core" Version="5.0.0-alpha1" />
