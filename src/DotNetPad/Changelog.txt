@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+Version 3.0.0.100 (Release)
+- Support C# 8.0 and VB 16 (Preview 2)
+
+
 Version 2.8.0.100 (Release)
 - Update and simplify csproj files (e.g. PackageReference)
 - Update to Microsoft.CodeAnalysis 2.10.0
