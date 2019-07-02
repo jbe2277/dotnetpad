@@ -93,7 +93,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Waf.Wpf" Version="5.1.0-alpha1" />
+    <PackageReference Include="System.Waf.Wpf" Version="5.1.0-alpha2" />
     <PackageReference Include="AvalonEdit" Version="5.0.4" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="3.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic.Features" Version="3.1.0" />
