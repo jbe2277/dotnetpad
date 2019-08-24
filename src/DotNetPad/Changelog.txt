@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+Version 3.0.1.100 (Release)
+- Fix crash that could occur in code completion
+- Update to Microsoft.CodeAnalysis 3.2.1
+
+
 Version 3.0.0.100 (Release)
 - Support C# 8.0 and VB 16 (Preview 2)
 
