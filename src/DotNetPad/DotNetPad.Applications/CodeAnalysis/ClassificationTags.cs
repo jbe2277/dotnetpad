@@ -10,29 +10,21 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
         {
             switch (textTag)
             {
-                case TextTags.Keyword:
-                    return ClassificationTypeNames.Keyword;
-
-                case TextTags.Class:
-                    return ClassificationTypeNames.ClassName;
-
-                case TextTags.Delegate:
-                    return ClassificationTypeNames.DelegateName;
-
-                case TextTags.Enum:
-                    return ClassificationTypeNames.EnumName;
-
-                case TextTags.Interface:
-                    return ClassificationTypeNames.InterfaceName;
-
-                case TextTags.Module:
-                    return ClassificationTypeNames.ModuleName;
-
-                case TextTags.Struct:
-                    return ClassificationTypeNames.StructName;
-
-                case TextTags.TypeParameter:
-                    return ClassificationTypeNames.TypeParameterName;
+                case TextTags.Keyword: return ClassificationTypeNames.Keyword;
+                case TextTags.Class: return ClassificationTypeNames.ClassName;
+                case TextTags.Delegate: return ClassificationTypeNames.DelegateName;
+                case TextTags.Enum: return ClassificationTypeNames.EnumName;
+                case TextTags.EnumMember: return ClassificationTypeNames.EnumMemberName;
+                case TextTags.Interface: return ClassificationTypeNames.InterfaceName;
+                case TextTags.Module: return ClassificationTypeNames.ModuleName;
+                case TextTags.Struct: return ClassificationTypeNames.StructName;
+                case TextTags.TypeParameter: return ClassificationTypeNames.TypeParameterName;
+                case TextTags.ExtensionMethod: return ClassificationTypeNames.ExtensionMethodName;
+                case TextTags.NumericLiteral: return ClassificationTypeNames.NumericLiteral;
+                case TextTags.StringLiteral: return ClassificationTypeNames.StringLiteral;
+                case TextTags.Operator: return ClassificationTypeNames.Operator;
+                case TextTags.Punctuation: return ClassificationTypeNames.Punctuation;
+                case TextTags.Constant: return ClassificationTypeNames.ConstantName;
 
                 case TextTags.Alias:
                 case TextTags.Assembly:
@@ -48,21 +40,9 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
                 case TextTags.RangeVariable:
                     return ClassificationTypeNames.Identifier;
 
-                case TextTags.NumericLiteral:
-                    return ClassificationTypeNames.NumericLiteral;
-
-                case TextTags.StringLiteral:
-                    return ClassificationTypeNames.StringLiteral;
-
                 case TextTags.Space:
                 case TextTags.LineBreak:
                     return ClassificationTypeNames.WhiteSpace;
-
-                case TextTags.Operator:
-                    return ClassificationTypeNames.Operator;
-
-                case TextTags.Punctuation:
-                    return ClassificationTypeNames.Punctuation;
 
                 case TextTags.AnonymousTypeIndicator:
                 case TextTags.Text:
