@@ -59,7 +59,8 @@ namespace Waf.DotNetPad.Applications.ViewModels
                 int? releaseKey = (int?)key?.GetValue("Release");
                 string majorVersion = "";
 
-                if (releaseKey > 461814) majorVersion = "4.7.2 or later";
+                if (releaseKey > 528372) majorVersion = "4.8.0 or later";
+                else if (releaseKey >= 528040) majorVersion = "4.8.0";
                 else if (releaseKey >= 461808) majorVersion = "4.7.2";
                 else if (releaseKey >= 461308) majorVersion = "4.7.1";
                 else if (releaseKey >= 460798) majorVersion = "4.7";
