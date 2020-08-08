@@ -1,11 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <AssemblyName>Waf.DotNetPad.Applications</AssemblyName>
     <RootNamespace>Waf.DotNetPad.Applications</RootNamespace>
     <TargetFramework>net472</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <CodeAnalysisRuleSet>..\DotNetPad.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
@@ -46,5 +44,9 @@
     <Compile Remove="Samples\*.vb" />
     <EmbeddedResource Include="Samples\*.cs" />
     <EmbeddedResource Include="Samples\*.vb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 </Project>
