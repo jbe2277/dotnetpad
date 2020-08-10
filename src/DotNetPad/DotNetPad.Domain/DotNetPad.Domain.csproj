@@ -4,6 +4,7 @@
     <RootNamespace>Waf.DotNetPad.Domain</RootNamespace>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

@@ -6,7 +6,7 @@ namespace Waf.DotNetPad.Domain
 {
     public class DocumentContent : Model
     {
-        private string code;
+        private string code = "";
         private IReadOnlyList<ErrorListItem> errorList;
 
         public DocumentContent()

@@ -117,15 +117,13 @@ namespace System.Runtime.CompilerServices
             {
                 var project = CurrentSolution.GetProject(documentId.ProjectId);
                 var compilation = await project.GetCompilationAsync(cancellationToken);
-            
-                using (var peStream = new MemoryStream())
-                using (var pdbStream = new MemoryStream())
-                {
-                    var result = compilation.Emit(peStream, pdbStream);
-                    var inMemoryAssembly = result.Success ? peStream.ToArray() : null;
-                    var inMemorySymbolStore = result.Success ? pdbStream.ToArray() : null;
-                    return new BuildResult(result.Diagnostics, inMemoryAssembly, inMemorySymbolStore);
-                }
+
+                using var peStream = new MemoryStream();
+                using var pdbStream = new MemoryStream();
+                var result = compilation.Emit(peStream, pdbStream);
+                var inMemoryAssembly = result.Success ? peStream.ToArray() : null;
+                var inMemorySymbolStore = result.Success ? pdbStream.ToArray() : null;
+                return new BuildResult(result.Diagnostics, inMemoryAssembly, inMemorySymbolStore);
             }, cancellationToken);
         }
         

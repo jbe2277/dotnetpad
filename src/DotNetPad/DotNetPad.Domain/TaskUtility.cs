@@ -8,21 +8,18 @@ namespace Waf.DotNetPad.Domain
     {
         public static Task WaitForProperty<T>(T observable, Func<T, bool> predicate) where T : INotifyPropertyChanged
         {
-            if (predicate(observable))
-            {
-                return Task.FromResult((object)null);
-            }
+            if (predicate(observable)) return Task.CompletedTask;
             
-            var tcs = new TaskCompletionSource<object>();
-            PropertyChangedEventHandler handler = (sender, e) => 
+            var tcs = new TaskCompletionSource<object?>();
+            void Handler(object sender, PropertyChangedEventArgs e)
             {
                 if (predicate(observable))
                 {
                     tcs.SetResult(null);
                 }
-            };
-            observable.PropertyChanged += handler;
-            tcs.Task.ContinueWith(t => observable.PropertyChanged -= handler, TaskContinuationOptions.ExecuteSynchronously);
+            }
+            observable.PropertyChanged += Handler;
+            tcs.Task.ContinueWith(t => observable.PropertyChanged -= Handler, TaskContinuationOptions.ExecuteSynchronously);
             return tcs.Task;
         }
     }

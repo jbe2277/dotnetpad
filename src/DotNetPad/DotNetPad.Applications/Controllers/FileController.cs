@@ -288,18 +288,14 @@ namespace Waf.DotNetPad.Applications.Controllers
         private static DocumentContent LoadDocumentContent(DocumentFile documentFile)
         {            
             Trace.WriteLine(">> Load document content: " + documentFile.FileName);
-            using (var stream = new FileStream(documentFile.FileName, FileMode.Open, FileAccess.Read))
+            using var stream = new FileStream(documentFile.FileName, FileMode.Open, FileAccess.Read);
+            using var reader = new StreamReader(stream, Encoding.UTF8);
+            var documentContent = new DocumentContent()
             {
-                using (var reader = new StreamReader(stream, Encoding.UTF8))
-                {
-                    var documentContent = new DocumentContent()
-                    {
-                        Code = reader.ReadToEnd()
-                    };
-                    documentFile.ResetModified();
-                    return documentContent;
-                }
-            }
+                Code = reader.ReadToEnd()
+            };
+            documentFile.ResetModified();
+            return documentContent;
         }
 
         private void SaveCore(DocumentFile document, string fileName)
@@ -308,10 +304,8 @@ namespace Waf.DotNetPad.Applications.Controllers
             {
                 using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
                 {
-                    using (var writer = new StreamWriter(stream, Encoding.UTF8))
-                    {
-                        writer.Write(document.Content.Code);
-                    }
+                    using var writer = new StreamWriter(stream, Encoding.UTF8);
+                    writer.Write(document.Content.Code);
                 }
                 document.FileName = fileName;
                 document.ResetModified();

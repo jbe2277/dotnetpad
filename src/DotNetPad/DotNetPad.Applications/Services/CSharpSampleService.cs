@@ -25,11 +25,9 @@ namespace Waf.DotNetPad.Applications.Services
 
         internal static string GetSampleCode(string sampleFileName)
         {
-            using (var stream = typeof(CSharpSampleService).Assembly.GetManifestResourceStream("Waf.DotNetPad.Applications.Samples." + sampleFileName))
-            using (var reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
+            using var stream = typeof(CSharpSampleService).Assembly.GetManifestResourceStream("Waf.DotNetPad.Applications.Samples." + sampleFileName);
+            using var reader = new StreamReader(stream);
+            return reader.ReadToEnd();
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Waf.DotNetPad.Domain
             Trace.TraceError(format, arguments);
         }
 
-        public static string GetMemberName([CallerMemberName] string memberName = null)
+        public static string GetMemberName([CallerMemberName] string memberName = null!)
         {
             return memberName;
         }

@@ -8,16 +8,16 @@ namespace Waf.DotNetPad.Domain
     public class DocumentFile : Model
     {
         private readonly Func<DocumentFile, DocumentContent> contentFactory;
-        private readonly Lazy<DocumentContent> content;
-        private Exception loadError;
+        private readonly Lazy<DocumentContent?> content;
+        private Exception? loadError;
         private bool modified;
-        private string fileName;
+        private string? fileName;
 
         public DocumentFile(DocumentType documentType, Func<DocumentFile, DocumentContent> contentFactory, int startCaretPosition = 0)
         {
             DocumentType = documentType;
             this.contentFactory = contentFactory;
-            content = new Lazy<DocumentContent>(LoadContent);
+            content = new Lazy<DocumentContent?>(LoadContent);
             StartCaretPosition = startCaretPosition;
         }
 
@@ -32,13 +32,13 @@ namespace Waf.DotNetPad.Domain
 
         public bool IsContentLoaded => content.IsValueCreated;
 
-        public Exception LoadError
+        public Exception? LoadError
         {
             get => loadError;
             private set => SetProperty(ref loadError, value);
         }
 
-        public DocumentContent Content 
+        public DocumentContent? Content 
         { 
             get 
             {
@@ -60,7 +60,7 @@ namespace Waf.DotNetPad.Domain
             private set => SetProperty(ref modified, value);
         }
 
-        public string FileName
+        public string? FileName
         {
             get => fileName;
             set => SetProperty(ref fileName, value);
@@ -71,9 +71,9 @@ namespace Waf.DotNetPad.Domain
             Modified = false;
         }
 
-        private DocumentContent LoadContent()
+        private DocumentContent? LoadContent()
         {
-            DocumentContent content = null;
+            DocumentContent? content = null;
             try
             {
                 content = contentFactory(this);
@@ -84,10 +84,7 @@ namespace Waf.DotNetPad.Domain
                 LoadError = ex;
             }
             
-            if (content != null)
-            {
-                content.PropertyChanged += ContentPropertyChanged;
-            }
+            if (content != null) content.PropertyChanged += ContentPropertyChanged;
             return content;
         }
 
