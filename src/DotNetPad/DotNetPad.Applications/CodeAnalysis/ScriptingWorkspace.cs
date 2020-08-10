@@ -35,7 +35,6 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             typeof(ImmutableArray).Assembly,                        // System.Collections.Immutable
             typeof(Span<>).Assembly,                                // System.Memory
             typeof(ArrayPool<>).Assembly,                           // System.Buffers
-            Type.GetType("System.ValueTuple", throwOnError: false)?.Assembly ?? typeof(ValueTuple).Assembly     // System.ValueTuple
         };
 
         private readonly ConcurrentDictionary<string, DocumentationProvider> documentationProviders;
@@ -58,7 +57,6 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
 
             var projectId = ProjectId.CreateNewId();
 
-            // ValueTuple needs a separate assembly in .NET 4.6.x. But it is not needed anymore in .NET 4.7+ as it is included in mscorelib.
             var references = defaultReferences.Distinct().Select(CreateReference).ToList();
             references.Add(CreateReference(Assembly.Load("System.Runtime, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")));
             references.Add(CreateReference(Assembly.Load("netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51")));
@@ -66,9 +64,25 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             else if (language == LanguageNames.CSharp) { references.Add(CreateReference(typeof(RuntimeBinderException).Assembly)); }
 
             var projectInfo = ProjectInfo.Create(projectId, VersionStamp.Default, name, name + ".dll", language, metadataReferences: references,
-                parseOptions: language == LanguageNames.CSharp ? (ParseOptions)new CSharpParseOptions(Microsoft.CodeAnalysis.CSharp.LanguageVersion.CSharp8) 
+                parseOptions: language == LanguageNames.CSharp ? (ParseOptions)new CSharpParseOptions(Microsoft.CodeAnalysis.CSharp.LanguageVersion.CSharp9) 
                     : new VisualBasicParseOptions(Microsoft.CodeAnalysis.VisualBasic.LanguageVersion.VisualBasic16));
             OnProjectAdded(projectInfo);
+
+            if (language == LanguageNames.CSharp)
+            {
+                var servicesDocumentId = DocumentId.CreateNewId(projectId);
+                var servicesDocumentInfo = DocumentInfo.Create(servicesDocumentId, "CompilerServices.cs", loader: TextLoader.From(TextAndVersion.Create(SourceText.From(@"
+using System.ComponentModel;
+namespace System.Runtime.CompilerServices
+{
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static class IsExternalInit
+    {
+    }
+}
+", Encoding.UTF8), VersionStamp.Create())));
+                OnDocumentAdded(servicesDocumentInfo);
+            }
 
             var documentId = DocumentId.CreateNewId(projectId);
             var documentInfo = DocumentInfo.Create(documentId, fileName, 

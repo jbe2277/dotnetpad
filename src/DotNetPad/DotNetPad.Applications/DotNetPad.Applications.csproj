@@ -39,8 +39,4 @@
     <EmbeddedResource Include="Samples\*.cs" />
     <EmbeddedResource Include="Samples\*.vb" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
 </Project>
