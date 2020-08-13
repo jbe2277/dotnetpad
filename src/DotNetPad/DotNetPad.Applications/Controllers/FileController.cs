@@ -41,7 +41,7 @@ namespace Waf.DotNetPad.Applications.Controllers
         private readonly FileType visualBasicFileType;
         private readonly FileType allFilesType;
         private readonly List<DocumentFile> observedDocumentFiles;
-        private DocumentFile lastActiveDocumentFile;
+        private DocumentFile? lastActiveDocumentFile;
         private int documentCounter;
 
         [ImportingConstructor]
@@ -84,7 +84,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             set => fileService.ActiveDocumentFile = value;
         }
 
-        private DocumentFile LockedDocumentFile => fileService.LockedDocumentFile;
+        private DocumentFile? LockedDocumentFile => fileService.LockedDocumentFile;
 
         public void Initialize()
         {
@@ -151,23 +151,23 @@ namespace Waf.DotNetPad.Applications.Controllers
             OpenCore();
         }
 
-        private bool CanCloseFile() { return ActiveDocumentFile != null && ActiveDocumentFile != LockedDocumentFile; }
+        private bool CanCloseFile() => ActiveDocumentFile != null && ActiveDocumentFile != LockedDocumentFile;
 
-        private void CloseFile() { CloseCore(ActiveDocumentFile); }
+        private void CloseFile() => CloseCore(ActiveDocumentFile!);
 
-        private bool CanCloseAll() { return ActiveDocumentFile != null && LockedDocumentFile == null; }
+        private bool CanCloseAll() => ActiveDocumentFile != null && LockedDocumentFile == null;
 
-        private bool CanSaveFile() { return ActiveDocumentFile != null && ActiveDocumentFile.Modified; }
+        private bool CanSaveFile() => ActiveDocumentFile?.Modified == true;
 
-        private void SaveFile() { Save(ActiveDocumentFile); }
+        private void SaveFile() => Save(ActiveDocumentFile!);
 
-        private bool CanSaveAsFile() { return ActiveDocumentFile != null; }
+        private bool CanSaveAsFile() => ActiveDocumentFile != null;
 
-        private void SaveAsFile() { SaveAs(ActiveDocumentFile); }
+        private void SaveAsFile() => SaveAs(ActiveDocumentFile!);
 
         private void Save(DocumentFile document)
         {
-            if (Path.IsPathRooted(document.FileName))
+            if (document.FileName != null && Path.IsPathRooted(document.FileName))
             {
                 SaveCore(document, document.FileName);
             }
@@ -184,7 +184,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             var result = fileDialogService.ShowSaveFileDialog(shellService.ShellView, fileType, fileName);
             if (result.IsValid)
             {
-                SaveCore(document, result.FileName);
+                SaveCore(document, result.FileName!);
             }
         }
 
@@ -197,7 +197,7 @@ namespace Waf.DotNetPad.Applications.Controllers
                 startCaretPosition = documentType == DocumentType.CSharp ? TemplateCode.StartCaretPositionCSharp : TemplateCode.StartCaretPositionVisualBasic;
             }
             var fileName = "Script" + (documentCounter + 1) + (documentType == DocumentType.CSharp ? ".cs" : ".vb");
-            var document = new DocumentFile(documentType, fileName, code, startCaretPosition);
+            var document = new DocumentFile(documentType, fileName, code!, startCaretPosition);
             document.ResetModified();
             fileService.AddDocument(document);
             ActiveDocumentFile = document;
@@ -300,6 +300,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private void SaveCore(DocumentFile document, string fileName)
         {
+            if (document.Content is null) throw new InvalidOperationException("document.Content must not be null");
             try
             {
                 using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
@@ -399,7 +400,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             e.Cancel = !PrepareToClose(fileService.DocumentFiles);
             if (!e.Cancel)
             {
-                shellService.Settings.LastOpenedFiles = fileService.DocumentFiles.Select(x => x.FileName).Where(Path.IsPathRooted).ToArray();
+                shellService.Settings.LastOpenedFiles = fileService.DocumentFiles.Select(x => x.FileName!).Where(x => x != null && Path.IsPathRooted(x)).ToArray();
             }
         }
     }

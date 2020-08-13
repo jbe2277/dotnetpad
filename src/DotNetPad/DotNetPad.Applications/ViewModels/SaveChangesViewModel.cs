@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Waf.Applications;
 using System.Windows.Input;
@@ -10,7 +11,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
     [Export, PartCreationPolicy(CreationPolicy.NonShared)]
     public class SaveChangesViewModel : ViewModel<ISaveChangesView>
     {
-        private IReadOnlyList<DocumentFile> documentFiles;
+        private IReadOnlyList<DocumentFile> documentFiles = Array.Empty<DocumentFile>();
         private bool? dialogResult;
 
         [ImportingConstructor]

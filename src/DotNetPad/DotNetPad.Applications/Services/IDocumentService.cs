@@ -10,6 +10,6 @@ namespace Waf.DotNetPad.Applications.Services
         
         DocumentFile? ActiveDocumentFile { get; set; }
 
-        DocumentFile LockedDocumentFile { get; set; }
+        DocumentFile? LockedDocumentFile { get; set; }
     }
 }

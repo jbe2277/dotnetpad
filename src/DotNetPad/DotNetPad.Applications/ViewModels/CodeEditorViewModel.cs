@@ -9,7 +9,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
     [Export, PartCreationPolicy(CreationPolicy.NonShared)]
     public class CodeEditorViewModel : ViewModel<ICodeEditorView>
     {
-        private DocumentFile documentFile;
+        private DocumentFile documentFile = null!;
         
         [ImportingConstructor]
         public CodeEditorViewModel(ICodeEditorView view, IShellService shellService, IWorkspaceService workspaceService, CodeEditorService codeEditorService)

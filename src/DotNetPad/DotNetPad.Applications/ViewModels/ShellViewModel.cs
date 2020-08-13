@@ -17,16 +17,16 @@ namespace Waf.DotNetPad.Applications.ViewModels
     {
         private readonly AppSettings settings;
         private readonly DelegateCommand garbageCollectorCommand;
-        private object errorListView;
-        private object outputView;
-        private ICommand startCommand;
-        private ICommand stopCommand;
-        private ICommand formatDocumentCommand;
+        private object? errorListView;
+        private object? outputView;
+        private ICommand? startCommand;
+        private ICommand? stopCommand;
+        private ICommand? formatDocumentCommand;
         private bool isScriptRunning;
-        private ICommand infoCommand;
-        private object currentStatusView;
-        private IReadOnlyList<DocumentDataModel> documentDataModels;
-        private DocumentDataModel activeDocumentDataModel;
+        private ICommand infoCommand = null!;
+        private object? currentStatusView;
+        private IReadOnlyList<DocumentDataModel> documentDataModels = Array.Empty<DocumentDataModel>();
+        private DocumentDataModel? activeDocumentDataModel;
         private string? statusText;
         
         [ImportingConstructor]
@@ -69,31 +69,31 @@ namespace Waf.DotNetPad.Applications.ViewModels
 
         public IVisualBasicSampleService VisualBasicSampleService { get; }
 
-        public object ErrorListView
+        public object? ErrorListView
         {
             get => errorListView;
             set => SetProperty(ref errorListView, value);
         }
 
-        public object OutputView
+        public object? OutputView
         {
             get => outputView;
             set => SetProperty(ref outputView, value);
         }
 
-        public ICommand StartCommand
+        public ICommand? StartCommand
         {
             get => startCommand;
             set => SetProperty(ref startCommand, value);
         }
 
-        public ICommand StopCommand
+        public ICommand? StopCommand
         {
             get => stopCommand;
             set => SetProperty(ref stopCommand, value);
         }
 
-        public ICommand FormatDocumentCommand
+        public ICommand? FormatDocumentCommand
         {
             get => formatDocumentCommand;
             set => SetProperty(ref formatDocumentCommand, value);
@@ -113,7 +113,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
 
         public ICommand GarbageCollectorCommand => garbageCollectorCommand;
 
-        public object CurrentStatusView
+        public object? CurrentStatusView
         {
             get => currentStatusView;
             private set => SetProperty(ref currentStatusView, value);
@@ -137,7 +137,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
             set => SetProperty(ref documentDataModels, value);
         }
 
-        public DocumentDataModel ActiveDocumentDataModel
+        public DocumentDataModel? ActiveDocumentDataModel
         {
             get => activeDocumentDataModel;
             set

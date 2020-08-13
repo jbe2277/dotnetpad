@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using Waf.DotNetPad.Applications.Properties;
 
 namespace Waf.DotNetPad.Applications.Services
 {
     public interface IShellService : INotifyPropertyChanged
     {
-        AppSettings? Settings { get; }
+        AppSettings Settings { get; }
         
         object ShellView { get; }
         

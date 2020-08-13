@@ -14,7 +14,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
         private readonly IClipboardService clipboardService;
         private readonly DelegateCommand gotoErrorCommand;
         private readonly DelegateCommand copyErrorCommand;
-        private ErrorListItem selectedErrorListItem;
+        private ErrorListItem? selectedErrorListItem;
 
         [ImportingConstructor]
         public ErrorListViewModel(IErrorListView view, IDocumentService documentService, ICodeEditorService codeEditorService, IClipboardService clipboardService)
@@ -33,7 +33,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
 
         public ICommand CopyErrorCommand => copyErrorCommand;
 
-        public ErrorListItem SelectedErrorListItem
+        public ErrorListItem? SelectedErrorListItem
         {
             get => selectedErrorListItem;
             set
@@ -46,24 +46,12 @@ namespace Waf.DotNetPad.Applications.ViewModels
             }
         }
 
-        private bool CanGotoError()
-        {
-            return SelectedErrorListItem != null;
-        }
+        private bool CanGotoError() => DocumentService.ActiveDocumentFile != null && SelectedErrorListItem != null;
 
-        private void GotoError()
-        {
-            codeEditorService.SetCaret(DocumentService.ActiveDocumentFile, SelectedErrorListItem.StartLine, SelectedErrorListItem.StartColumn);
-        }
+        private void GotoError() => codeEditorService.SetCaret(DocumentService.ActiveDocumentFile!, SelectedErrorListItem!.StartLine, SelectedErrorListItem.StartColumn);
 
-        private bool CanCopyError()
-        {
-            return SelectedErrorListItem != null;
-        }
+        private bool CanCopyError() => SelectedErrorListItem != null;
 
-        private void CopyError()
-        {
-            clipboardService.SetText(SelectedErrorListItem.Description);
-        }
+        private void CopyError() => clipboardService.SetText(SelectedErrorListItem!.Description);
     }
 }

@@ -22,7 +22,7 @@ namespace Waf.DotNetPad.Applications.Services
             this.shellView = shellView;
         }
 
-        public AppSettings? Settings { get; set; }
+        public AppSettings Settings { get; set; } = null!;
         
         public object ShellView => shellView.Value;
 

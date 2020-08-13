@@ -27,7 +27,7 @@ namespace Waf.DotNetPad.Applications.Properties
         public double BottomPanesHeight { get; set; }
 
         [DataMember]
-        public IReadOnlyList<string> LastOpenedFiles { get; set; }
+        public IReadOnlyList<string> LastOpenedFiles { get; set; } = Array.Empty<string>();
 
 
         protected override void SetDefaultValues()

@@ -14,16 +14,16 @@ namespace Waf.DotNetPad.Applications.Services
         private readonly ObservableCollection<DocumentFile> documentFiles;
         private readonly ReadOnlyObservableList<DocumentFile> readOnlyDocumentFiles;
         private DocumentFile? activeDocumentFile;
-        private DocumentFile lockedDocumentFile;
-        private ICommand newCSharpCommand;
-        private ICommand newVisualBasicCommand;
-        private DelegateCommand newCSharpFromClipboardCommand;
-        private DelegateCommand newVisualBasicFromClipboardCommand;
-        private ICommand openCommand;
-        private ICommand closeCommand;
-        private ICommand closeAllCommand;
-        private ICommand saveCommand;
-        private ICommand saveAsCommand;
+        private DocumentFile? lockedDocumentFile;
+        private ICommand newCSharpCommand = null!;
+        private ICommand newVisualBasicCommand = null!;
+        private DelegateCommand newCSharpFromClipboardCommand = null!;
+        private DelegateCommand newVisualBasicFromClipboardCommand = null!;
+        private ICommand openCommand = null!;
+        private ICommand closeCommand = null!;
+        private ICommand closeAllCommand = null!;
+        private ICommand saveCommand = null!;
+        private ICommand saveAsCommand = null!;
 
         [ImportingConstructor]
         public FileService()
@@ -51,7 +51,7 @@ namespace Waf.DotNetPad.Applications.Services
             }
         }
 
-        public DocumentFile LockedDocumentFile
+        public DocumentFile? LockedDocumentFile
         {
             get => lockedDocumentFile;
             set => SetProperty(ref lockedDocumentFile, value);

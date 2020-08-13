@@ -7,7 +7,7 @@ namespace Waf.DotNetPad.Applications.Services
     [Export(typeof(ICodeEditorService)), Export]
     public class CodeEditorService : ICodeEditorService
     {
-        public event EventHandler<SetCaretEventArgs> RequestSetCaret;
+        public event EventHandler<SetCaretEventArgs>? RequestSetCaret;
         
         public void SetCaret(DocumentFile documentFile, int line, int column)
         {
