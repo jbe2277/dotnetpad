@@ -27,7 +27,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
         private object currentStatusView;
         private IReadOnlyList<DocumentDataModel> documentDataModels;
         private DocumentDataModel activeDocumentDataModel;
-        private string statusText;
+        private string? statusText;
         
         [ImportingConstructor]
         public ShellViewModel(IShellView view, IShellService shellService, IFileService fileService, ICSharpSampleService csharpSampleService, 
@@ -149,7 +149,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
             }
         }
 
-        public string StatusText
+        public string? StatusText
         {
             get => statusText;
             set

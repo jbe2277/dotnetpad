@@ -78,7 +78,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             shellService.Closing += ShellServiceClosing;
         }
 
-        private DocumentFile ActiveDocumentFile
+        private DocumentFile? ActiveDocumentFile
         {
             get => fileService.ActiveDocumentFile;
             set => fileService.ActiveDocumentFile = value;
@@ -108,17 +108,17 @@ namespace Waf.DotNetPad.Applications.Controllers
             }
         }
 
-        private void NewCSharpFile(object commandParameter = null) 
+        private void NewCSharpFile(object? commandParameter = null) 
         {
             NewCore(DocumentType.CSharp, TryGetCode(commandParameter));
         }
 
-        private void NewVisualBasicFile(object commandParameter = null)
+        private void NewVisualBasicFile(object? commandParameter = null)
         {
             NewCore(DocumentType.VisualBasic, TryGetCode(commandParameter));
         }
 
-        private static string TryGetCode(object commandParameter)
+        private static string? TryGetCode(object? commandParameter)
         {
             return commandParameter is Lazy<string> lazyParameter ? lazyParameter.Value : commandParameter as string;
         }
@@ -188,7 +188,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             }
         }
 
-        private void NewCore(DocumentType documentType, string code = null)
+        private void NewCore(DocumentType documentType, string? code = null)
         {
             int startCaretPosition = 0;
             if (string.IsNullOrEmpty(code))
@@ -243,7 +243,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             fileService.ClearDocuments();
         }
         
-        private DocumentFile OpenCore(string fileName = null, bool setActiveDocument = true)
+        private DocumentFile? OpenCore(string? fileName = null, bool setActiveDocument = true)
         {
             if (string.IsNullOrEmpty(fileName))
             {

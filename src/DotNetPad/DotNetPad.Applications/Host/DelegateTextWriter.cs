@@ -36,7 +36,7 @@ namespace Waf.DotNetPad.Applications.Host
             appendTextAction(value);
         }
 
-        public override object InitializeLifetimeService()
+        public override object? InitializeLifetimeService()
         {
             return null;
         }

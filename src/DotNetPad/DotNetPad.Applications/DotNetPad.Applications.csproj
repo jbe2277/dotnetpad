@@ -4,6 +4,7 @@
     <RootNamespace>Waf.DotNetPad.Applications</RootNamespace>
     <TargetFramework>net472</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

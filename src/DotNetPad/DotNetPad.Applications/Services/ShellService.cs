@@ -14,7 +14,7 @@ namespace Waf.DotNetPad.Applications.Services
         private int line;
         private int column;
         private bool isClosingEventInitialized;
-        private event CancelEventHandler closing;
+        private event CancelEventHandler? closing;
 
         [ImportingConstructor]
         public ShellService(Lazy<IShellView> shellView)
@@ -22,7 +22,7 @@ namespace Waf.DotNetPad.Applications.Services
             this.shellView = shellView;
         }
 
-        public AppSettings Settings { get; set; }
+        public AppSettings? Settings { get; set; }
         
         public object ShellView => shellView.Value;
 
@@ -38,7 +38,7 @@ namespace Waf.DotNetPad.Applications.Services
             set => SetProperty(ref column, value);
         }
 
-        public event CancelEventHandler Closing
+        public event CancelEventHandler? Closing
         {
             add
             {

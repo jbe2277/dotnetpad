@@ -10,9 +10,9 @@ namespace Waf.DotNetPad.Applications.Host
     public class ScriptHost
     {
         private readonly object fieldsLock = new object();
-        private byte[] loadedAssembly;
-        private AppDomain scriptAppDomain;
-        private RemoteScriptRun remoteScriptRun;
+        private byte[]? loadedAssembly;
+        private AppDomain? scriptAppDomain;
+        private RemoteScriptRun? remoteScriptRun;
 
         public async Task RunScriptAsync(byte[] inMemoryAssembly, byte[] inMemorySymbolStore, TextWriter outputTextWriter, TextWriter errorTextWriter, CancellationToken cancellationToken)
         {
@@ -22,7 +22,7 @@ namespace Waf.DotNetPad.Applications.Host
 
         private void RunScriptCore(byte[] inMemoryAssembly, byte[] inMemorySymbolStore, TextWriter outputTextWriter, TextWriter errorTextWriter)
         {
-            RemoteScriptRun scriptRun;
+            RemoteScriptRun? scriptRun;
             lock (fieldsLock)
             {
                 if (inMemoryAssembly != loadedAssembly)

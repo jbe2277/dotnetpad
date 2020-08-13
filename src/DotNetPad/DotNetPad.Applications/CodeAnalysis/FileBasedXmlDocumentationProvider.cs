@@ -19,7 +19,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             docComments = new Lazy<Dictionary<string, string>>(CreateDocComments, isThreadSafe: true);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is FileBasedXmlDocumentationProvider other && filePath == other.filePath;
         }
@@ -29,7 +29,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             return filePath.GetHashCode();
         }
         
-        protected override string GetDocumentationForSymbol(string documentationMemberID, CultureInfo preferredCulture, CancellationToken cancellationToken = default(CancellationToken))
+        protected override string GetDocumentationForSymbol(string documentationMemberID, CultureInfo preferredCulture, CancellationToken cancellationToken = default)
         {
             return docComments.Value.TryGetValue(documentationMemberID, out var docComment) ? docComment : "";
         }
@@ -60,12 +60,12 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             return commentsDictionary;
         }
 
-        private static string GetDocumentationFilePath(string originalPath)
+        private static string? GetDocumentationFilePath(string originalPath)
         {
             if (File.Exists(originalPath)) { return originalPath; }
             
             var fileName = Path.GetFileName(originalPath);
-            string path = null;
+            string? path = null;
             foreach (var version in new[] { @"v4.X", @"v4.7.1", @"v4.7", @"v4.6.1", @"v4.6", @"v4.5.2", @"v4.5.1", @"v4.5" })
             {
                 path = GetNetFrameworkPathOrNull(fileName, version);
@@ -78,7 +78,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             return path;
         }
 
-        private static string GetNetFrameworkPathOrNull(string fileName, string version)
+        private static string? GetNetFrameworkPathOrNull(string fileName, string version)
         {
             const string netFrameworkPathPart = @"Reference Assemblies\Microsoft\Framework\.NETFramework";
             var newPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), netFrameworkPathPart, version, fileName);

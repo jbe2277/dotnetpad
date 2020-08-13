@@ -38,9 +38,9 @@ namespace Waf.DotNetPad.Applications.ViewModels
             ViewCore.ShowDialog(owner);
         }
 
-        private void ShowWebsite(object parameter)
+        private void ShowWebsite(object? parameter)
         {
-            string url = (string)parameter;
+            var url = (parameter as string) ?? "";
             try
             {
                 Process.Start(url);
@@ -53,23 +53,21 @@ namespace Waf.DotNetPad.Applications.ViewModels
 
         private static string GetDotNetVersion()
         {
-            using (var baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
-            using (var key = baseKey.OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\"))
-            {
-                int? releaseKey = (int?)key?.GetValue("Release");
-                string majorVersion = "";
+            using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+            using var key = baseKey.OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\");
+            int? releaseKey = (int?)key?.GetValue("Release");
+            string majorVersion = "";
 
-                if (releaseKey > 528372) majorVersion = "4.8.0 or later";
-                else if (releaseKey >= 528040) majorVersion = "4.8.0";
-                else if (releaseKey >= 461808) majorVersion = "4.7.2";
-                else if (releaseKey >= 461308) majorVersion = "4.7.1";
-                else if (releaseKey >= 460798) majorVersion = "4.7";
-                else if (releaseKey >= 394802) majorVersion = "4.6.2";
-                else if (releaseKey >= 394254) majorVersion = "4.6.1";
+            if (releaseKey > 528372) majorVersion = "4.8.0 or later";
+            else if (releaseKey >= 528040) majorVersion = "4.8.0";
+            else if (releaseKey >= 461808) majorVersion = "4.7.2";
+            else if (releaseKey >= 461308) majorVersion = "4.7.1";
+            else if (releaseKey >= 460798) majorVersion = "4.7";
+            else if (releaseKey >= 394802) majorVersion = "4.6.2";
+            else if (releaseKey >= 394254) majorVersion = "4.6.1";
 
-                if (releaseKey != null) majorVersion += " (" + releaseKey + ")";
-                return majorVersion;
-            }
+            if (releaseKey != null) majorVersion += " (" + releaseKey + ")";
+            return majorVersion;
         }
     }
 }

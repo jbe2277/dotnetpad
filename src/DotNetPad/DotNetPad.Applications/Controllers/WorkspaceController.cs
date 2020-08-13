@@ -115,7 +115,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             ShellViewModel.IsErrorListViewVisible = true;
         }
 
-        public Document GetDocument(DocumentFile documentFile)
+        public Document? GetDocument(DocumentFile documentFile)
         {
             var documentId = documentIds[documentFile];
             return workspace.CurrentSolution.GetDocument(documentId);

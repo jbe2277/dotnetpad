@@ -8,7 +8,7 @@ namespace Waf.DotNetPad.Applications.Services
     {
         IReadOnlyObservableList<DocumentFile> DocumentFiles { get; }
         
-        DocumentFile ActiveDocumentFile { get; set; }
+        DocumentFile? ActiveDocumentFile { get; set; }
 
         DocumentFile LockedDocumentFile { get; set; }
     }

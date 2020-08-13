@@ -13,7 +13,7 @@ namespace Waf.DotNetPad.Applications.Services
     {
         private readonly ObservableCollection<DocumentFile> documentFiles;
         private readonly ReadOnlyObservableList<DocumentFile> readOnlyDocumentFiles;
-        private DocumentFile activeDocumentFile;
+        private DocumentFile? activeDocumentFile;
         private DocumentFile lockedDocumentFile;
         private ICommand newCSharpCommand;
         private ICommand newVisualBasicCommand;
@@ -34,7 +34,7 @@ namespace Waf.DotNetPad.Applications.Services
 
         public IReadOnlyObservableList<DocumentFile> DocumentFiles => readOnlyDocumentFiles;
 
-        public DocumentFile ActiveDocumentFile
+        public DocumentFile? ActiveDocumentFile
         {
             get => activeDocumentFile;
             set

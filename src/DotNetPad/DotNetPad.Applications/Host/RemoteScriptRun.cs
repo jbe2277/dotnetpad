@@ -6,7 +6,7 @@ namespace Waf.DotNetPad.Applications.Host
 {
     public class RemoteScriptRun : MarshalByRefObject
     {
-        private Assembly scriptAssembly;
+        private Assembly? scriptAssembly;
 
         public void Load(byte[] inMemoryAssembly, byte[] inMemorySymbolStore, TextWriter outputTextWriter, TextWriter errorTextWriter)
         {
@@ -36,7 +36,7 @@ namespace Waf.DotNetPad.Applications.Host
             }
         }
 
-        public override object InitializeLifetimeService()
+        public override object? InitializeLifetimeService()
         {
             return null;
         }
