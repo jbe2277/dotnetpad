@@ -10,9 +10,9 @@ namespace Waf.DotNetPad.Presentation.DesignData
         {
             DocumentFiles = new[]
             {
-                new DocumentFile(DocumentType.CSharp, null) { FileName = "Script 1.cs" },
-                new DocumentFile(DocumentType.CSharp, null) { FileName = "Script 2.cs" },
-                new DocumentFile(DocumentType.VisualBasic, null) { FileName = @"C:\Users\Luke\Documents\Waf DotNetPad\Script 3.vb" },
+                new DocumentFile(DocumentType.CSharp, null!) { FileName = "Script 1.cs" },
+                new DocumentFile(DocumentType.CSharp, null!) { FileName = "Script 2.cs" },
+                new DocumentFile(DocumentType.VisualBasic, null!) { FileName = @"C:\Users\Luke\Documents\Waf DotNetPad\Script 3.vb" },
             };
         }
 

@@ -29,11 +29,11 @@ namespace Waf.DotNetPad.Presentation.Controls
             DependencyProperty.Register(nameof(DocumentFile), typeof(DocumentFile), typeof(CodeEditor), new FrameworkPropertyMetadata(null, DocumentFileChangedCallback));
 
         private readonly ErrorTextMarkerService errorMarkerService;
-        private CompletionWindow completionWindow;
+        private CompletionWindow? completionWindow;
         private CancellationTokenSource completionCancellation;
-        private IWorkspaceService workspaceService;
-        private DocumentFile documentFile;
-        private IWeakEventProxy documentContentPropertyChangedProxy;
+        private IWorkspaceService? workspaceService;
+        private DocumentFile? documentFile;
+        private IWeakEventProxy? documentContentPropertyChangedProxy;
 
         public CodeEditor()
         {
@@ -42,7 +42,7 @@ namespace Waf.DotNetPad.Presentation.Controls
 
             if (!WafConfiguration.IsInDesignMode)
             {
-                TextArea.TextView.LineTransformers.Insert(0, new CodeHighlightingColorizer(() => workspaceService.GetDocument(documentFile)));
+                TextArea.TextView.LineTransformers.Insert(0, new CodeHighlightingColorizer(() => workspaceService!.GetDocument(documentFile!)));
             }
             TextArea.TextEntering += TextAreaTextEntering;
             TextArea.TextEntered += TextAreaTextEntered;
@@ -167,7 +167,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         private void UpdateErrorMarkers()
         {
             errorMarkerService.Clear();
-            foreach (var errorListItem in DocumentFile.Content.ErrorList)
+            foreach (var errorListItem in DocumentFile.Content?.ErrorList ?? Array.Empty<ErrorListItem>())
             {
                 var startOffset = Document.GetOffset(new TextLocation(errorListItem.StartLine + 1, errorListItem.StartColumn + 1));
                 var endOffset = Document.GetOffset(new TextLocation(errorListItem.EndLine + 1, errorListItem.EndColumn + 1));
@@ -194,7 +194,7 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         private bool UpdateCode()
         {
-            var code = DocumentFile.Content.Code;
+            var code = DocumentFile.Content?.Code;
             if (Text != code)
             {
                 Text = code;

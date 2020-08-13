@@ -15,7 +15,7 @@ namespace Waf.DotNetPad.Presentation.Controls
     {
         private readonly TextEditor textEditor;
         private readonly TextSegmentCollection<ErrorTextMarker> markers;
-        private ToolTip toolTip;
+        private ToolTip? toolTip;
 
         public ErrorTextMarkerService(TextEditor textEditor)
         {

@@ -7,7 +7,7 @@ namespace Waf.DotNetPad.Presentation.DesignData
 {
     public class SampleShellViewModel : ShellViewModel
     {
-        public SampleShellViewModel() : base(new MockShellView(), new MockShellService(), new MockFileService(), null, null)
+        public SampleShellViewModel() : base(new MockShellView(), new MockShellService(), new MockFileService(), null!, null!)
         {
         }
 
@@ -31,9 +31,9 @@ namespace Waf.DotNetPad.Presentation.DesignData
             public double BottomPanesHeight { get; set; }
 
 
-            public event CancelEventHandler Closing;
+            public event CancelEventHandler? Closing;
 
-            public event EventHandler Closed;
+            public event EventHandler? Closed;
 
 
             public void Show()

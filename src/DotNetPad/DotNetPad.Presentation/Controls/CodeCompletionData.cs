@@ -17,7 +17,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         private readonly Lazy<object> description;
         private readonly Func<Task<ImmutableArray<TaggedText>>> getDescriptionFunc;
         private readonly ImmutableArray<string> tags;
-        private readonly Lazy<ImageSource> image;
+        private readonly Lazy<ImageSource?> image;
 
         public CodeCompletionData(string text, Func<Task<ImmutableArray<TaggedText>>> getDescriptionFunc, ImmutableArray<string> tags)
         {
@@ -25,7 +25,7 @@ namespace Waf.DotNetPad.Presentation.Controls
             description = new Lazy<object>(CreateDescription);
             this.getDescriptionFunc = getDescriptionFunc;
             this.tags = tags;
-            image = new Lazy<ImageSource>(GetImage);
+            image = new Lazy<ImageSource?>(GetImage);
         }
 
         public double Priority => 0;
@@ -36,7 +36,7 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         public object Content => Text;
 
-        public ImageSource Image => image.Value;
+        public ImageSource? Image => image.Value;
 
         public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs)
         {
@@ -48,44 +48,29 @@ namespace Waf.DotNetPad.Presentation.Controls
             return new CodeCompletionDescription(getDescriptionFunc());
         }
 
-        private ImageSource GetImage()
+        private ImageSource? GetImage()
         {
             var tag = tags.FirstOrDefault();
-            if (tag == null) { return null; }
-            switch (tag)
+            if (tag == null) return null;
+            return tag switch
             {
-                case WellKnownTags.Class:
-                    return GetImage("ClassImageSource");
-                case WellKnownTags.Constant:
-                    return GetImage("ConstantImageSource");
-                case WellKnownTags.Delegate:
-                    return GetImage("DelegateImageSource");
-                case WellKnownTags.Enum:
-                    return GetImage("EnumImageSource");
-                case WellKnownTags.EnumMember:
-                    return GetImage("EnumItemImageSource");
-                case WellKnownTags.Event:
-                    return GetImage("EventImageSource");
-                case WellKnownTags.ExtensionMethod:
-                    return GetImage("ExtensionMethodImageSource");
-                case WellKnownTags.Field:
-                    return GetImage("FieldImageSource");
-                case WellKnownTags.Interface:
-                    return GetImage("InterfaceImageSource");
-                case WellKnownTags.Keyword:
-                    return GetImage("KeywordImageSource");
-                case WellKnownTags.Method:
-                    return GetImage("MethodImageSource");
-                case WellKnownTags.Module:
-                    return GetImage("ModuleImageSource");
-                case WellKnownTags.Namespace:
-                    return GetImage("NamespaceImageSource");
-                case WellKnownTags.Property:
-                    return GetImage("PropertyImageSource");
-                case WellKnownTags.Structure:
-                    return GetImage("StructureImageSource");
-            }
-            return null;
+                WellKnownTags.Class => GetImage("ClassImageSource"),
+                WellKnownTags.Constant => GetImage("ConstantImageSource"),
+                WellKnownTags.Delegate => GetImage("DelegateImageSource"),
+                WellKnownTags.Enum => GetImage("EnumImageSource"),
+                WellKnownTags.EnumMember => GetImage("EnumItemImageSource"),
+                WellKnownTags.Event => GetImage("EventImageSource"),
+                WellKnownTags.ExtensionMethod => GetImage("ExtensionMethodImageSource"),
+                WellKnownTags.Field => GetImage("FieldImageSource"),
+                WellKnownTags.Interface => GetImage("InterfaceImageSource"),
+                WellKnownTags.Keyword => GetImage("KeywordImageSource"),
+                WellKnownTags.Method => GetImage("MethodImageSource"),
+                WellKnownTags.Module => GetImage("ModuleImageSource"),
+                WellKnownTags.Namespace => GetImage("NamespaceImageSource"),
+                WellKnownTags.Property => GetImage("PropertyImageSource"),
+                WellKnownTags.Structure => GetImage("StructureImageSource"),
+                _ => null,
+            };
         }
 
         private static ImageSource GetImage(string resourceKey)

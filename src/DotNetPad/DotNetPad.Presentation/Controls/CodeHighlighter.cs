@@ -17,7 +17,7 @@ namespace Waf.DotNetPad.Presentation.Controls
     {
         private readonly TaskScheduler uiTaskScheduler;
         private readonly Func<Document> getDocument;
-        private readonly List<VersionedHighlightedLine> cachedLines;
+        private readonly List<VersionedHighlightedLine?> cachedLines;
         private readonly Task initialDelayTask;
 
         public CodeHighlighter(IDocument document, Func<Document> getDocument)
@@ -25,7 +25,7 @@ namespace Waf.DotNetPad.Presentation.Controls
             uiTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             Document = document;
             this.getDocument = getDocument;
-            cachedLines = new List<VersionedHighlightedLine>();
+            cachedLines = new List<VersionedHighlightedLine?>();
             initialDelayTask = CreateInitialDelayTask();
         }
 
@@ -33,7 +33,7 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         public HighlightingColor DefaultTextColor => CodeHighlightColors.DefaultHighlightingColor;
 
-        public event HighlightingStateChangedEventHandler HighlightingStateChanged;
+        public event HighlightingStateChangedEventHandler? HighlightingStateChanged;
 
         private static async Task CreateInitialDelayTask()
         {
@@ -61,7 +61,7 @@ namespace Waf.DotNetPad.Presentation.Controls
 
             foreach (var line in cachedLines.ToArray().Reverse())
             {
-                if (!line?.DocumentLine?.IsDeleted == true) { break; }
+                if (!line?.DocumentLine?.IsDeleted != false) break;
                 cachedLines.Remove(line);
             }
 
@@ -127,45 +127,26 @@ namespace Waf.DotNetPad.Presentation.Controls
             var text = await document.GetTextAsync(cancellationToken).ConfigureAwait(false);
             if (text.Length >= documentLine.Offset + documentLine.TotalLength)
             {
-                return await Classifier.GetClassifiedSpansAsync(document,
-                    new TextSpan(documentLine.Offset, documentLine.TotalLength), cancellationToken).ConfigureAwait(false);
+                return await Classifier.GetClassifiedSpansAsync(document, new TextSpan(documentLine.Offset, documentLine.TotalLength), cancellationToken).ConfigureAwait(false);
             }
-            return Enumerable.Empty<ClassifiedSpan>();
+            return Array.Empty<ClassifiedSpan>();
         }
 
-        public void BeginHighlighting()
-        {
-        }
+        public void BeginHighlighting() { }
 
-        public void EndHighlighting()
-        {
-        }
+        public void EndHighlighting() { }
 
-        public HighlightingColor GetNamedColor(string name)
-        {
-            return null;
-        }
+        public HighlightingColor? GetNamedColor(string name) => null;
 
-        public IEnumerable<HighlightingColor> GetColorStack(int lineNumber)
-        {
-            return null;
-        }
+        public IEnumerable<HighlightingColor>? GetColorStack(int lineNumber) => null;
 
-        public void UpdateHighlightingState(int lineNumber)
-        {
-        }
+        public void UpdateHighlightingState(int lineNumber) { }
 
-        public void Dispose()
-        {
-            cachedLines.Clear();
-        }
+        public void Dispose() => cachedLines.Clear();
 
         private static void EnlargeList<T>(List<T> list, int newCount)
         {
-            if (newCount > list.Count)
-            {
-                list.AddRange(Enumerable.Repeat(default(T), newCount - list.Count));
-            }
+            if (newCount > list.Count) list.AddRange(Enumerable.Repeat(default(T)!, newCount - list.Count));
         }
 
 
@@ -173,7 +154,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         {
             private readonly CancellationTokenSource cancellationTokenSource;
 
-            public VersionedHighlightedLine(IDocument document, IDocumentLine documentLine, ITextSourceVersion version, VersionedHighlightedLine oldVersion)
+            public VersionedHighlightedLine(IDocument document, IDocumentLine documentLine, ITextSourceVersion version, VersionedHighlightedLine? oldVersion)
                 : base(document, documentLine)
             {
                 Version = version;
@@ -201,10 +182,7 @@ namespace Waf.DotNetPad.Presentation.Controls
 
             public CancellationToken CancellationToken { get; }
 
-            public void Cancel()
-            {
-                cancellationTokenSource.Cancel();
-            }
+            public void Cancel() => cancellationTokenSource.Cancel();
         }
 
         private sealed class HighlightedSectionComparer : IEqualityComparer<HighlightedSection>
@@ -218,10 +196,7 @@ namespace Waf.DotNetPad.Presentation.Controls
                 return (x.Color, x.Length, x.Offset).Equals((y.Color, y.Length, y.Offset));
             }
 
-            public int GetHashCode(HighlightedSection obj)
-            {
-                return (obj.Color, obj.Length, obj.Offset).GetHashCode();
-            }
+            public int GetHashCode(HighlightedSection obj) => (obj.Color, obj.Length, obj.Offset).GetHashCode();
         }
     }
 }

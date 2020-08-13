@@ -6,7 +6,7 @@ namespace Waf.DotNetPad.Presentation.DesignData
 {
     public class SampleCodeEditorViewModel : CodeEditorViewModel
     {
-        public SampleCodeEditorViewModel() : base(new MockCodeEditorView(), new MockShellService(), null, null)
+        public SampleCodeEditorViewModel() : base(new MockCodeEditorView(), new MockShellService(), null!, null!)
         {
             var code = @"using System;
 using System.Linq;

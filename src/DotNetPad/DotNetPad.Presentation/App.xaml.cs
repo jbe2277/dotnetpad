@@ -20,9 +20,9 @@ namespace Waf.DotNetPad.Presentation
 {
     public partial class App
     {
-        private AggregateCatalog catalog;
-        private CompositionContainer container;
-        private IEnumerable<IModuleController> moduleControllers;
+        private AggregateCatalog catalog = null!;
+        private CompositionContainer container = null!;
+        private IEnumerable<IModuleController> moduleControllers = Array.Empty<IModuleController>();
 
         public App()
         {
@@ -96,9 +96,9 @@ namespace Waf.DotNetPad.Presentation
             HandleException(e.ExceptionObject as Exception, e.IsTerminating);
         }
 
-        private static void HandleException(Exception e, bool isTerminating)
+        private static void HandleException(Exception? e, bool isTerminating)
         {
-            if (e == null) { return; }
+            if (e is null) return;
             Logger.Error(e.ToString());
             if (!isTerminating)
             {

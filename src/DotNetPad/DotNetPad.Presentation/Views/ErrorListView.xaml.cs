@@ -17,7 +17,7 @@ namespace Waf.DotNetPad.Presentation.Views
         public ErrorListView()
         {
             InitializeComponent();
-            viewModel = new Lazy<ErrorListViewModel>(this.GetViewModel<ErrorListViewModel>);
+            viewModel = new Lazy<ErrorListViewModel>(() => this.GetViewModel<ErrorListViewModel>()!);
         }
 
         public ErrorListViewModel ViewModel => viewModel.Value;

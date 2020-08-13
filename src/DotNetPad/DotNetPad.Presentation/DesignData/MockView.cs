@@ -4,6 +4,6 @@ namespace Waf.DotNetPad.Presentation.DesignData
 {
     public class MockView : IView
     {
-        public object DataContext { get; set; }
+        public object? DataContext { get; set; }
     }
 }

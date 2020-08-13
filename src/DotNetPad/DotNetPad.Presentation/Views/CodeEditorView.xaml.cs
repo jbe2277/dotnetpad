@@ -17,7 +17,7 @@ namespace Waf.DotNetPad.Presentation.Views
         public CodeEditorView()
         {
             InitializeComponent();
-            viewModel = new Lazy<CodeEditorViewModel>(this.GetViewModel<CodeEditorViewModel>);
+            viewModel = new Lazy<CodeEditorViewModel>(() => this.GetViewModel<CodeEditorViewModel>()!);
             Loaded += FirstTimeLoadedHandler;
             Loaded += LoadedHandler;
             Unloaded += UnloadedHandler;

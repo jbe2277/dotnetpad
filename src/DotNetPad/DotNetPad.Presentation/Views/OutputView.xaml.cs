@@ -26,7 +26,7 @@ namespace Waf.DotNetPad.Presentation.Views
         public OutputView()
         {
             InitializeComponent();
-            viewModel = new Lazy<OutputViewModel>(this.GetViewModel<OutputViewModel>);
+            viewModel = new Lazy<OutputViewModel>(() => this.GetViewModel<OutputViewModel>()!);
             outputParagraphs = new Dictionary<DocumentFile, Paragraph>();
 
             Loaded += FirstTimeLoadedHandler;
