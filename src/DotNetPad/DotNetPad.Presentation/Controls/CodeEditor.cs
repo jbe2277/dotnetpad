@@ -16,6 +16,7 @@ using Microsoft.CodeAnalysis;
 using Waf.DotNetPad.Applications.Services;
 using Waf.DotNetPad.Domain;
 using System.Waf;
+using System.Waf.Foundation;
 
 namespace Waf.DotNetPad.Presentation.Controls
 {
@@ -30,8 +31,9 @@ namespace Waf.DotNetPad.Presentation.Controls
         private readonly ErrorTextMarkerService errorMarkerService;
         private CompletionWindow completionWindow;
         private CancellationTokenSource completionCancellation;
-        private volatile IWorkspaceService workspaceService;
-        private volatile DocumentFile documentFile;
+        private IWorkspaceService workspaceService;
+        private DocumentFile documentFile;
+        private IWeakEventProxy documentContentPropertyChangedProxy;
 
         public CodeEditor()
         {
@@ -187,7 +189,7 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         private void IsVisibleChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (!IsVisible) { completionCancellation.Cancel(); }
+            if (!IsVisible) completionCancellation.Cancel();
         }
 
         private bool UpdateCode()
@@ -201,39 +203,31 @@ namespace Waf.DotNetPad.Presentation.Controls
             return false;
         }
 
-        private static void WorkspaceServiceChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private void DocumentFileChanged(DocumentFile newFile)
         {
-            ((CodeEditor)d).workspaceService = (IWorkspaceService)e.NewValue;
-        }
-
-        private static void DocumentFileChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var editor = (CodeEditor)d;
-            editor.documentFile = (DocumentFile)e.NewValue;
-
-            if (e.OldValue is DocumentFile oldDocumentFile)
+            documentFile = newFile;
+            documentContentPropertyChangedProxy?.Remove();
+            documentContentPropertyChangedProxy = null;
+            
+            if (DocumentFile?.Content != null)
             {
-                PropertyChangedEventManager.RemoveHandler(oldDocumentFile.Content, editor.DocumentContentPropertyChanged, "");
-            }
-
-            if (editor.DocumentFile?.Content != null)
-            {
-                if (editor.UpdateCode())
+                if (UpdateCode())
                 {
-                    editor.CaretOffset = editor.DocumentFile.StartCaretPosition;
+                    CaretOffset = DocumentFile.StartCaretPosition;
                 }
-                PropertyChangedEventManager.AddHandler(editor.DocumentFile.Content, editor.DocumentContentPropertyChanged, "");
-                editor.UpdateErrorMarkers();
+                documentContentPropertyChangedProxy = WeakEvent.PropertyChanged.Add(DocumentFile.Content, DocumentContentPropertyChanged);
+                UpdateErrorMarkers();
             }
             else
             {
-                editor.Text = "";
+                Text = "";
             }
         }
 
-        private static bool IsAllowedLanguageLetter(char character)
-        {
-            return TextUtilities.GetCharacterClass(character) == CharacterClass.IdentifierPart;
-        }
+        private static void WorkspaceServiceChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e) => ((CodeEditor)d).workspaceService = (IWorkspaceService)e.NewValue;
+
+        private static void DocumentFileChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e) =>((CodeEditor)d).DocumentFileChanged((DocumentFile)e.NewValue);
+
+        private static bool IsAllowedLanguageLetter(char character) => TextUtilities.GetCharacterClass(character) == CharacterClass.IdentifierPart;
     }
 }

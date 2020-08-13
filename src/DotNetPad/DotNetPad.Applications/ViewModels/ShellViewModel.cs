@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Waf.Applications;
+using System.Waf.Foundation;
 using System.Windows.Input;
 using Waf.DotNetPad.Applications.DataModels;
 using Waf.DotNetPad.Applications.Properties;
@@ -42,7 +43,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
             garbageCollectorCommand = new DelegateCommand(GC.Collect);
             statusText = Resources.Ready;
             
-            PropertyChangedEventManager.AddHandler(fileService, FileServicePropertyChanged, "");
+            WeakEvent.PropertyChanged.Add(fileService, FileServicePropertyChanged);
             view.Closed += ViewClosed;
 
             // Restore the window size when the values are valid.

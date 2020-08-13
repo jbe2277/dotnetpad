@@ -42,6 +42,7 @@ namespace Waf.DotNetPad.Applications.Controllers
         private readonly FileType allFilesType;
         private readonly List<DocumentFile> observedDocumentFiles;
         private DocumentFile? lastActiveDocumentFile;
+        private IWeakEventProxy? activeDocumentPropertyChangedProxy;
         private int documentCounter;
 
         [ImportingConstructor]
@@ -74,7 +75,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             visualBasicFileType = new FileType(Resources.VisualBasicFile, ".vb");
             allFilesType = new FileType(Resources.CodeFile, ".cs;*.vb");
             observedDocumentFiles = new List<DocumentFile>();
-            PropertyChangedEventManager.AddHandler(fileService, FileServicePropertyChanged, "");
+            WeakEvent.PropertyChanged.Add(fileService, FileServicePropertyChanged);
             shellService.Closing += ShellServiceClosing;
         }
 
@@ -365,12 +366,12 @@ namespace Waf.DotNetPad.Applications.Controllers
         {
             if (e.PropertyName == nameof(IFileService.ActiveDocumentFile))
             {
-                if (lastActiveDocumentFile != null) { PropertyChangedEventManager.RemoveHandler(lastActiveDocumentFile, ActiveDocumentPropertyChanged, ""); }
+                activeDocumentPropertyChangedProxy?.Remove();
+                activeDocumentPropertyChangedProxy = null;
 
                 lastActiveDocumentFile = ActiveDocumentFile;
 
-                if (lastActiveDocumentFile != null) { PropertyChangedEventManager.AddHandler(lastActiveDocumentFile, ActiveDocumentPropertyChanged, ""); }
-
+                if (lastActiveDocumentFile != null) { activeDocumentPropertyChangedProxy = WeakEvent.PropertyChanged.Add(lastActiveDocumentFile, ActiveDocumentPropertyChanged); }
                 UpdateCommands();
             }
             else if (e.PropertyName == nameof(IFileService.LockedDocumentFile))

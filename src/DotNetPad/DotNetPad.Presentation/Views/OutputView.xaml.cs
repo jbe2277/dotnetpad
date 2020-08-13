@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Waf.Applications;
+using System.Waf.Foundation;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -53,13 +54,13 @@ namespace Waf.DotNetPad.Presentation.Views
         {
             Loaded -= FirstTimeLoadedHandler;
 
-            CollectionChangedEventManager.AddHandler(ViewModel.DocumentService.DocumentFiles, DocumentsCollectionChanged);
+            WeakEvent.CollectionChanged.Add(ViewModel.DocumentService.DocumentFiles, DocumentsCollectionChanged);
             foreach (var documentFile in ViewModel.DocumentService.DocumentFiles)
             {
                 outputParagraphs.Add(documentFile, new Paragraph());
             }
 
-            PropertyChangedEventManager.AddHandler(ViewModel.DocumentService, DocumentServicePropertyChanged, "");
+            WeakEvent.PropertyChanged.Add(ViewModel.DocumentService, DocumentServicePropertyChanged);
             if (ViewModel.DocumentService.ActiveDocumentFile != null)
             {
                 outputDocument.Blocks.Add(outputParagraphs[ViewModel.DocumentService.ActiveDocumentFile]);

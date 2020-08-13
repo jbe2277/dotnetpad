@@ -100,8 +100,8 @@ namespace Waf.DotNetPad.Applications.Controllers
                 workspace.WorkspaceChanged += WorkspaceChanged;
             }
 
-            PropertyChangedEventManager.AddHandler(documentService, DocumentServicePropertyChanged, "");
-            CollectionChangedEventManager.AddHandler(documentService.DocumentFiles, DocumentsCollectionChanged);
+            WeakEvent.PropertyChanged.Add(documentService, DocumentServicePropertyChanged);
+            WeakEvent.CollectionChanged.Add(documentService.DocumentFiles, DocumentsCollectionChanged);
             foreach (var documentFile in documentService.DocumentFiles)
             {
                 AddProject(documentFile);
