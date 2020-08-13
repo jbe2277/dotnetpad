@@ -5,7 +5,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
 {
     public class BuildResult
     {
-        public BuildResult(IReadOnlyList<Diagnostic> diagnostic, byte[] inMemoryAssembly, byte[] inMemorySymbolStore)
+        public BuildResult(IReadOnlyList<Diagnostic> diagnostic, byte[]? inMemoryAssembly, byte[]? inMemorySymbolStore)
         {
             Diagnostic = diagnostic;
             InMemoryAssembly = inMemoryAssembly;
@@ -14,8 +14,8 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
 
         public IReadOnlyList<Diagnostic> Diagnostic { get; }
 
-        public byte[] InMemoryAssembly { get; }
+        public byte[]? InMemoryAssembly { get; }
 
-        public byte[] InMemorySymbolStore { get; }
+        public byte[]? InMemorySymbolStore { get; }
     }
 }

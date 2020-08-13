@@ -36,11 +36,11 @@ namespace Waf.DotNetPad.Applications.Controllers
         private readonly DelegateCommand stopCommand;
         private readonly DelegateCommand formatDocumentCommand;
         private readonly Dictionary<DocumentFile, DocumentId> documentIds;
-        private Tuple<DocumentFile, BuildResult> lastBuildResult;
-        private ScriptingWorkspace workspace;
-        private CancellationTokenSource updateDiagnosticsCancellation;
-        private CancellationTokenSource runScriptCancellation;
-        private DocumentFile runningDocument;
+        private Tuple<DocumentFile, BuildResult>? lastBuildResult;
+        private ScriptingWorkspace workspace = null!;
+        private CancellationTokenSource? updateDiagnosticsCancellation;
+        private CancellationTokenSource? runScriptCancellation;
+        private DocumentFile? runningDocument;
         
         [ImportingConstructor]
         public WorkspaceController(IDocumentService documentService, Lazy<ShellViewModel> shellViewModel, Lazy<ErrorListViewModel> errorListViewModel, 
@@ -67,7 +67,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private OutputViewModel OutputViewModel => outputViewModel.Value;
 
-        private DocumentFile RunningDocument
+        private DocumentFile? RunningDocument
         {
             get => runningDocument;
             set
@@ -115,15 +115,15 @@ namespace Waf.DotNetPad.Applications.Controllers
             ShellViewModel.IsErrorListViewVisible = true;
         }
 
-        public Document? GetDocument(DocumentFile documentFile)
+        public Document GetDocument(DocumentFile documentFile)
         {
             var documentId = documentIds[documentFile];
-            return workspace.CurrentSolution.GetDocument(documentId);
+            return workspace.CurrentSolution.GetDocument(documentId)!;
         }
 
         public void UpdateText(DocumentFile documentFile, string text)
         {
-            if (documentFile.Content.Code == text) { return; }
+            if (documentFile.Content!.Code == text) return;
             var documentId = documentIds[documentFile];
             workspace.UpdateText(documentId, text);
         }
@@ -137,7 +137,7 @@ namespace Waf.DotNetPad.Applications.Controllers
                     var documentFile = documentIds.SingleOrDefault(x => x.Value == e.DocumentId).Key;
                     if (documentFile == null) return;
                     var sourceText = await GetDocument(documentFile).GetTextAsync();
-                    documentFile.Content.Code = sourceText.ToString();
+                    documentFile.Content!.Code = sourceText.ToString();
 
                     if (documentService.ActiveDocumentFile == documentFile)
                     {
@@ -159,7 +159,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             await TaskUtility.WaitForProperty(documentFile, x => x.IsContentLoaded);
             using (new PerformanceTrace("AddProjectWithDocument", documentFile))
             {
-                var documentId = workspace.AddProjectWithDocument(documentFile.FileName, documentFile.Content != null ? documentFile.Content.Code : "");
+                var documentId = workspace.AddProjectWithDocument(documentFile.FileName ?? "", documentFile.Content?.Code ?? "");
                 documentIds.Add(documentFile, documentId);
                 updateDiagnosticsAction.InvokeAccumulated();
             }
@@ -189,24 +189,15 @@ namespace Waf.DotNetPad.Applications.Controllers
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                foreach (DocumentFile documentFile in e.NewItems)
-                {
-                    AddProject(documentFile);
-                }
+                foreach (DocumentFile x in e.NewItems) AddProject(x);
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                foreach (DocumentFile documentFile in e.OldItems)
-                {
-                    RemoveProject(documentFile);
-                }
+                foreach (DocumentFile x in e.OldItems) RemoveProject(x);
             }
             else if (e.Action == NotifyCollectionChangedAction.Reset && !documentService.DocumentFiles.Any())
             {
-                foreach (var documentFile in documentIds.Keys.ToArray())
-                {
-                    RemoveProject(documentFile);
-                }
+                foreach (var x in documentIds.Keys.ToArray()) RemoveProject(x);
             }
             else
             {
@@ -245,14 +236,11 @@ namespace Waf.DotNetPad.Applications.Controllers
             }
         }
 
-        private bool CanStartScript()
-        {
-            return RunningDocument == null && documentService.ActiveDocumentFile != null;
-        }
+        private bool CanStartScript() => RunningDocument == null && documentService.ActiveDocumentFile != null;
         
         private async void StartScript()
         {
-            var documentFile = documentService.ActiveDocumentFile;
+            var documentFile = documentService.ActiveDocumentFile!;
             runScriptCancellation = new CancellationTokenSource();
             var cancellationToken = runScriptCancellation.Token;
             RunningDocument = documentFile;
@@ -264,7 +252,7 @@ namespace Waf.DotNetPad.Applications.Controllers
                 using (new PerformanceTrace("BuildAsync", documentFile))
                 {
                     var result = await workspace.BuildAsync(documentIds[documentFile], CancellationToken.None);
-                    documentFile.Content.ErrorList = result.Diagnostic.Where(x => x.Severity != DiagnosticSeverity.Hidden).Select(CreateErrorListItem).ToArray();
+                    documentFile.Content!.ErrorList = result.Diagnostic.Where(x => x.Severity != DiagnosticSeverity.Hidden).Select(CreateErrorListItem).ToArray();
                     lastBuildResult = result.InMemoryAssembly == null ? null : new Tuple<DocumentFile, BuildResult>(documentFile, result);
                 }
             }
@@ -276,7 +264,7 @@ namespace Waf.DotNetPad.Applications.Controllers
                     var buildResult = lastBuildResult.Item2;
                     try
                     {
-                        await host.RunScriptAsync(buildResult.InMemoryAssembly, buildResult.InMemorySymbolStore, outputTextWriter, errorTextWriter, cancellationToken);
+                        await host.RunScriptAsync(buildResult.InMemoryAssembly!, buildResult.InMemorySymbolStore!, outputTextWriter, errorTextWriter, cancellationToken);
                     }
                     catch (OperationCanceledException)
                     {
@@ -293,36 +281,21 @@ namespace Waf.DotNetPad.Applications.Controllers
             runScriptCancellation = null;
         }
 
-        private bool CanStopScript()
-        {
-            return runScriptCancellation != null && !runScriptCancellation.IsCancellationRequested;
-        }
+        private bool CanStopScript() => runScriptCancellation != null && !runScriptCancellation.IsCancellationRequested;
 
         private void StopScript()
         {
-            runScriptCancellation.Cancel();
-            ShellViewModel.StatusText = "Stopping the execution of " + Path.GetFileName(runningDocument.FileName) + "...";
+            runScriptCancellation?.Cancel();
+            ShellViewModel.StatusText = "Stopping the execution of " + Path.GetFileName(runningDocument!.FileName) + "...";
         }
 
-        private bool CanFormatDocument()
-        {
-            return RunningDocument == null && documentService.ActiveDocumentFile != null;
-        }
+        private bool CanFormatDocument() => RunningDocument == null && documentService.ActiveDocumentFile != null;
 
-        private void FormatDocument()
-        {
-            workspace.FormatDocumentAsync(documentIds[documentService.ActiveDocumentFile]);
-        }
+        private void FormatDocument() => workspace.FormatDocumentAsync(documentIds[documentService.ActiveDocumentFile!]);
 
-        private void AppendOutputText(string text)
-        {
-            AppendTextCore(OutputViewModel.AppendOutputText, text);
-        }
+        private void AppendOutputText(string text) => AppendTextCore(OutputViewModel.AppendOutputText, text);
 
-        private void AppendErrorText(string text)
-        {
-            AppendTextCore(OutputViewModel.AppendErrorText, text);
-        }
+        private void AppendErrorText(string text) => AppendTextCore(OutputViewModel.AppendErrorText, text);
 
         private void AppendTextCore(Action<DocumentFile, string> appendTextAction, string text)
         {
@@ -338,28 +311,18 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private void ResetBuildResult(DocumentFile documentFile)
         {
-            if (lastBuildResult?.Item1 == documentFile) 
-            { 
-                lastBuildResult = null; 
-            }
+            if (lastBuildResult?.Item1 == documentFile) lastBuildResult = null; 
         }
 
         private static ErrorListItem CreateErrorListItem(Diagnostic diagnostic)
         {
             var mappedSpan = diagnostic.Location.GetMappedLineSpan();
-            ErrorSeverity errorSeverity;
-            if (diagnostic.Severity == DiagnosticSeverity.Error)
+            var errorSeverity = diagnostic.Severity switch
             {
-                errorSeverity = ErrorSeverity.Error;
-            }
-            else if (diagnostic.Severity == DiagnosticSeverity.Warning)
-            {
-                errorSeverity = ErrorSeverity.Warning;
-            }
-            else
-            {
-                errorSeverity = ErrorSeverity.Info;
-            }
+                DiagnosticSeverity.Error => ErrorSeverity.Error,
+                DiagnosticSeverity.Warning => ErrorSeverity.Warning,
+                _ => ErrorSeverity.Info
+            };
             return new ErrorListItem(errorSeverity, diagnostic.GetMessage(), mappedSpan.Span.Start.Line, mappedSpan.Span.Start.Character,
                 mappedSpan.Span.End.Line, mappedSpan.Span.End.Character);
         }
