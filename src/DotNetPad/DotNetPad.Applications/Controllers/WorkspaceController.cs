@@ -41,9 +41,9 @@ namespace Waf.DotNetPad.Applications.Controllers
         private CancellationTokenSource? updateDiagnosticsCancellation;
         private CancellationTokenSource? runScriptCancellation;
         private DocumentFile? runningDocument;
-        
+
         [ImportingConstructor]
-        public WorkspaceController(IDocumentService documentService, Lazy<ShellViewModel> shellViewModel, Lazy<ErrorListViewModel> errorListViewModel, 
+        public WorkspaceController(IDocumentService documentService, Lazy<ShellViewModel> shellViewModel, Lazy<ErrorListViewModel> errorListViewModel,
             Lazy<OutputViewModel> outputViewModel, ScriptHost host)
         {
             taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
@@ -60,7 +60,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             formatDocumentCommand = new DelegateCommand(FormatDocument, CanFormatDocument);
             documentIds = new Dictionary<DocumentFile, DocumentId>();
         }
-        
+
         private ShellViewModel ShellViewModel => shellViewModel.Value;
 
         private ErrorListViewModel ErrorListViewModel => errorListViewModel.Value;
@@ -106,7 +106,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             {
                 AddProject(documentFile);
             }
-            
+
             ShellViewModel.StartCommand = startCommand;
             ShellViewModel.StopCommand = stopCommand;
             ShellViewModel.FormatDocumentCommand = formatDocumentCommand;
@@ -224,7 +224,7 @@ namespace Waf.DotNetPad.Applications.Controllers
                 {
                     var diagnostics = await workspace.GetDiagnosticsAsync(documentIds[documentFile], token);
                     token.ThrowIfCancellationRequested();
-                    documentFile.Content.ErrorList = diagnostics.Where(x => x.Severity != DiagnosticSeverity.Hidden).Select(CreateErrorListItem).ToArray();
+                    UpdateErrorList(documentFile, diagnostics);
                 }
             }
             catch (OperationCanceledException)
@@ -236,8 +236,13 @@ namespace Waf.DotNetPad.Applications.Controllers
             }
         }
 
+        private static void UpdateErrorList(DocumentFile documentFile, IReadOnlyList<Diagnostic> diagnostics)
+        {
+            documentFile.Content!.ErrorList = diagnostics.Where(x => x.Severity != DiagnosticSeverity.Hidden && x.Id != "CS8632").Select(CreateErrorListItem).ToArray();
+        }
+
         private bool CanStartScript() => RunningDocument == null && documentService.ActiveDocumentFile != null;
-        
+
         private async void StartScript()
         {
             var documentFile = documentService.ActiveDocumentFile!;
@@ -252,11 +257,11 @@ namespace Waf.DotNetPad.Applications.Controllers
                 using (new PerformanceTrace("BuildAsync", documentFile))
                 {
                     var result = await workspace.BuildAsync(documentIds[documentFile], CancellationToken.None);
-                    documentFile.Content!.ErrorList = result.Diagnostic.Where(x => x.Severity != DiagnosticSeverity.Hidden).Select(CreateErrorListItem).ToArray();
+                    UpdateErrorList(documentFile, result.Diagnostic);
                     lastBuildResult = result.InMemoryAssembly == null ? null : new Tuple<DocumentFile, BuildResult>(documentFile, result);
                 }
             }
-            
+
             if (lastBuildResult != null)
             {
                 using (new PerformanceTrace("RunScriptAsync", documentFile))
@@ -311,7 +316,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private void ResetBuildResult(DocumentFile documentFile)
         {
-            if (lastBuildResult?.Item1 == documentFile) lastBuildResult = null; 
+            if (lastBuildResult?.Item1 == documentFile) lastBuildResult = null;
         }
 
         private static ErrorListItem CreateErrorListItem(Diagnostic diagnostic)

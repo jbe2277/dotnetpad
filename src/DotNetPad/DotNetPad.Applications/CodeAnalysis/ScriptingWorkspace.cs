@@ -64,31 +64,29 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             else if (language == LanguageNames.CSharp) { references.Add(CreateReference(typeof(RuntimeBinderException).Assembly)); }
 
             var projectInfo = ProjectInfo.Create(projectId, VersionStamp.Default, name, name + ".dll", language, metadataReferences: references,
-                parseOptions: language == LanguageNames.CSharp ? (ParseOptions)new CSharpParseOptions(Microsoft.CodeAnalysis.CSharp.LanguageVersion.CSharp9) 
+                parseOptions: language == LanguageNames.CSharp ? (ParseOptions)new CSharpParseOptions(Microsoft.CodeAnalysis.CSharp.LanguageVersion.CSharp9)
                     : new VisualBasicParseOptions(Microsoft.CodeAnalysis.VisualBasic.LanguageVersion.VisualBasic16));
             OnProjectAdded(projectInfo);
 
             if (language == LanguageNames.CSharp)
             {
-                var servicesDocumentId = DocumentId.CreateNewId(projectId);
-                var servicesDocumentInfo = DocumentInfo.Create(servicesDocumentId, "CompilerServices.cs", loader: TextLoader.From(TextAndVersion.Create(SourceText.From(@"
-using System.ComponentModel;
-namespace System.Runtime.CompilerServices
-{
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static class IsExternalInit
-    {
-    }
-}
-", Encoding.UTF8), VersionStamp.Create())));
-                OnDocumentAdded(servicesDocumentInfo);
+                AddFile(projectId, "NullableAttributes.cs");
+                AddFile(projectId, "IsExternalInit.cs");
+                AddFile(projectId, "Range.cs");
             }
 
             var documentId = DocumentId.CreateNewId(projectId);
-            var documentInfo = DocumentInfo.Create(documentId, fileName, 
-                                loader: TextLoader.From(TextAndVersion.Create(SourceText.From(text, Encoding.UTF8), VersionStamp.Create())));
+            var documentInfo = DocumentInfo.Create(documentId, fileName, loader: TextLoader.From(TextAndVersion.Create(SourceText.From(text, Encoding.UTF8), VersionStamp.Create())));
             OnDocumentAdded(documentInfo);
             return documentId;
+
+            void AddFile(ProjectId id, string sourceFile)
+            {
+                using var stream = typeof(ScriptingWorkspace).Assembly.GetManifestResourceStream("Waf.DotNetPad.Applications.CompilerServices." + sourceFile);
+                var newDocumentId = DocumentId.CreateNewId(id);
+                var newDocumentInfo = DocumentInfo.Create(newDocumentId, sourceFile, loader: TextLoader.From(TextAndVersion.Create(SourceText.From(stream, Encoding.UTF8), VersionStamp.Create())));
+                OnDocumentAdded(newDocumentInfo);
+            }
         }
 
         public void RemoveProject(DocumentId id)
@@ -126,7 +124,7 @@ namespace System.Runtime.CompilerServices
                 return new BuildResult(result.Diagnostics, inMemoryAssembly, inMemorySymbolStore);
             }, cancellationToken);
         }
-        
+
         public Task FormatDocumentAsync(DocumentId documentId)
         {
             return Task.Run(async () =>

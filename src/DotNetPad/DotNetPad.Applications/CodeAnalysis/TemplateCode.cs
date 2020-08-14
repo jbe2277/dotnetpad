@@ -2,8 +2,9 @@
 {
     internal static class TemplateCode
     {
-        public static string InitialCSharpCode =>     
-@"using System;
+        public static string InitialCSharpCode =>
+@"#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace Sample
     }
 }";
 
-        public static int StartCaretPositionCSharp => 226;
+        public static int StartCaretPositionCSharp => 244;
 
         public static string InitialVisualBasicCode =>
 @"Imports System

@@ -34,6 +34,10 @@
     <Compile Update="Properties\Resources.Designer.cs" AutoGen="True" DependentUpon="Resources.resx" DesignTime="True" />
 
     <!-- Samples as Embedded Resource -->
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)\..\NullableAttributes.cs" Link="CompilerServices\NullableAttributes.cs"/>
+    <Compile Remove="CompilerServices\*.cs" />
+    <EmbeddedResource Include="CompilerServices\*.cs" />
+
     <Compile Remove="Samples\*.cs" />
     <Compile Remove="Samples\*.vb" />
     <EmbeddedResource Include="Samples\*.cs" />
