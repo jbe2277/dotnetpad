@@ -15,8 +15,10 @@ namespace Waf.DotNetPad.Applications.Services
 
         public Lazy<string> LocalFunctions => new Lazy<string>(() => GetSampleCode("LocalFunctions.cs"));
 
+        public Lazy<string> NullableReferenceTypes => new Lazy<string>(() => GetSampleCode("NullableReferenceTypes.cs"));
+
         public Lazy<string> NullConditionalOperator => new Lazy<string>(() => GetSampleCode("NullConditionalOperator.cs"));
-        
+
         public Lazy<string> NameOfOperator => new Lazy<string>(() => GetSampleCode("NameOfOperator.cs"));
 
         public Lazy<string> AutoPropertyInitializers => new Lazy<string>(() => GetSampleCode("AutoPropertyInitializers.cs"));

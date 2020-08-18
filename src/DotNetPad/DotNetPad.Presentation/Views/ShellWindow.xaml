@@ -80,7 +80,11 @@
                                     <Setter Property="Background" Value="{StaticResource DarkBackground}"/>
                                     <Setter Property="VerticalContentAlignment" Value="Center"/>
                                     <Setter Property="Padding" Value="7,0"/>
-                                    <Setter Property="Margin" Value="0,0,1,1"/>
+                                    <Setter Property="Margin" Value="0.5"/>
+                                </Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource MenuButton}">
+                                    <Setter Property="Margin" Value="0.5"/>
+                                    <Setter Property="Height" Value="23"/>
                                 </Style>
                             </Grid.Resources>
 
@@ -98,65 +102,72 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
-                            <Label Grid.Row="0" Content="out variables" Margin="0,1,1,1"/>
-                            <Button Grid.Column="1" Grid.Row="0" Command="{Binding FileService.NewCSharpCommand}" Content="C# 7"
-                                    CommandParameter="{Binding CSharpSampleService.OutVariables}"
-                                    Click="CloseSamplesPopup" Margin="0,1,1,1" Style="{StaticResource MenuButton}"/>
-                            <Button Grid.Column="2" Grid.Row="0" IsEnabled="False" Margin="0,1,0,1" Style="{StaticResource MenuButton}"/>
-
-                            <Label Grid.Row="1" Content="Tuples"/>
-                            <Button Grid.Column="1" Grid.Row="1" Command="{Binding FileService.NewCSharpCommand}" Content="C# 7"
-                                    CommandParameter="{Binding CSharpSampleService.Tuples}"
-                                    Click="CloseSamplesPopup" Margin="0,0,0,1" Style="{StaticResource MenuButton}"/>
-                            <Button Grid.Column="2" Grid.Row="1" Command="{Binding FileService.NewVisualBasicCommand}" Content="VB 15"
-                                    CommandParameter="{Binding VisualBasicSampleService.Tuples}"
-                                    Click="CloseSamplesPopup" Margin="0,0,0,1" Style="{StaticResource MenuButton}"/>
-
-                            <Label Grid.Row="2" Content="Pattern matching"/>
-                            <Button Grid.Column="1" Grid.Row="2" Command="{Binding FileService.NewCSharpCommand}" Content="C# 7"
-                                    CommandParameter="{Binding CSharpSampleService.PatternMatching}"
-                                    Click="CloseSamplesPopup" Margin="0,0,0,1" Style="{StaticResource MenuButton}"/>
-                            <Button Grid.Column="2" Grid.Row="2" IsEnabled="False" Margin="0,0,0,1" Style="{StaticResource MenuButton}"/>
-
-                            <Label Grid.Row="3" Content="Local functions"/>
-                            <Button Grid.Column="1" Grid.Row="3" Command="{Binding FileService.NewCSharpCommand}" Content="C# 7"
-                                    CommandParameter="{Binding CSharpSampleService.LocalFunctions}"
-                                    Click="CloseSamplesPopup" Margin="0,0,0,1" Style="{StaticResource MenuButton}"/>
-                            <Button Grid.Column="2" Grid.Row="3" IsEnabled="False" Margin="0,0,0,1" Style="{StaticResource MenuButton}"/>
-
-                            <Label Grid.Row="4" Content="Null-conditional operator"/>
-                            <Button Grid.Column="1" Grid.Row="4" Command="{Binding FileService.NewCSharpCommand}" Content="C# 6"
-                                    CommandParameter="{Binding CSharpSampleService.NullConditionalOperator}"
-                                    Click="CloseSamplesPopup" Margin="0,0,0,1" Style="{StaticResource MenuButton}"/>
-                            <Button Grid.Column="2" Grid.Row="4" Command="{Binding FileService.NewVisualBasicCommand}" Content="VB 14"
-                                    CommandParameter="{Binding VisualBasicSampleService.NullConditionalOperator}"
-                                    Click="CloseSamplesPopup" Margin="0,0,0,1" Style="{StaticResource MenuButton}"/>
-
-                            <Label Grid.Row="5" Content="nameof operator"/>
-                            <Button Grid.Column="1" Grid.Row="5" Command="{Binding FileService.NewCSharpCommand}" Content="C# 6" 
-                                    CommandParameter="{Binding CSharpSampleService.NameOfOperator}"
-                                    Click="CloseSamplesPopup" Margin="0,0,0,1" Style="{StaticResource MenuButton}"/>
-                            <Button Grid.Column="2" Grid.Row="5" Command="{Binding FileService.NewVisualBasicCommand}" Content="VB 14" 
-                                    CommandParameter="{Binding VisualBasicSampleService.NameOfOperator}" 
-                                    Click="CloseSamplesPopup" Margin="0,0,0,1" Style="{StaticResource MenuButton}"/>
-
-                            <Label Grid.Row="6" Content="Auto-property initializers"/>
-                            <Button Grid.Column="1" Grid.Row="6" Command="{Binding FileService.NewCSharpCommand}" Content="C# 6" 
-                                    CommandParameter="{Binding CSharpSampleService.AutoPropertyInitializers}"
-                                    Click="CloseSamplesPopup" Margin="0,0,0,1" Style="{StaticResource MenuButton}"/>
-                            <Button Grid.Column="2" Grid.Row="6" Command="{Binding FileService.NewVisualBasicCommand}" Content="VB 14" 
-                                    CommandParameter="{Binding VisualBasicSampleService.AutoPropertyInitializers}" 
-                                    Click="CloseSamplesPopup" Margin="0,0,0,1" Style="{StaticResource MenuButton}"/>
-
-                            <Label Grid.Row="7" Content="String interpolation" Margin="0,0,1,0"/>
-                            <Button Grid.Column="1" Grid.Row="7" Command="{Binding FileService.NewCSharpCommand}" Content="C# 6" 
+                            <Label Grid.Row="0" Content="String interpolation"/>
+                            <Button Grid.Column="1" Grid.Row="0" Command="{Binding FileService.NewCSharpCommand}" Content="C# 6" 
                                     CommandParameter="{Binding CSharpSampleService.StringInterpolation}"
-                                    Click="CloseSamplesPopup" Margin="0,0,1,0" Style="{StaticResource MenuButton}"/>
-                            <Button Grid.Column="2" Grid.Row="7" Command="{Binding FileService.NewVisualBasicCommand}" Content="VB 14" 
+                                    Click="CloseSamplesPopup"/>
+                            <Button Grid.Column="2" Grid.Row="0" Command="{Binding FileService.NewVisualBasicCommand}" Content="VB 14" 
                                     CommandParameter="{Binding VisualBasicSampleService.StringInterpolation}" 
-                                    Click="CloseSamplesPopup" Margin="0" Style="{StaticResource MenuButton}"/>
+                                    Click="CloseSamplesPopup"/>
+
+                            <Label Grid.Row="1" Content="Auto-property initializers"/>
+                            <Button Grid.Column="1" Grid.Row="1" Command="{Binding FileService.NewCSharpCommand}" Content="C# 6" 
+                                    CommandParameter="{Binding CSharpSampleService.AutoPropertyInitializers}"
+                                    Click="CloseSamplesPopup"/>
+                            <Button Grid.Column="2" Grid.Row="1" Command="{Binding FileService.NewVisualBasicCommand}" Content="VB 14" 
+                                    CommandParameter="{Binding VisualBasicSampleService.AutoPropertyInitializers}" 
+                                    Click="CloseSamplesPopup"/>
+
+                            <Label Grid.Row="2" Content="nameof operator"/>
+                            <Button Grid.Column="1" Grid.Row="2" Command="{Binding FileService.NewCSharpCommand}" Content="C# 6" 
+                                    CommandParameter="{Binding CSharpSampleService.NameOfOperator}"
+                                    Click="CloseSamplesPopup"/>
+                            <Button Grid.Column="2" Grid.Row="2" Command="{Binding FileService.NewVisualBasicCommand}" Content="VB 14" 
+                                    CommandParameter="{Binding VisualBasicSampleService.NameOfOperator}" 
+                                    Click="CloseSamplesPopup" />
+
+                            <Label Grid.Row="3" Content="Null-conditional operator"/>
+                            <Button Grid.Column="1" Grid.Row="3" Command="{Binding FileService.NewCSharpCommand}" Content="C# 6"
+                                    CommandParameter="{Binding CSharpSampleService.NullConditionalOperator}"
+                                    Click="CloseSamplesPopup"/>
+                            <Button Grid.Column="2" Grid.Row="3" Command="{Binding FileService.NewVisualBasicCommand}" Content="VB 14"
+                                    CommandParameter="{Binding VisualBasicSampleService.NullConditionalOperator}"
+                                    Click="CloseSamplesPopup"/>
+
+                            <Label Grid.Row="4" Content="Local functions"/>
+                            <Button Grid.Column="1" Grid.Row="4" Command="{Binding FileService.NewCSharpCommand}" Content="C# 7"
+                                    CommandParameter="{Binding CSharpSampleService.LocalFunctions}"
+                                    Click="CloseSamplesPopup"/>
+                            <Button Grid.Column="2" Grid.Row="4" IsEnabled="False"/>
+
+                            <Label Grid.Row="5" Content="Pattern matching"/>
+                            <Button Grid.Column="1" Grid.Row="5" Command="{Binding FileService.NewCSharpCommand}" Content="C# 7"
+                                    CommandParameter="{Binding CSharpSampleService.PatternMatching}"
+                                    Click="CloseSamplesPopup"/>
+                            <Button Grid.Column="2" Grid.Row="5" IsEnabled="False"/>
+
+                            <Label Grid.Row="6" Content="Tuples"/>
+                            <Button Grid.Column="1" Grid.Row="6" Command="{Binding FileService.NewCSharpCommand}" Content="C# 7"
+                                    CommandParameter="{Binding CSharpSampleService.Tuples}"
+                                    Click="CloseSamplesPopup"/>
+                            <Button Grid.Column="2" Grid.Row="6" Command="{Binding FileService.NewVisualBasicCommand}" Content="VB 15"
+                                    CommandParameter="{Binding VisualBasicSampleService.Tuples}"
+                                    Click="CloseSamplesPopup"/>
+
+                            <Label Grid.Row="7" Content="out variables"/>
+                            <Button Grid.Column="1" Grid.Row="7" Command="{Binding FileService.NewCSharpCommand}" Content="C# 7"
+                                    CommandParameter="{Binding CSharpSampleService.OutVariables}"
+                                    Click="CloseSamplesPopup"/>
+                            <Button Grid.Column="2" Grid.Row="7" IsEnabled="False"/>
+
+                            <Label Grid.Row="8" Content="Nullable Reference Types"/>
+                            <Button Grid.Column="1" Grid.Row="8" Command="{Binding FileService.NewCSharpCommand}" Content="C# 8"
+                                    CommandParameter="{Binding CSharpSampleService.NullableReferenceTypes}"
+                                    Click="CloseSamplesPopup"/>
+                            <Button Grid.Column="2" Grid.Row="8" IsEnabled="False"/>
                         </Grid>
                     </Border>
                 </ctrl:Flyout>

@@ -12,8 +12,10 @@ namespace Waf.DotNetPad.Applications.Services
 
         Lazy<string> LocalFunctions { get; }
 
+        Lazy<string> NullableReferenceTypes { get; }
+
         Lazy<string> NullConditionalOperator { get; }
-        
+
         Lazy<string> NameOfOperator { get; }
 
         Lazy<string> AutoPropertyInitializers { get; }

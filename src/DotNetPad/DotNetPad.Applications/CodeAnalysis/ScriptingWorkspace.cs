@@ -24,7 +24,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
 {
     internal class ScriptingWorkspace : Workspace
     {
-        private static readonly Assembly[] defaultReferences =
+        private static readonly ImmutableArray<Assembly> defaultReferences = ImmutableArray.CreateRange(new[]
         {
             typeof(object).Assembly,                                // mscorelib
             typeof(Uri).Assembly,                                   // System
@@ -35,7 +35,9 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             typeof(ImmutableArray).Assembly,                        // System.Collections.Immutable
             typeof(Span<>).Assembly,                                // System.Memory
             typeof(ArrayPool<>).Assembly,                           // System.Buffers
-        };
+        });
+
+        private static readonly ImmutableArray<string> preprocessorSymbols = ImmutableArray.CreateRange(new[] { "TRACE", "DEBUG", "NET472" });
 
         private readonly ConcurrentDictionary<string, DocumentationProvider> documentationProviders;
 
@@ -64,7 +66,8 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             else if (language == LanguageNames.CSharp) { references.Add(CreateReference(typeof(RuntimeBinderException).Assembly)); }
 
             var projectInfo = ProjectInfo.Create(projectId, VersionStamp.Default, name, name + ".dll", language, metadataReferences: references,
-                parseOptions: language == LanguageNames.CSharp ? (ParseOptions)new CSharpParseOptions(Microsoft.CodeAnalysis.CSharp.LanguageVersion.CSharp9)
+                parseOptions: language == LanguageNames.CSharp
+                    ? (ParseOptions)new CSharpParseOptions(Microsoft.CodeAnalysis.CSharp.LanguageVersion.CSharp9, preprocessorSymbols: preprocessorSymbols)
                     : new VisualBasicParseOptions(Microsoft.CodeAnalysis.VisualBasic.LanguageVersion.VisualBasic16));
             OnProjectAdded(projectInfo);
 
