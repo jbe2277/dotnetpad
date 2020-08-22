@@ -4,8 +4,8 @@ using System.IO;
 
 namespace Waf.DotNetPad.Applications.Services
 {
-    [Export(typeof(ICSharpSampleService))]
-    internal class CSharpSampleService : ICSharpSampleService
+    [Export]
+    public class CSharpSampleService
     {
         public Lazy<string> OutVariables => new Lazy<string>(() => GetSampleCode("OutVariables.cs"));
 
@@ -24,6 +24,8 @@ namespace Waf.DotNetPad.Applications.Services
         public Lazy<string> AutoPropertyInitializers => new Lazy<string>(() => GetSampleCode("AutoPropertyInitializers.cs"));
 
         public Lazy<string> StringInterpolation => new Lazy<string>(() => GetSampleCode("StringInterpolation.cs"));
+
+        public Lazy<string> SwitchExpression => new Lazy<string>(() => GetSampleCode("SwitchExpression.cs"));
 
         internal static string GetSampleCode(string sampleFileName)
         {

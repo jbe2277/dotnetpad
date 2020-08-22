@@ -29,10 +29,10 @@ namespace Waf.DotNetPad.Applications.ViewModels
         private IReadOnlyList<DocumentDataModel> documentDataModels = Array.Empty<DocumentDataModel>();
         private DocumentDataModel? activeDocumentDataModel;
         private string? statusText;
-        
+
         [ImportingConstructor]
-        public ShellViewModel(IShellView view, IShellService shellService, IFileService fileService, ICSharpSampleService csharpSampleService, 
-            IVisualBasicSampleService visualBasicSampleService)
+        public ShellViewModel(IShellView view, IShellService shellService, IFileService fileService, CSharpSampleService csharpSampleService,
+            VisualBasicSampleService visualBasicSampleService)
             : base(view)
         {
             ShellService = shellService;
@@ -42,7 +42,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
             settings = shellService.Settings;
             garbageCollectorCommand = new DelegateCommand(GC.Collect);
             statusText = Resources.Ready;
-            
+
             WeakEvent.PropertyChanged.Add(fileService, FileServicePropertyChanged);
             view.Closed += ViewClosed;
 
@@ -66,9 +66,9 @@ namespace Waf.DotNetPad.Applications.ViewModels
 
         public IFileService FileService { get; }
 
-        public ICSharpSampleService CSharpSampleService { get; }
+        public CSharpSampleService CSharpSampleService { get; }
 
-        public IVisualBasicSampleService VisualBasicSampleService { get; }
+        public VisualBasicSampleService VisualBasicSampleService { get; }
 
         public object? ErrorListView
         {
