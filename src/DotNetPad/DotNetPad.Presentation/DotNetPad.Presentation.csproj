@@ -252,39 +252,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Error16.png" />
-    <Resource Include="Resources\Images\Info16.png" />
-    <Resource Include="Resources\Images\Warning16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Class16.png" />
-    <Resource Include="Resources\Images\Constant16.png" />
-    <Resource Include="Resources\Images\Delegate16.png" />
-    <Resource Include="Resources\Images\Enum16.png" />
-    <Resource Include="Resources\Images\EnumItem16.png" />
-    <Resource Include="Resources\Images\Event16.png" />
-    <Resource Include="Resources\Images\ExtensionMethod16.png" />
-    <Resource Include="Resources\Images\Field16.png" />
-    <Resource Include="Resources\Images\Interface16.png" />
-    <Resource Include="Resources\Images\Keyword16.png" />
-    <Resource Include="Resources\Images\Method16.png" />
-    <Resource Include="Resources\Images\Namespace16.png" />
-    <Resource Include="Resources\Images\Property16.png" />
-    <Resource Include="Resources\Images\Structure16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Module16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Copy16.png" />
-    <Resource Include="Resources\Images\Cut16.png" />
-    <Resource Include="Resources\Images\Paste16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Start16.png" />
-    <Resource Include="Resources\Images\Stop16.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
