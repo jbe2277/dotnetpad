@@ -27,6 +27,8 @@ namespace Waf.DotNetPad.Applications.Services
 
         public Lazy<string> SwitchExpression => new Lazy<string>(() => GetSampleCode("SwitchExpression.cs"));
 
+        public Lazy<string> CS9Preview => new Lazy<string>(() => GetSampleCode("CS9Preview.cs"));
+
         internal static string GetSampleCode(string sampleFileName)
         {
             using var stream = typeof(CSharpSampleService).Assembly.GetManifestResourceStream("Waf.DotNetPad.Applications.Samples." + sampleFileName);
