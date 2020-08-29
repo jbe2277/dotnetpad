@@ -1,6 +1,18 @@
 Changelog
 ---------
 
+Version 4.0.0.100 (Release)
+- Update target framework to 4.7.2
+- Update to Microsoft.CodeAnalysis 3.7.0
+- Enable C# 9 preview support
+- Support NullableAttributes and Range, Indices
+- Improve .NET Framework version detection
+- Replace png icons with xaml icons
+- Add NullableReferenceTypes sample
+- Add SwitchExpression sample
+- Add CS9Preview sample
+
+
 Version 3.0.1.100 (Release)
 - Fix crash that could occur in code completion
 - Update to Microsoft.CodeAnalysis 3.2.1
