@@ -20,8 +20,8 @@
     <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Memory" Version="4.5.4" />
     <PackageReference Include="System.Waf.Wpf" Version="6.2.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="3.7.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic.Features" Version="3.7.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="3.8.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic.Features" Version="3.8.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,7 +34,7 @@
     <Compile Update="Properties\Resources.Designer.cs" AutoGen="True" DependentUpon="Resources.resx" DesignTime="True" />
 
     <!-- Samples as Embedded Resource -->
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)\..\NullableAttributes.cs" Link="CompilerServices\NullableAttributes.cs"/>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)\..\NullableAttributes.cs" Link="CompilerServices\NullableAttributes.cs" />
     <Compile Remove="CompilerServices\*.cs" />
     <EmbeddedResource Include="CompilerServices\*.cs" />
 

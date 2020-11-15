@@ -10,43 +10,27 @@ namespace Sample
     {
         internal static void Main()
         {
-            var person = new Person
-            {
-                FirstName = "Obi-Wan",
-                LastName = "Kenobi"
-            };
-            // person.FirstName = "Darth";  // not allowed
+            var person = new Person("Obi-Wan", "Kenobi");
+            Console.WriteLine(person.ToString());
 
-            var student = new Student { FirstName = "Luke", LastName = "Skywalker" };
+            // Target-typed new expressions
+            Student student = new("Luke", "Skywalker") { Style = "Jedi" };
+            // student.Style = "Sith";  // not allowed
+            Console.WriteLine(student.ToString());
 
             // Target typed ?? and ?
             var result = student ?? person;  // Shared base type
+            Console.WriteLine(result.ToString());
 
             // "not" pattern
             if (person is not Person) Console.WriteLine("Not of type person");
-
-            // Target-typed new expressions
-            Point point = new (2, 3);
         }
     }
 
-    public class Person
+    public record Person(string? FirstName, string? LastName);
+
+    public record Student(string? FirstName, string? LastName) : Person(FirstName, LastName)
     {
-        public string? FirstName { get; init; }
-        public string? LastName { get; init; }
-    }
-
-    public class Student : Person { }
-
-    public readonly struct Point
-    {
-        public Point(double x, double y)
-        {
-            X = x;
-            Y = y;
-        }
-
-        public double X { get; }
-        public double Y { get; }
+        public string? Style { get; init; }
     }
 }
