@@ -18,6 +18,13 @@ namespace Sample
             // student.Style = "Sith";  // not allowed
             Console.WriteLine(student.ToString());
 
+            // with ... create clone
+            var lukeClone = student with { };
+            Console.WriteLine($"Luke and LukeClone: Equals: {student == lukeClone}; ReferenceEquals: {ReferenceEquals(student, lukeClone)}");
+
+            var lea = student with { FirstName = "Lea" };  
+            Console.WriteLine(lea.ToString());
+
             // Target typed ?? and ?
             var result = student ?? person;  // Shared base type
             Console.WriteLine(result.ToString());
