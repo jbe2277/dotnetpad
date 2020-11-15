@@ -177,9 +177,9 @@
                                     Click="CloseSamplesPopup"/>
                             <Button Grid.Column="2" Grid.Row="9" IsEnabled="False"/>
 
-                            <Label Grid.Row="10" Content="C# 9 Preview"/>
+                            <Label Grid.Row="10" Content="Record"/>
                             <Button Grid.Column="1" Grid.Row="10" Command="{Binding FileService.NewCSharpCommand}" Content="C# 9"
-                                    CommandParameter="{Binding CSharpSampleService.CS9Preview}"
+                                    CommandParameter="{Binding CSharpSampleService.Record}"
                                     Click="CloseSamplesPopup"/>
                             <Button Grid.Column="2" Grid.Row="10" IsEnabled="False"/>
                         </Grid>

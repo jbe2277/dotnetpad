@@ -27,7 +27,7 @@ namespace Waf.DotNetPad.Applications.Services
 
         public Lazy<string> SwitchExpression => new Lazy<string>(() => GetSampleCode("SwitchExpression.cs"));
 
-        public Lazy<string> CS9Preview => new Lazy<string>(() => GetSampleCode("CS9Preview.cs"));
+        public Lazy<string> Record => new Lazy<string>(() => GetSampleCode("Record.cs"));
 
         internal static string GetSampleCode(string sampleFileName)
         {

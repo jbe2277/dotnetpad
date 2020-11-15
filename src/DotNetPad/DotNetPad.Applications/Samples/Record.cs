@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sample
 {
-    internal static class CS9Preview
+    internal static class Record
     {
         internal static void Main()
         {
