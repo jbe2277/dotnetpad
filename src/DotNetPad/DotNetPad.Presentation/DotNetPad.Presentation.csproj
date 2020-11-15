@@ -31,7 +31,7 @@
     <PublisherName>Waf</PublisherName>
     <SuiteName>Waf DotNetPad</SuiteName>
     <ApplicationRevision>100</ApplicationRevision>
-    <ApplicationVersion>4.0.0.100</ApplicationVersion>
+    <ApplicationVersion>4.1.0.100</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>

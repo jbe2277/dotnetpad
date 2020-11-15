@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+Version 4.1.0.100 (Release)
+- Update to Microsoft.CodeAnalysis 3.8.0
+- Enable C# 9 final support
+- Replace CS9Preview sample with Record sample
+
+
 Version 4.0.0.100 (Release)
 - Update target framework to 4.7.2
 - Update to Microsoft.CodeAnalysis 3.7.0

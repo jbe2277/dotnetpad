@@ -133,7 +133,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             return Task.Run(async () =>
             {
                 var formattedDocument = await Microsoft.CodeAnalysis.Formatting.Formatter.FormatAsync(
-                        CurrentSolution.GetDocument(documentId)).ConfigureAwait(false);
+                        CurrentSolution.GetDocument(documentId)!).ConfigureAwait(false);
                 TryApplyChanges(formattedDocument.Project.Solution);
             });
         }
