@@ -10,10 +10,8 @@ using System.Waf;
 using System.Waf.Applications;
 using System.Windows;
 using System.Windows.Threading;
-using Waf.DotNetPad.Applications.Services;
 using Waf.DotNetPad.Applications.ViewModels;
 using Waf.DotNetPad.Domain;
-using Waf.DotNetPad.Presentation.Properties;
 using Waf.DotNetPad.Presentation.Services;
 
 namespace Waf.DotNetPad.Presentation
@@ -41,8 +39,6 @@ namespace Waf.DotNetPad.Presentation
             AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
 #endif
 
-            InitializeCultures();
-
             catalog = new AggregateCatalog();
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(WafConfiguration).Assembly));
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(ShellViewModel).Assembly));
@@ -53,37 +49,18 @@ namespace Waf.DotNetPad.Presentation
             batch.AddExportedValue(container);
             container.Compose(batch);
 
-            // Initialize all presentation services
-            var presentationServices = container.GetExportedValues<IPresentationService>();
-            foreach (var presentationService in presentationServices) { presentationService.Initialize(); }
-
-            // Initialize and run all module controllers
             moduleControllers = container.GetExportedValues<IModuleController>();
-            foreach (var moduleController in moduleControllers) { moduleController.Initialize(); }
-            foreach (var moduleController in moduleControllers) { moduleController.Run(); }
+            foreach (var x in moduleControllers) x.Initialize();
+            foreach (var x in moduleControllers) x.Run();
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
-            // Shutdown the module controllers in reverse order
-            foreach (var moduleController in moduleControllers.Reverse()) { moduleController.Shutdown(); }
+            foreach (var x in moduleControllers.Reverse()) x.Shutdown();
 
-            // Dispose
             container.Dispose();
             catalog.Dispose();
             base.OnExit(e);
-        }
-
-        private static void InitializeCultures()
-        {
-            if (!string.IsNullOrEmpty(Settings.Default.Culture))
-            {
-                CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(Settings.Default.Culture);
-            }
-            if (!string.IsNullOrEmpty(Settings.Default.UICulture))
-            {
-                CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(Settings.Default.UICulture);
-            }
         }
 
         private static void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
