@@ -1,7 +1,7 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Waf.Applications;
 using System.Windows.Input;
 using Waf.DotNetPad.Applications.Views;
@@ -12,16 +12,13 @@ namespace Waf.DotNetPad.Applications.ViewModels
     [Export, PartCreationPolicy(CreationPolicy.NonShared)]
     public class InfoViewModel : ViewModel<IInfoView>
     {
-        private readonly DelegateCommand showWebsiteCommand;
-
         [ImportingConstructor]
-        public InfoViewModel(IInfoView view)
-            : base(view)
+        public InfoViewModel(IInfoView view) : base(view)
         {
-            showWebsiteCommand = new DelegateCommand(ShowWebsite);
+            ShowWebsiteCommand = new DelegateCommand(ShowWebsite);
         }
 
-        public ICommand ShowWebsiteCommand => showWebsiteCommand;
+        public ICommand ShowWebsiteCommand { get; }
 
         public string ProductName => ApplicationInfo.ProductName;
 
@@ -29,45 +26,23 @@ namespace Waf.DotNetPad.Applications.ViewModels
 
         public string OSVersion => Environment.OSVersion.ToString();
 
-        public string NetVersion { get; } = GetDotNetVersion();
+        public string NetVersion { get; } = Environment.Version.ToString();
 
-        public bool Is64BitProcess => Environment.Is64BitProcess;
+        public Architecture ProcessArchitecture => RuntimeInformation.ProcessArchitecture;
 
-        public void ShowDialog(object owner)
-        {
-            ViewCore.ShowDialog(owner);
-        }
-
+        public void ShowDialog(object owner) => ViewCore.ShowDialog(owner);
+        
         private void ShowWebsite(object? parameter)
         {
             var url = (parameter as string) ?? "";
             try
             {
-                Process.Start(url);
+                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
             }
             catch (Exception e)
             {
                 Logger.Error("An exception occured when trying to show the url '{0}'. Exception: {1}", url, e);
             }
-        }
-
-        private static string GetDotNetVersion()
-        {
-            using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
-            using var key = baseKey.OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\");
-            int? releaseKey = (int?)key?.GetValue("Release");
-            string majorVersion = "";
-
-            if (releaseKey > 528372) majorVersion = "4.8.0 or later";
-            else if (releaseKey >= 528040) majorVersion = "4.8.0";
-            else if (releaseKey >= 461808) majorVersion = "4.7.2";
-            else if (releaseKey >= 461308) majorVersion = "4.7.1";
-            else if (releaseKey >= 460798) majorVersion = "4.7";
-            else if (releaseKey >= 394802) majorVersion = "4.6.2";
-            else if (releaseKey >= 394254) majorVersion = "4.6.1";
-
-            if (releaseKey != null) majorVersion += " (" + releaseKey + ")";
-            return majorVersion;
         }
     }
 }

@@ -14,12 +14,10 @@ namespace Waf.DotNetPad.Presentation.Views
         {
             InitializeComponent();
 
-            using (var stream = Application.GetResourceStream(new Uri("/Resources/Images/DotNetPad.ico", UriKind.Relative)).Stream)
-            {
-                var decoder = BitmapDecoder.Create(stream, BitmapCreateOptions.DelayCreation, BitmapCacheOption.OnDemand);
-                BitmapFrame frame = decoder.Frames.Where(f => f.Width < 300).OrderBy(f => f.Width).LastOrDefault();
-                applicationImage.Source = frame;
-            }
+            using var stream = Application.GetResourceStream(new Uri("/Resources/Images/DotNetPad.ico", UriKind.Relative)).Stream;
+            var decoder = BitmapDecoder.Create(stream, BitmapCreateOptions.DelayCreation, BitmapCacheOption.OnDemand);
+            var frame = decoder.Frames.Where(f => f.Width < 300).OrderBy(f => f.Width).LastOrDefault();
+            applicationImage.Source = frame;
         }
 
         public void ShowDialog(object owner)

@@ -37,10 +37,10 @@
                 </Grid.RowDefinitions>
 
                 <Label Content="{x:Static p:Resources.Product}" Grid.Row="0"/>
-                <Label Content="{Binding ProductName}" Grid.Column="1"/>
+                <Label Content="{Binding ProductName, Mode=OneTime}" Grid.Column="1"/>
 
                 <Label Content="{x:Static p:Resources.Version}" Grid.Row="1"/>
-                <Label Content="{Binding Version}" Grid.Column="1" Grid.Row="1"/>
+                <Label Content="{Binding Version, Mode=OneTime}" Grid.Column="1" Grid.Row="1"/>
 
                 <Label Content="{x:Static p:Resources.License}" Grid.Row="2"/>
                 <Label Grid.Column="1" Grid.Row="2">
@@ -53,24 +53,13 @@
                 </Label>
 
                 <Label Content="{x:Static p:Resources.OperatingSystem}" Grid.Row="4"/>
-                <Label Content="{Binding OSVersion}" Grid.Column="1" Grid.Row="4"/>
+                <Label Content="{Binding OSVersion, Mode=OneTime}" Grid.Column="1" Grid.Row="4"/>
 
                 <Label Content="{x:Static p:Resources.NetFramework}" Grid.Row="5"/>
                 <Label Grid.Column="1" Grid.Row="5">
                     <TextBlock>
-                        <Run Text="{Binding NetVersion, Mode=OneWay}"/>
-                        <Run>
-                            <Run.Style>
-                                <Style TargetType="Run">
-                                    <Setter Property="Text" Value="{x:Static p:Resources.Info32Bit}"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Is64BitProcess}" Value="True">
-                                            <Setter Property="Text" Value="{x:Static p:Resources.Info64Bit}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Run.Style>
-                        </Run>
+                        <Run Text="{Binding NetVersion, Mode=OneTime}"/>
+                        <Run Text="{Binding ProcessArchitecture, StringFormat=' ({0})', Mode=OneTime}"/>
                     </TextBlock>
                 </Label>
             </Grid>
