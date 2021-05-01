@@ -66,7 +66,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             
             var fileName = Path.GetFileName(originalPath);
             string? path = null;
-            foreach (var version in new[] { @"v4.X", @"v4.7.1", @"v4.7", @"v4.6.1", @"v4.6", @"v4.5.2", @"v4.5.1", @"v4.5" })
+            foreach (var version in new[] { @"5.0.0\ref\net5.0" })
             {
                 path = GetNetFrameworkPathOrNull(fileName, version);
                 if (path != null)
@@ -80,8 +80,8 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
 
         private static string? GetNetFrameworkPathOrNull(string fileName, string version)
         {
-            const string netFrameworkPathPart = @"Reference Assemblies\Microsoft\Framework\.NETFramework";
-            var newPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), netFrameworkPathPart, version, fileName);
+            const string netFrameworkPathPart = @"dotnet\packs\Microsoft.NETCore.App.Ref";
+            var newPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), netFrameworkPathPart, version, fileName);
             return File.Exists(newPath) ? newPath : null;
         }
     }

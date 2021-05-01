@@ -1,65 +1,40 @@
 ﻿using System;
-using System.ComponentModel.Composition;
 using System.IO;
+using System.Reflection;
+using System.Runtime.Loader;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Waf.DotNetPad.Applications.Host
 {
-    [Export]
-    public class ScriptHost
+    // Use AssemblyLoadContext for unloading the script assembly but this does not provide any kind of isolation.
+    public static class ScriptHost
     {
-        private readonly object fieldsLock = new object();
-        private byte[]? loadedAssembly;
-        private AppDomain? scriptAppDomain;
-        private RemoteScriptRun? remoteScriptRun;
-
-        public async Task RunScriptAsync(byte[] inMemoryAssembly, byte[] inMemorySymbolStore, TextWriter outputTextWriter, TextWriter errorTextWriter, CancellationToken cancellationToken)
+        public static Task RunScriptAsync(byte[] inMemoryAssembly, byte[] inMemorySymbolStore, TextWriter errorTextWriter, CancellationToken cancellationToken)
         {
-            cancellationToken.Register(StopScriptCore);
-            await Task.Run(() => RunScriptCore(inMemoryAssembly, inMemorySymbolStore, outputTextWriter, errorTextWriter), cancellationToken);
+            return Task.Run(() =>
+            {
+                try
+                {
+                    var context = new ScriptLoadContext();
+                    var scriptAssembly = context.LoadFromStream(new MemoryStream(inMemoryAssembly), new MemoryStream(inMemorySymbolStore));
+                    if (scriptAssembly.EntryPoint is null) throw new InvalidOperationException("Could not find the entry point of the script assembly.");
+                    scriptAssembly.EntryPoint.Invoke(null, null);
+                    context.Unload();
+                }
+                catch (Exception ex)
+                {
+                    errorTextWriter.WriteLine(ex.ToString());
+                }
+            }, cancellationToken);
         }
 
-        private void RunScriptCore(byte[] inMemoryAssembly, byte[] inMemorySymbolStore, TextWriter outputTextWriter, TextWriter errorTextWriter)
+        private class ScriptLoadContext : AssemblyLoadContext
         {
-            RemoteScriptRun? scriptRun;
-            lock (fieldsLock)
-            {
-                if (inMemoryAssembly != loadedAssembly)
-                {
-                    if (scriptAppDomain != null)
-                    {
-                        AppDomain.Unload(scriptAppDomain);
-                    }
-                    scriptAppDomain = AppDomain.CreateDomain("ScriptAppDomain");
-                    remoteScriptRun = (RemoteScriptRun)scriptAppDomain.CreateInstanceAndUnwrap(typeof(RemoteScriptRun).Assembly.FullName, typeof(RemoteScriptRun).FullName);
-                    remoteScriptRun.Load(inMemoryAssembly, inMemorySymbolStore, outputTextWriter, errorTextWriter);
-                    loadedAssembly = inMemoryAssembly;
-                }
-                scriptRun = remoteScriptRun;
-            }
-            
-            try
-            {
-                scriptRun?.Run();
-            }
-            catch (AppDomainUnloadedException)
-            {
-            }
-        }
+            public ScriptLoadContext() : base(isCollectible: true) { }
 
-        private void StopScriptCore()
-        {
-            lock (fieldsLock)
-            {
-                if (scriptAppDomain != null)
-                {
-                    AppDomain.Unload(scriptAppDomain);
-                    scriptAppDomain = null;
-                    loadedAssembly = null;
-                    remoteScriptRun = null;
-                }
-            }
+            // Return null so that dependant assemblies are loaded into the default context.
+            protected override Assembly? Load(AssemblyName assemblyName) => null;
         }
     }
 }

@@ -6,19 +6,16 @@ using Microsoft.CodeAnalysis.VisualBasic;
 using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.VisualBasic;
 using System;
-using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
 
 namespace Waf.DotNetPad.Applications.CodeAnalysis
 {
@@ -26,18 +23,14 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
     {
         private static readonly ImmutableArray<Assembly> defaultReferences = ImmutableArray.CreateRange(new[]
         {
-            typeof(object).Assembly,                                // mscorelib
-            typeof(Uri).Assembly,                                   // System
-            typeof(Enumerable).Assembly,                            // System.Core
-            typeof(XmlReader).Assembly,                             // System.Xml
-            typeof(XDocument).Assembly,                             // System.Xml.Linq
-            typeof(DataContractSerializer).Assembly,                // System.Runtime.Serialization
+            typeof(object).Assembly,                                // System.Runtime
+            typeof(Console).Assembly,                               // System.Console
+            typeof(Enumerable).Assembly,                            // System.Link
             typeof(ImmutableArray).Assembly,                        // System.Collections.Immutable
-            typeof(Span<>).Assembly,                                // System.Memory
-            typeof(ArrayPool<>).Assembly,                           // System.Buffers
+            typeof(INotifyPropertyChanged).Assembly,                // System.ObjectModel
         });
 
-        private static readonly ImmutableArray<string> preprocessorSymbols = ImmutableArray.CreateRange(new[] { "TRACE", "DEBUG", "NET472" });
+        private static readonly ImmutableArray<string> preprocessorSymbols = ImmutableArray.CreateRange(new[] { "TRACE", "DEBUG" });
 
         private readonly ConcurrentDictionary<string, DocumentationProvider> documentationProviders;
 
@@ -60,15 +53,14 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             var projectId = ProjectId.CreateNewId();
 
             var references = defaultReferences.Distinct().Select(CreateReference).ToList();
-            references.Add(CreateReference(Assembly.Load("System.Runtime, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")));
-            references.Add(CreateReference(Assembly.Load("netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51")));
+            references.Add(CreateReference(Assembly.Load("System.Runtime, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")));
             if (language == LanguageNames.VisualBasic) { references.Add(CreateReference(typeof(VBMath).Assembly)); }
             else if (language == LanguageNames.CSharp) { references.Add(CreateReference(typeof(RuntimeBinderException).Assembly)); }
 
             var projectInfo = ProjectInfo.Create(projectId, VersionStamp.Default, name, name + ".dll", language, metadataReferences: references,
                 parseOptions: language == LanguageNames.CSharp
-                    ? (ParseOptions)new CSharpParseOptions(Microsoft.CodeAnalysis.CSharp.LanguageVersion.Preview, preprocessorSymbols: preprocessorSymbols)
-                    : new VisualBasicParseOptions(Microsoft.CodeAnalysis.VisualBasic.LanguageVersion.VisualBasic16));
+                    ? new CSharpParseOptions(Microsoft.CodeAnalysis.CSharp.LanguageVersion.CSharp9, preprocessorSymbols: preprocessorSymbols)
+                    : new VisualBasicParseOptions(Microsoft.CodeAnalysis.VisualBasic.LanguageVersion.VisualBasic16_9));
             OnProjectAdded(projectInfo);
 
             var documentId = DocumentId.CreateNewId(projectId);

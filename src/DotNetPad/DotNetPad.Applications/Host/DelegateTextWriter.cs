@@ -8,19 +8,16 @@ namespace Waf.DotNetPad.Applications.Host
 {
     public class DelegateTextWriter : TextWriter
     {
-        private readonly Action<string> appendTextAction;
+        private readonly Action<string?> appendTextAction;
 
-        public DelegateTextWriter(Action<string> appendTextAction) : base(CultureInfo.CurrentCulture)
+        public DelegateTextWriter(Action<string?> appendTextAction) : base(CultureInfo.CurrentCulture)
         {
             this.appendTextAction = appendTextAction;
         }
 
         public override Encoding Encoding => Encoding.UTF8;
         
-        public override void Write(char value)
-        {
-            appendTextAction(value.ToString(CultureInfo.CurrentCulture));
-        }
+        public override void Write(char value) => appendTextAction(value.ToString(CultureInfo.CurrentCulture));
 
         public override void Write(char[] buffer, int index, int count)
         {
@@ -31,14 +28,6 @@ namespace Waf.DotNetPad.Applications.Host
             appendTextAction(new string(buffer));
         }
 
-        public override void Write(string value)
-        {
-            appendTextAction(value);
-        }
-
-        public override object? InitializeLifetimeService()
-        {
-            return null;
-        }
+        public override void Write(string? value) => appendTextAction(value);
     }
 }
