@@ -50,7 +50,7 @@ namespace Waf.DotNetPad.Presentation.Views
             UpdateCaretPosition();
         }
 
-        private void CaretPositionChanged(object sender, EventArgs e)
+        private void CaretPositionChanged(object? sender, EventArgs e)
         {
             UpdateCaretPosition();
         }
@@ -65,7 +65,7 @@ namespace Waf.DotNetPad.Presentation.Views
             }
         }
 
-        private void CodeEditorServiceRequestSetCaret(object sender, SetCaretEventArgs e)
+        private void CodeEditorServiceRequestSetCaret(object? sender, SetCaretEventArgs e)
         {
             if (e.DocumentFile != ViewModel.DocumentFile) { return; }
 

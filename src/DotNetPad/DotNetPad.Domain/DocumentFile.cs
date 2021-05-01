@@ -88,7 +88,7 @@ namespace Waf.DotNetPad.Domain
             return content;
         }
 
-        private void ContentPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void ContentPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(DocumentContent.Code))
             {

@@ -103,7 +103,7 @@ namespace Waf.DotNetPad.Presentation.Controls
                 int offset = textEditor.Document.GetOffset(logicalPosition);
 
                 var markersAtOffset = markers.FindSegmentsContaining(offset);
-                ErrorTextMarker marker = markersAtOffset.LastOrDefault(m => !string.IsNullOrEmpty(m.Message));
+                var marker = markersAtOffset.LastOrDefault(m => !string.IsNullOrEmpty(m.Message));
 
                 if (marker != null)
                 {
@@ -133,7 +133,7 @@ namespace Waf.DotNetPad.Presentation.Controls
             }
         }
 
-        private void TextViewVisualLinesChanged(object sender, EventArgs e)
+        private void TextViewVisualLinesChanged(object? sender, EventArgs e)
         {
             if (toolTip != null)
             {

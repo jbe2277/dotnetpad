@@ -75,14 +75,6 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             var documentInfo = DocumentInfo.Create(documentId, fileName, loader: TextLoader.From(TextAndVersion.Create(SourceText.From(text, Encoding.UTF8), VersionStamp.Create())));
             OnDocumentAdded(documentInfo);
             return documentId;
-
-            void AddFile(ProjectId id, string sourceFile)
-            {
-                using var stream = typeof(ScriptingWorkspace).Assembly.GetManifestResourceStream("Waf.DotNetPad.Applications.CompilerServices." + sourceFile);
-                var newDocumentId = DocumentId.CreateNewId(id);
-                var newDocumentInfo = DocumentInfo.Create(newDocumentId, sourceFile, loader: TextLoader.From(TextAndVersion.Create(SourceText.From(stream, Encoding.UTF8), VersionStamp.Create())));
-                OnDocumentAdded(newDocumentInfo);
-            }
         }
 
         public void RemoveProject(DocumentId id)
