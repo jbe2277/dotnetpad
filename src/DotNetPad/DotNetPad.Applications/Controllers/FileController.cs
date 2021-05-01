@@ -289,7 +289,7 @@ namespace Waf.DotNetPad.Applications.Controllers
         private static DocumentContent LoadDocumentContent(DocumentFile documentFile)
         {            
             Trace.WriteLine(">> Load document content: " + documentFile.FileName);
-            using var stream = new FileStream(documentFile.FileName, FileMode.Open, FileAccess.Read);
+            using var stream = new FileStream(documentFile.FileName ?? throw new InvalidOperationException("FileName is null"), FileMode.Open, FileAccess.Read);
             using var reader = new StreamReader(stream, Encoding.UTF8);
             var documentContent = new DocumentContent()
             {
@@ -319,11 +319,11 @@ namespace Waf.DotNetPad.Applications.Controllers
             }
         }
 
-        private void FileServiceDocumentsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void FileServiceDocumentsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                foreach (DocumentFile documentFile in e.NewItems)
+                foreach (DocumentFile documentFile in e.NewItems!)
                 {
                     documentFile.PropertyChanged += DocumentFilePropertyChanged;
                     observedDocumentFiles.Add(documentFile);
@@ -331,7 +331,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                foreach (DocumentFile documentFile in e.OldItems)
+                foreach (DocumentFile documentFile in e.OldItems!)
                 {
                     documentFile.PropertyChanged -= DocumentFilePropertyChanged;
                     observedDocumentFiles.Remove(documentFile);
@@ -351,18 +351,18 @@ namespace Waf.DotNetPad.Applications.Controllers
             }
         }
 
-        private async void DocumentFilePropertyChanged(object sender, PropertyChangedEventArgs e)
+        private async void DocumentFilePropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(DocumentFile.LoadError))
             {
                 await Task.Yield();
-                var document = ((DocumentFile)sender);
+                var document = (DocumentFile)sender!;
                 CloseCore(document);
                 messageService.ShowError(shellService.ShellView, string.Format(CultureInfo.CurrentCulture, Resources.OpenFileError, document.FileName));
             }
         }
 
-        private void FileServicePropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void FileServicePropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(IFileService.ActiveDocumentFile))
             {
@@ -380,7 +380,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             }
         }
 
-        private void ActiveDocumentPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void ActiveDocumentPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(DocumentFile.Modified))
             {

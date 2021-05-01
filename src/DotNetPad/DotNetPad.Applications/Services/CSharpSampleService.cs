@@ -32,7 +32,7 @@ namespace Waf.DotNetPad.Applications.Services
         internal static string GetSampleCode(string sampleFileName)
         {
             using var stream = typeof(CSharpSampleService).Assembly.GetManifestResourceStream("Waf.DotNetPad.Applications.Samples." + sampleFileName);
-            using var reader = new StreamReader(stream);
+            using var reader = new StreamReader(stream ?? throw new InvalidOperationException("Could not load sample code"));
             return reader.ReadToEnd();
         }
     }

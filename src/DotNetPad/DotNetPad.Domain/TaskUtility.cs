@@ -11,7 +11,7 @@ namespace Waf.DotNetPad.Domain
             if (predicate(observable)) return Task.CompletedTask;
             
             var tcs = new TaskCompletionSource<object?>();
-            void Handler(object sender, PropertyChangedEventArgs e)
+            void Handler(object? sender, PropertyChangedEventArgs e)
             {
                 if (predicate(observable))
                 {

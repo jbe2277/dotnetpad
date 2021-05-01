@@ -24,7 +24,7 @@ namespace Waf.DotNetPad.Presentation.Views
 
         private void ErrorListDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (e.OriginalSource is FrameworkElement element && element?.DataContext is ErrorListItem)
+            if (e.OriginalSource is FrameworkElement element && element.DataContext is ErrorListItem)
             {
                 ViewModel.GotoErrorCommand.Execute(null);
             }

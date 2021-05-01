@@ -128,7 +128,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             workspace.UpdateText(documentId, text);
         }
 
-        private void WorkspaceChanged(object sender, WorkspaceChangeEventArgs e)
+        private void WorkspaceChanged(object? sender, WorkspaceChangeEventArgs e)
         {
             if (e.Kind == WorkspaceChangeKind.DocumentChanged)
             {
@@ -175,7 +175,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             ResetBuildResult(documentFile);
         }
 
-        private void DocumentServicePropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void DocumentServicePropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(IDocumentService.ActiveDocumentFile))
             {
@@ -185,15 +185,15 @@ namespace Waf.DotNetPad.Applications.Controllers
             }
         }
 
-        private void DocumentsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void DocumentsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                foreach (DocumentFile x in e.NewItems) AddProject(x);
+                foreach (DocumentFile x in e.NewItems!) AddProject(x);
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                foreach (DocumentFile x in e.OldItems) RemoveProject(x);
+                foreach (DocumentFile x in e.OldItems!) RemoveProject(x);
             }
             else if (e.Action == NotifyCollectionChangedAction.Reset && !documentService.DocumentFiles.Any())
             {
@@ -227,9 +227,7 @@ namespace Waf.DotNetPad.Applications.Controllers
                     UpdateErrorList(documentFile, diagnostics);
                 }
             }
-            catch (OperationCanceledException)
-            {
-            }
+            catch (OperationCanceledException) { }
             finally
             {
                 updateDiagnosticsCancellation = null;
@@ -271,9 +269,7 @@ namespace Waf.DotNetPad.Applications.Controllers
                     {
                         await host.RunScriptAsync(buildResult.InMemoryAssembly!, buildResult.InMemorySymbolStore!, outputTextWriter, errorTextWriter, cancellationToken);
                     }
-                    catch (OperationCanceledException)
-                    {
-                    }
+                    catch (OperationCanceledException) { }
                 }
                 ShellViewModel.IsOutputViewVisible = true;
             }

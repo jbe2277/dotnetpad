@@ -67,18 +67,18 @@ namespace Waf.DotNetPad.Presentation.Views
             }
         }
 
-        private void DocumentsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void DocumentsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                foreach (DocumentFile documentFile in e.NewItems)
+                foreach (DocumentFile documentFile in e.NewItems!)
                 {
                     outputParagraphs.Add(documentFile, new Paragraph());
                 }
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                foreach (DocumentFile documentFile in e.OldItems)
+                foreach (DocumentFile documentFile in e.OldItems!)
                 {
                     outputParagraphs.Remove(documentFile);
                 }
@@ -93,7 +93,7 @@ namespace Waf.DotNetPad.Presentation.Views
             }
         }
 
-        private void DocumentServicePropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void DocumentServicePropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(IDocumentService.ActiveDocumentFile))
             {
@@ -105,7 +105,7 @@ namespace Waf.DotNetPad.Presentation.Views
             }
         }
 
-        private void OutputBoxTextChanged(object sender, TextChangedEventArgs e)
+        private void OutputBoxTextChanged(object? sender, TextChangedEventArgs e)
         {
             outputBox.ScrollToEnd();
         }

@@ -189,7 +189,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         {
             public static HighlightedSectionComparer Default { get; } = new HighlightedSectionComparer();
 
-            public bool Equals(HighlightedSection x, HighlightedSection y)
+            public bool Equals(HighlightedSection? x, HighlightedSection? y)
             {
                 if (x == y) { return true; }
                 if (x == null || y == null) { return false; }

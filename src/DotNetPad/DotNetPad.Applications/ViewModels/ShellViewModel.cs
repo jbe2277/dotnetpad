@@ -178,7 +178,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
             }
         }
 
-        private void FileServicePropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void FileServicePropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(IFileService.ActiveDocumentFile))
             {
@@ -186,7 +186,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
             }
         }
 
-        private void ViewClosed(object sender, EventArgs e)
+        private void ViewClosed(object? sender, EventArgs e)
         {
             settings.Left = ViewCore.Left;
             settings.Top = ViewCore.Top;
