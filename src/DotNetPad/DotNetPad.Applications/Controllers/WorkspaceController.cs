@@ -28,9 +28,7 @@ namespace Waf.DotNetPad.Applications.Controllers
         private readonly Lazy<ShellViewModel> shellViewModel;
         private readonly Lazy<ErrorListViewModel> errorListViewModel;
         private readonly Lazy<OutputViewModel> outputViewModel;
-        private readonly ScriptHost host;
         private readonly ThrottledAction updateDiagnosticsAction;
-        private readonly DelegateTextWriter outputTextWriter;
         private readonly DelegateTextWriter errorTextWriter;
         private readonly DelegateCommand startCommand;
         private readonly DelegateCommand stopCommand;
@@ -44,16 +42,15 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         [ImportingConstructor]
         public WorkspaceController(IDocumentService documentService, Lazy<ShellViewModel> shellViewModel, Lazy<ErrorListViewModel> errorListViewModel,
-            Lazy<OutputViewModel> outputViewModel, ScriptHost host)
+            Lazy<OutputViewModel> outputViewModel)
         {
             taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             this.documentService = documentService;
             this.shellViewModel = shellViewModel;
             this.errorListViewModel = errorListViewModel;
             this.outputViewModel = outputViewModel;
-            this.host = host;
             updateDiagnosticsAction = new ThrottledAction(UpdateDiagnostics, ThrottledActionMode.InvokeOnlyIfIdleForDelayTime, TimeSpan.FromSeconds(2));
-            outputTextWriter = new DelegateTextWriter(AppendOutputText);
+            Console.SetOut(new DelegateTextWriter(AppendOutputText));
             errorTextWriter = new DelegateTextWriter(AppendErrorText);
             startCommand = new DelegateCommand(StartScript, CanStartScript);
             stopCommand = new DelegateCommand(StopScript, CanStopScript);
@@ -267,7 +264,7 @@ namespace Waf.DotNetPad.Applications.Controllers
                     var buildResult = lastBuildResult.Item2;
                     try
                     {
-                        await host.RunScriptAsync(buildResult.InMemoryAssembly!, buildResult.InMemorySymbolStore!, outputTextWriter, errorTextWriter, cancellationToken);
+                        await ScriptHost.RunScriptAsync(buildResult.InMemoryAssembly!, buildResult.InMemorySymbolStore!, errorTextWriter, cancellationToken);
                     }
                     catch (OperationCanceledException) { }
                 }
@@ -294,12 +291,13 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private void FormatDocument() => workspace.FormatDocumentAsync(documentIds[documentService.ActiveDocumentFile!]);
 
-        private void AppendOutputText(string text) => AppendTextCore(OutputViewModel.AppendOutputText, text);
+        private void AppendOutputText(string? text) => AppendTextCore(OutputViewModel.AppendOutputText, text);
 
-        private void AppendErrorText(string text) => AppendTextCore(OutputViewModel.AppendErrorText, text);
+        private void AppendErrorText(string? text) => AppendTextCore(OutputViewModel.AppendErrorText, text);
 
-        private void AppendTextCore(Action<DocumentFile, string> appendTextAction, string text)
+        private void AppendTextCore(Action<DocumentFile, string> appendTextAction, string? text)
         {
+            if (string.IsNullOrEmpty(text)) return;
             TaskHelper.Run(() =>
             {
                 var document = RunningDocument;
