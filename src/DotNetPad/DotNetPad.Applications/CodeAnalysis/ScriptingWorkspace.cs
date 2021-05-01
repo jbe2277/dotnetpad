@@ -71,13 +71,6 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
                     : new VisualBasicParseOptions(Microsoft.CodeAnalysis.VisualBasic.LanguageVersion.VisualBasic16));
             OnProjectAdded(projectInfo);
 
-            if (language == LanguageNames.CSharp)
-            {
-                AddFile(projectId, "NullableAttributes.cs");
-                AddFile(projectId, "IsExternalInit.cs");
-                AddFile(projectId, "Range.cs");
-            }
-
             var documentId = DocumentId.CreateNewId(projectId);
             var documentInfo = DocumentInfo.Create(documentId, fileName, loader: TextLoader.From(TextAndVersion.Create(SourceText.From(text, Encoding.UTF8), VersionStamp.Create())));
             OnDocumentAdded(documentInfo);

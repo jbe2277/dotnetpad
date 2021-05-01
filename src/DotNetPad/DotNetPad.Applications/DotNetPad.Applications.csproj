@@ -1,24 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <AssemblyName>Waf.DotNetPad.Applications</AssemblyName>
     <RootNamespace>Waf.DotNetPad.Applications</RootNamespace>
-    <TargetFramework>net472</TargetFramework>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Buffers" Version="4.5.1" />
-    <PackageReference Include="System.Memory" Version="4.5.4" />
     <PackageReference Include="System.Waf.Wpf" Version="6.3.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="3.9.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic.Features" Version="3.9.0" />
@@ -32,11 +19,6 @@
     <!-- Resources -->
     <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
     <Compile Update="Properties\Resources.Designer.cs" AutoGen="True" DependentUpon="Resources.resx" DesignTime="True" />
-
-    <!-- Samples as Embedded Resource -->
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)\..\NullableAttributes.cs" Link="CompilerServices\NullableAttributes.cs" />
-    <Compile Remove="CompilerServices\*.cs" />
-    <EmbeddedResource Include="CompilerServices\*.cs" />
 
     <Compile Remove="Samples\*.cs" />
     <Compile Remove="Samples\*.vb" />
