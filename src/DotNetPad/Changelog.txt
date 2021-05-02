@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+Version 5.0.0.100 (Release)
+- Migrate to .NET 5
+- Update to Microsoft.CodeAnalysis 3.9.0
+
+
 Version 4.1.0.100 (Release)
 - Update to Microsoft.CodeAnalysis 3.8.0
 - Enable C# 9 final support
