@@ -1,13 +1,16 @@
-name: DotNetPad
+name: CI
+
 on:
   push:
     paths: 
-      - 'src/**'
-      - '.github/workflows/**'
+      - 'src/DotNetPad/**'
+
 jobs:
   build:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
     - name: Build
-      run: dotnet build ./src/DotNetPad/DotNetPad.sln -c Release
+      run: |
+        $Env:MSBUILD_PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\msbuild.exe"
+        & $Env:MSBUILD_PATH ./src/DotNetPad/DotNetPad.sln -p:Configuration=Release -p:Platform="Any CPU" -m /restore
