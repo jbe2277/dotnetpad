@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Waf.Applications;
 using System.Waf.Applications.Services;
+using System.Waf.Foundation;
 using Waf.DotNetPad.Applications.DataModels;
 using Waf.DotNetPad.Applications.Properties;
 using Waf.DotNetPad.Applications.Services;
@@ -46,7 +47,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         public void Initialize()
         {
-            settingsService.ErrorOccurred += (sender, e) => Logger.Error("Error in SettingsService: {0}", e.Error);
+            settingsService.ErrorOccurred += (sender, e) => Log.Default.Error("Error in SettingsService: {0}", e.Error);
             ShellService.Settings = settingsService.Get<AppSettings>();
 
             fileController.Initialize();

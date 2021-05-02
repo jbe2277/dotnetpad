@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime;
 using System.Waf;
 using System.Waf.Applications;
+using System.Waf.Foundation;
 using System.Windows;
 using System.Windows.Threading;
 using Waf.DotNetPad.Applications.ViewModels;
@@ -24,9 +25,8 @@ namespace Waf.DotNetPad.Presentation
 
         public App()
         {
-            var environmentService = new EnvironmentService();
-            Directory.CreateDirectory(environmentService.ProfilePath);
-            ProfileOptimization.SetProfileRoot(environmentService.ProfilePath);
+            Directory.CreateDirectory(EnvironmentService.ProfilePath);
+            ProfileOptimization.SetProfileRoot(EnvironmentService.ProfilePath);
             ProfileOptimization.StartProfile("Startup.profile");
         }
 
@@ -76,7 +76,7 @@ namespace Waf.DotNetPad.Presentation
         private static void HandleException(Exception? e, bool isTerminating)
         {
             if (e is null) return;
-            Logger.Error(e.ToString());
+            Log.Default.Error(e.ToString());
             if (!isTerminating)
             {
                 MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Presentation.Properties.Resources.UnknownError, e),
