@@ -3,6 +3,7 @@ using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Waf.Applications;
+using System.Waf.Foundation;
 using System.Windows.Input;
 using Waf.DotNetPad.Applications.Views;
 using Waf.DotNetPad.Domain;
@@ -41,7 +42,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
             }
             catch (Exception e)
             {
-                Logger.Error("An exception occured when trying to show the url '{0}'. Exception: {1}", url, e);
+                Log.Default.Error("An exception occured when trying to show the url '{0}'. Exception: {1}", url, e);
             }
         }
     }
