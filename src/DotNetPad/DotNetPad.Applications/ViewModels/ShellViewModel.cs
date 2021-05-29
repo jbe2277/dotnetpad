@@ -153,14 +153,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
         public string? StatusText
         {
             get => statusText;
-            set
-            {
-                if (statusText != value)
-                {
-                    statusText = value ?? Resources.Ready;
-                    RaisePropertyChanged();
-                }
-            }
+            set => SetProperty(ref statusText, value ?? Resources.Ready);
         }
 
         public void Show()
@@ -173,8 +166,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
             base.OnPropertyChanged(e);
             if (e.PropertyName == nameof(CurrentStatusView))
             {
-                RaisePropertyChanged(nameof(IsErrorListViewVisible));
-                RaisePropertyChanged(nameof(IsOutputViewVisible));
+                RaisePropertyChanged(nameof(IsErrorListViewVisible), nameof(IsOutputViewVisible));
             }
         }
 

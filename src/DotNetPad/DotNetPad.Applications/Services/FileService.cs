@@ -39,15 +39,10 @@ namespace Waf.DotNetPad.Applications.Services
             get => activeDocumentFile;
             set
             {
-                if (activeDocumentFile != value)
-                {
-                    if (value != null && !documentFiles.Contains(value))
-                    {
-                        throw new ArgumentException("value is not an item of the Documents collection.");
-                    }
-                    activeDocumentFile = value;
-                    RaisePropertyChanged();
-                }
+                if (activeDocumentFile == value) return;
+                if (value != null && !documentFiles.Contains(value)) throw new ArgumentException("value is not an item of the Documents collection.");
+                activeDocumentFile = value;
+                RaisePropertyChanged();
             }
         }
 

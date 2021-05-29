@@ -269,7 +269,7 @@ namespace Waf.DotNetPad.Applications.Controllers
                 {
                     Trace.TraceError(string.Format(CultureInfo.InvariantCulture,
                         "The extension of the file '{0}' is not supported.", fileName));
-                    messageService.ShowError(shellService.ShellView, string.Format(CultureInfo.CurrentCulture, Resources.OpenFileUnsupportedExtension, fileName));
+                    messageService.ShowError(shellService.ShellView, Resources.OpenFileUnsupportedExtension, fileName);
                     return null;
                 }
 
@@ -315,7 +315,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             catch (Exception e)
             {
                 Trace.TraceError(e.ToString());
-                messageService.ShowError(shellService.ShellView, string.Format(CultureInfo.CurrentCulture, Resources.SaveFileError, fileName));
+                messageService.ShowError(shellService.ShellView, Resources.SaveFileError, fileName);
             }
         }
 
@@ -358,7 +358,7 @@ namespace Waf.DotNetPad.Applications.Controllers
                 await Task.Yield();
                 var document = (DocumentFile)sender!;
                 CloseCore(document);
-                messageService.ShowError(shellService.ShellView, string.Format(CultureInfo.CurrentCulture, Resources.OpenFileError, document.FileName));
+                messageService.ShowError(shellService.ShellView, Resources.OpenFileError, document.FileName);
             }
         }
 
