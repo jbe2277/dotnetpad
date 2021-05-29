@@ -106,19 +106,10 @@ namespace Waf.DotNetPad.Applications.Services
             set => SetProperty(ref saveAsCommand, value);
         }
 
-        public void AddDocument(DocumentFile document)
-        {
-            documentFiles.Add(document);
-        }
+        public void AddDocument(DocumentFile document) => documentFiles.Add(document);
 
-        public void RemoveDocument(DocumentFile document)
-        {
-            documentFiles.Remove(document);
-        }
+        public void RemoveDocument(DocumentFile document) => documentFiles.Remove(document);
 
-        public void ClearDocuments()
-        {
-            documentFiles.Clear();
-        }
+        public void ClearDocuments() => documentFiles.Clear();
     }
 }

@@ -19,16 +19,10 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             docComments = new Lazy<Dictionary<string, string>>(CreateDocComments, isThreadSafe: true);
         }
 
-        public override bool Equals(object? obj)
-        {
-            return obj is FileBasedXmlDocumentationProvider other && filePath == other.filePath;
-        }
+        public override bool Equals(object? obj) => obj is FileBasedXmlDocumentationProvider other && filePath.Equals(other.filePath);
 
-        public override int GetHashCode()
-        {
-            return filePath.GetHashCode();
-        }
-        
+        public override int GetHashCode() => filePath.GetHashCode();
+
         protected override string GetDocumentationForSymbol(string documentationMemberID, CultureInfo preferredCulture, CancellationToken cancellationToken = default)
         {
             return docComments.Value.TryGetValue(documentationMemberID, out var docComment) ? docComment : "";
@@ -62,7 +56,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
 
         private static string? GetDocumentationFilePath(string originalPath)
         {
-            if (File.Exists(originalPath)) { return originalPath; }
+            if (File.Exists(originalPath)) return originalPath;
             
             var fileName = Path.GetFileName(originalPath);
             string? path = null;
@@ -74,7 +68,6 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
                     break;
                 }
             }
-            
             return path;
         }
 

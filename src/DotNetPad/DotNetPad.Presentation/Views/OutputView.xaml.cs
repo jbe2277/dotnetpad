@@ -35,20 +35,11 @@ namespace Waf.DotNetPad.Presentation.Views
 
         private OutputViewModel ViewModel => viewModel.Value;
 
-        public void AppendOutputText(DocumentFile document, string text)
-        {
-            outputParagraphs[document].Inlines.Add(text);
-        }
+        public void AppendOutputText(DocumentFile document, string text) => outputParagraphs[document].Inlines.Add(text);
 
-        public void AppendErrorText(DocumentFile document, string text)
-        {
-            outputParagraphs[document].Inlines.Add(new Run(text) { Foreground = (Brush)FindResource("ErrorForeground") });
-        }
+        public void AppendErrorText(DocumentFile document, string text) => outputParagraphs[document].Inlines.Add(new Run(text) { Foreground = (Brush)FindResource("ErrorForeground") });
 
-        public void ClearOutput(DocumentFile document)
-        {
-            outputParagraphs[document].Inlines.Clear();
-        }
+        public void ClearOutput(DocumentFile document) => outputParagraphs[document].Inlines.Clear();
 
         private void FirstTimeLoadedHandler(object sender, RoutedEventArgs e)
         {
@@ -87,10 +78,7 @@ namespace Waf.DotNetPad.Presentation.Views
             {
                 outputParagraphs.Clear();
             }
-            else
-            {
-                throw new NotSupportedException("Collection modification is not supported!");
-            }
+            else throw new NotSupportedException("Collection modification is not supported!");
         }
 
         private void DocumentServicePropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -105,9 +93,6 @@ namespace Waf.DotNetPad.Presentation.Views
             }
         }
 
-        private void OutputBoxTextChanged(object? sender, TextChangedEventArgs e)
-        {
-            outputBox.ScrollToEnd();
-        }
+        private void OutputBoxTextChanged(object? sender, TextChangedEventArgs e) => outputBox.ScrollToEnd();
     }
 }

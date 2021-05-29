@@ -14,9 +14,9 @@ namespace Waf.DotNetPad.Presentation.Converters
 {
     public class TaggedTextListConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
         {
-            var list = (ImmutableArray<TaggedText>)value;
+            var list = (ImmutableArray<TaggedText>)value!;
             if (list.IsDefault)
             {
                 return "...";
@@ -24,10 +24,7 @@ namespace Waf.DotNetPad.Presentation.Converters
             return CreateTextBlock(list);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
+        public object ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture) => throw new NotSupportedException();
 
         private static TextBlock CreateTextBlock(ImmutableArray<TaggedText> text)
         {

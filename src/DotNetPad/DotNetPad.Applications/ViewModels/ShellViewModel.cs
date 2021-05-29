@@ -31,9 +31,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
         private string? statusText;
 
         [ImportingConstructor]
-        public ShellViewModel(IShellView view, IShellService shellService, IFileService fileService, CSharpSampleService csharpSampleService,
-            VisualBasicSampleService visualBasicSampleService)
-            : base(view)
+        public ShellViewModel(IShellView view, IShellService shellService, IFileService fileService, CSharpSampleService csharpSampleService, VisualBasicSampleService visualBasicSampleService) : base(view)
         {
             ShellService = shellService;
             FileService = fileService;
@@ -156,10 +154,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
             set => SetProperty(ref statusText, value ?? Resources.Ready);
         }
 
-        public void Show()
-        {
-            ViewCore.Show();
-        }
+        public void Show() => ViewCore.Show();
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {

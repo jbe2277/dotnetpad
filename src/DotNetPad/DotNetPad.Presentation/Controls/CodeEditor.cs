@@ -91,8 +91,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         protected override async void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-            if (e.Key == Key.Space && e.KeyboardDevice.Modifiers.HasFlag(ModifierKeys.Control)
-                && !e.KeyboardDevice.Modifiers.HasFlag(ModifierKeys.Shift))
+            if (e.Key == Key.Space && e.KeyboardDevice.Modifiers.HasFlag(ModifierKeys.Control) && !e.KeyboardDevice.Modifiers.HasFlag(ModifierKeys.Shift))
             {
                 e.Handled = true;
                 await ShowCompletionAsync(null);
@@ -102,7 +101,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         private async Task ShowCompletionAsync(char? triggerChar)
         {
             completionCancellation.Cancel();
-            if (WorkspaceService == null || DocumentFile == null) { return; }
+            if (WorkspaceService == null || DocumentFile == null) return;
 
             completionCancellation = new CancellationTokenSource();
             var cancellationToken = completionCancellation.Token;
@@ -116,8 +115,7 @@ namespace Waf.DotNetPad.Presentation.Controls
                     var document = WorkspaceService.GetDocument(DocumentFile);
                     var completionService = CompletionService.GetService(document);
 
-                    var completionList = await Task.Run(async () =>
-                            await completionService.GetCompletionsAsync(document, position, cancellationToken: cancellationToken), cancellationToken);
+                    var completionList = await Task.Run(async () => await completionService.GetCompletionsAsync(document, position, cancellationToken: cancellationToken), cancellationToken);
                     if (completionList == null) { return; }
 
                     cancellationToken.ThrowIfCancellationRequested();

@@ -116,11 +116,8 @@ namespace Waf.DotNetPad.Presentation.Controls
             return line.CancellationToken.IsCancellationRequested || line.Version == null || !currentVersion.BelongsToSameDocumentAs(line.Version) || currentVersion.CompareAge(line.Version) != 0;
         }
 
-        private static bool IsOutsideLine(IDocumentLine documentLine, int offset, int length)
-        {
-            return offset < documentLine.Offset || offset + length > documentLine.EndOffset;
-        }
-        
+        private static bool IsOutsideLine(IDocumentLine documentLine, int offset, int length) => offset < documentLine.Offset || offset + length > documentLine.EndOffset;
+
         private async Task<IEnumerable<ClassifiedSpan>> GetClassifiedSpansAsync(IDocumentLine documentLine, CancellationToken cancellationToken)
         {
             var document = getDocument();
@@ -191,8 +188,8 @@ namespace Waf.DotNetPad.Presentation.Controls
 
             public bool Equals(HighlightedSection? x, HighlightedSection? y)
             {
-                if (x == y) { return true; }
-                if (x == null || y == null) { return false; }
+                if (ReferenceEquals(x, y)) return true;
+                if (x is null || y is null) return false;
                 return (x.Color, x.Length, x.Offset).Equals((y.Color, y.Length, y.Offset));
             }
 

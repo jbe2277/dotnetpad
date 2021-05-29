@@ -46,10 +46,7 @@ namespace Waf.DotNetPad.Presentation.Views
 
         private ShellViewModel ViewModel => viewModel.Value;
 
-        private void NewFileButtonClick(object sender, RoutedEventArgs e)
-        {
-            newFilePopup.IsOpen = true;
-        }
+        private void NewFileButtonClick(object sender, RoutedEventArgs e) => newFilePopup.IsOpen = true;
 
         private void NewFilePopupOpened(object sender, EventArgs e)
         {
@@ -57,29 +54,14 @@ namespace Waf.DotNetPad.Presentation.Views
             ViewModel.FileService.NewVisualBasicFromClipboardCommand.RaiseCanExecuteChanged();
         }
 
-        private void CloseFilePopup(object sender, RoutedEventArgs e)
-        {
-            newFilePopup.IsOpen = false;
-        }
+        private void CloseFilePopup(object sender, RoutedEventArgs e) => newFilePopup.IsOpen = false;
 
-        private void MoreButtonClick(object sender, RoutedEventArgs e)
-        {
-            morePopup.IsOpen = true;
-        }
+        private void MoreButtonClick(object sender, RoutedEventArgs e) => morePopup.IsOpen = true;
 
-        private void CloseMorePopup(object sender, RoutedEventArgs e)
-        {
-            morePopup.IsOpen = false;
-        }
+        private void CloseMorePopup(object sender, RoutedEventArgs e) => morePopup.IsOpen = false;
 
-        private void SamplesButtonClick(object sender, RoutedEventArgs e)
-        {
-            samplesPopup.IsOpen = true;
-        }
+        private void SamplesButtonClick(object sender, RoutedEventArgs e) => samplesPopup.IsOpen = true;
 
-        private void CloseSamplesPopup(object sender, RoutedEventArgs e)
-        {
-            samplesPopup.IsOpen = false;
-        }
+        private void CloseSamplesPopup(object sender, RoutedEventArgs e) => samplesPopup.IsOpen = false;
     }
 }

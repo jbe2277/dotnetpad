@@ -8,16 +8,10 @@ namespace Waf.DotNetPad.Applications.Services
     public class CodeEditorService : ICodeEditorService
     {
         public event EventHandler<SetCaretEventArgs>? RequestSetCaret;
-        
-        public void SetCaret(DocumentFile documentFile, int line, int column)
-        {
-            OnRequestSetCaret(new SetCaretEventArgs(documentFile, line, column));
-        }
 
-        protected virtual void OnRequestSetCaret(SetCaretEventArgs e)
-        {
-            RequestSetCaret?.Invoke(this, e);
-        }
+        public void SetCaret(DocumentFile documentFile, int line, int column) => OnRequestSetCaret(new SetCaretEventArgs(documentFile, line, column));
+
+        protected virtual void OnRequestSetCaret(SetCaretEventArgs e) => RequestSetCaret?.Invoke(this, e);
     }
 
 

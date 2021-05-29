@@ -87,19 +87,16 @@ namespace Waf.DotNetPad.Presentation.Controls
             }
         }
 
-        public void Transform(ITextRunConstructionContext context, IList<VisualLineElement> elements)
-        {
-        }
+        public void Transform(ITextRunConstructionContext context, IList<VisualLineElement> elements) { }
 
         private void TextViewMouseHover(object sender, MouseEventArgs e)
         {
-            if (!markers.Any()) { return; }
+            if (!markers.Any()) return;
             
-            TextViewPosition? position = textEditor.TextArea.TextView.GetPositionFloor(
-                e.GetPosition(textEditor.TextArea.TextView) + textEditor.TextArea.TextView.ScrollOffset);
+            var position = textEditor.TextArea.TextView.GetPositionFloor(e.GetPosition(textEditor.TextArea.TextView) + textEditor.TextArea.TextView.ScrollOffset);
             if (position.HasValue)
             {
-                TextLocation logicalPosition = position.Value.Location;
+                var logicalPosition = position.Value.Location;
                 int offset = textEditor.Document.GetOffset(logicalPosition);
 
                 var markersAtOffset = markers.FindSegmentsContaining(offset);

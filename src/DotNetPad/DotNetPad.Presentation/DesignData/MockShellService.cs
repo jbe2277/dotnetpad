@@ -22,9 +22,6 @@ namespace Waf.DotNetPad.Presentation.DesignData
 
         public event CancelEventHandler? Closing;
 
-        protected virtual void OnClosing(CancelEventArgs e)
-        {
-            Closing?.Invoke(this, e);
-        }
+        protected virtual void OnClosing(CancelEventArgs e) => Closing?.Invoke(this, e);
     }
 }

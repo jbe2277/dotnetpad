@@ -87,7 +87,7 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         protected override void OnPreviewKeyUp(KeyEventArgs e)
         {
-            if (e.Key == Key.Escape) { IsOpen = false; }
+            if (e.Key == Key.Escape) IsOpen = false;
             base.OnPreviewKeyUp(e);
         }
 
@@ -110,10 +110,7 @@ namespace Waf.DotNetPad.Presentation.Controls
         private static object IsOpenCoerceValueCallback(DependencyObject d, object baseValue)
         {
             var flyout = (Flyout)d;
-            if (flyout.closedStopwatch.IsRunning && flyout.closedStopwatch.ElapsedMilliseconds < 200)
-            {
-                return DependencyProperty.UnsetValue;
-            }
+            if (flyout.closedStopwatch.IsRunning && flyout.closedStopwatch.ElapsedMilliseconds < 200) return DependencyProperty.UnsetValue;
             return baseValue;
         }
     }

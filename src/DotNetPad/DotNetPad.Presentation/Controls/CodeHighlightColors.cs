@@ -43,15 +43,9 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         public static HighlightingColor DefaultHighlightingColor => defaultHighlightingColor;
 
-        public static Color GetColor(string classificationTypeName)
-        {
-            return GetHighlightingColorCore(classificationTypeName).Color;
-        }
+        public static Color GetColor(string classificationTypeName) => GetHighlightingColorCore(classificationTypeName).Color;
 
-        public static HighlightingColor GetHighlightingColor(string classificationTypeName)
-        {
-            return GetHighlightingColorCore(classificationTypeName);
-        }
+        public static HighlightingColor GetHighlightingColor(string classificationTypeName) => GetHighlightingColorCore(classificationTypeName);
 
         private static CachedHighlightingColor GetHighlightingColorCore(string classificationTypeName)
         {

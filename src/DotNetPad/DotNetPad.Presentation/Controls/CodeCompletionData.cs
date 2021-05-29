@@ -38,20 +38,13 @@ namespace Waf.DotNetPad.Presentation.Controls
 
         public ImageSource? Image => image.Value;
 
-        public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs)
-        {
-            textArea.Document.Replace(completionSegment, Text);
-        }
+        public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs) => textArea.Document.Replace(completionSegment, Text);
 
-        private object CreateDescription()
-        {
-            return new CodeCompletionDescription(getDescriptionFunc());
-        }
+        private object CreateDescription() => new CodeCompletionDescription(getDescriptionFunc());
 
         private ImageSource? GetImage()
         {
             var tag = tags.FirstOrDefault();
-            if (tag == null) return null;
             return tag switch
             {
                 WellKnownTags.Class => GetImage("ClassImageSource"),
@@ -73,9 +66,6 @@ namespace Waf.DotNetPad.Presentation.Controls
             };
         }
 
-        private static ImageSource GetImage(string resourceKey)
-        {
-            return (ImageSource)Application.Current.Resources[resourceKey];
-        }
+        private static ImageSource GetImage(string resourceKey) => (ImageSource)Application.Current.Resources[resourceKey];
     }
 }

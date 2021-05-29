@@ -40,20 +40,11 @@ namespace Waf.DotNetPad.Presentation.Views
             ViewModel.CodeEditorService.RequestSetCaret += CodeEditorServiceRequestSetCaret;
         }
 
-        private void UnloadedHandler(object sender, RoutedEventArgs e)
-        {
-            ViewModel.CodeEditorService.RequestSetCaret -= CodeEditorServiceRequestSetCaret;
-        }
+        private void UnloadedHandler(object sender, RoutedEventArgs e) => ViewModel.CodeEditorService.RequestSetCaret -= CodeEditorServiceRequestSetCaret;
 
-        private void IsVisibleChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            UpdateCaretPosition();
-        }
+        private void IsVisibleChangedHandler(object sender, DependencyPropertyChangedEventArgs e) => UpdateCaretPosition();
 
-        private void CaretPositionChanged(object? sender, EventArgs e)
-        {
-            UpdateCaretPosition();
-        }
+        private void CaretPositionChanged(object? sender, EventArgs e) => UpdateCaretPosition();
 
         private async void UpdateCaretPosition()
         {
@@ -67,8 +58,7 @@ namespace Waf.DotNetPad.Presentation.Views
 
         private void CodeEditorServiceRequestSetCaret(object? sender, SetCaretEventArgs e)
         {
-            if (e.DocumentFile != ViewModel.DocumentFile) { return; }
-
+            if (e.DocumentFile != ViewModel.DocumentFile) return;
             var offset = codeEditor.Document.GetOffset(new TextLocation(e.Line + 1, e.Column + 1));
             codeEditor.TextArea.Caret.Offset = offset;
             codeEditor.Focus();

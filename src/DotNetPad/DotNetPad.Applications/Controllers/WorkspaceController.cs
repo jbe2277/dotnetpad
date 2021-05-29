@@ -74,14 +74,7 @@ namespace Waf.DotNetPad.Applications.Controllers
                     runningDocument = value;
                     documentService.LockedDocumentFile = value;
                     ShellViewModel.IsScriptRunning = runningDocument != null;
-                    if (runningDocument != null)
-                    {
-                        ShellViewModel.StatusText = Path.GetFileName(runningDocument.FileName) + " is running...";
-                    }
-                    else
-                    {
-                        ShellViewModel.StatusText = null;
-                    }
+                    ShellViewModel.StatusText = runningDocument is null ? null : Path.GetFileName(runningDocument.FileName) + " is running...";
                     startCommand.RaiseCanExecuteChanged();
                     stopCommand.RaiseCanExecuteChanged();
                     formatDocumentCommand.RaiseCanExecuteChanged();
@@ -96,14 +89,10 @@ namespace Waf.DotNetPad.Applications.Controllers
                 workspace = new ScriptingWorkspace(CreateHostServices());
                 workspace.WorkspaceChanged += WorkspaceChanged;
             }
-
             WeakEvent.PropertyChanged.Add(documentService, DocumentServicePropertyChanged);
             WeakEvent.CollectionChanged.Add(documentService.DocumentFiles, DocumentsCollectionChanged);
-            foreach (var documentFile in documentService.DocumentFiles)
-            {
-                AddProject(documentFile);
-            }
-
+            foreach (var documentFile in documentService.DocumentFiles) AddProject(documentFile);
+            
             ShellViewModel.StartCommand = startCommand;
             ShellViewModel.StopCommand = stopCommand;
             ShellViewModel.FormatDocumentCommand = formatDocumentCommand;
@@ -164,10 +153,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private void RemoveProject(DocumentFile documentFile)
         {
-            if (documentIds.TryGetValue(documentFile, out var documentId))
-            {
-                workspace.RemoveProject(documentId);
-            }
+            if (documentIds.TryGetValue(documentFile, out var documentId))workspace.RemoveProject(documentId);
             documentIds.Remove(documentFile);
             ResetBuildResult(documentFile);
         }
@@ -196,26 +182,19 @@ namespace Waf.DotNetPad.Applications.Controllers
             {
                 foreach (var x in documentIds.Keys.ToArray()) RemoveProject(x);
             }
-            else
-            {
-                throw new NotSupportedException("Collection modification is not supported!");
-            }
+            else throw new NotSupportedException("Collection modification is not supported!");
         }
 
         private async void UpdateDiagnostics()
         {
             updateDiagnosticsCancellation?.Cancel();
-
             updateDiagnosticsCancellation = new CancellationTokenSource();
             var token = updateDiagnosticsCancellation.Token;
             try
             {
                 var documentFile = documentService.ActiveDocumentFile;
-                if (documentFile?.Content == null)
-                {
-                    return;
-                }
-
+                if (documentFile?.Content == null)return;
+                
                 token.ThrowIfCancellationRequested();
                 using (new PerformanceTrace("GetDiagnosticsAsync", documentFile))
                 {

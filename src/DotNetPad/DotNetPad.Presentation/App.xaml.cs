@@ -57,7 +57,6 @@ namespace Waf.DotNetPad.Presentation
         protected override void OnExit(ExitEventArgs e)
         {
             foreach (var x in moduleControllers.Reverse()) x.Shutdown();
-
             container.Dispose();
             catalog.Dispose();
             base.OnExit(e);
@@ -79,8 +78,7 @@ namespace Waf.DotNetPad.Presentation
             Log.Default.Error(e.ToString());
             if (!isTerminating)
             {
-                MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Presentation.Properties.Resources.UnknownError, e),
-                    ApplicationInfo.ProductName, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Presentation.Properties.Resources.UnknownError, e), ApplicationInfo.ProductName, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

@@ -16,9 +16,6 @@ namespace Waf.DotNetPad.Applications.Services
 
         public Lazy<string> StringInterpolation => new Lazy<string>(() => GetSampleCode("StringInterpolation.vb"));
 
-        internal static string GetSampleCode(string sampleFileName)
-        {
-            return CSharpSampleService.GetSampleCode(sampleFileName);
-        }
+        internal static string GetSampleCode(string sampleFileName) => CSharpSampleService.GetSampleCode(sampleFileName);
     }
 }

@@ -17,8 +17,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
         private ErrorListItem? selectedErrorListItem;
 
         [ImportingConstructor]
-        public ErrorListViewModel(IErrorListView view, IDocumentService documentService, ICodeEditorService codeEditorService, IClipboardService clipboardService)
-            : base(view)
+        public ErrorListViewModel(IErrorListView view, IDocumentService documentService, ICodeEditorService codeEditorService, IClipboardService clipboardService) : base(view)
         {
             DocumentService = documentService;
             this.codeEditorService = codeEditorService;

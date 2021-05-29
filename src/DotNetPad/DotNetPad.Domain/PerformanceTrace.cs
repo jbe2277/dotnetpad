@@ -14,14 +14,10 @@ namespace Waf.DotNetPad.Domain
             this.name = name;
         }
 
-        public PerformanceTrace(string name, DocumentFile document)
-            : this(document.FileName + ": " + name)
+        public PerformanceTrace(string name, DocumentFile document) : this(document.FileName + ": " + name)
         {
         }
 
-        public void Dispose()
-        {
-            Trace.WriteLine(">>> " + name + ": " + stopwatch.ElapsedMilliseconds + " ms");
-        }
+        public void Dispose() => Trace.WriteLine(">>> " + name + ": " + stopwatch.ElapsedMilliseconds + " ms");
     }
 }

@@ -17,19 +17,10 @@ namespace Waf.DotNetPad.Applications.ViewModels
 
         public IDocumentService DocumentService { get; }
 
-        public void AppendOutputText(DocumentFile document, string text)
-        {
-            ViewCore.AppendOutputText(document, text);
-        }
+        public void AppendOutputText(DocumentFile document, string text) => ViewCore.AppendOutputText(document, text);
 
-        public void AppendErrorText(DocumentFile document, string text)
-        {
-            ViewCore.AppendErrorText(document, text);
-        }
+        public void AppendErrorText(DocumentFile document, string text) => ViewCore.AppendErrorText(document, text);
 
-        public void ClearOutput(DocumentFile document)
-        {
-            ViewCore.ClearOutput(document);
-        }
+        public void ClearOutput(DocumentFile document) => ViewCore.ClearOutput(document);
     }
 }

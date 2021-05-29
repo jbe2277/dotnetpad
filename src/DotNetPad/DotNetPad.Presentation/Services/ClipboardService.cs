@@ -7,19 +7,10 @@ namespace Waf.DotNetPad.Presentation.Services
     [Export(typeof(IClipboardService))]
     internal class ClipboardService : IClipboardService
     {
-        public bool ContainsText()
-        {
-            return Clipboard.ContainsText();
-        }
+        public bool ContainsText() => Clipboard.ContainsText();
 
-        public string GetText()
-        {
-            return Clipboard.GetText();
-        }
+        public string GetText() => Clipboard.GetText();
 
-        public void SetText(string text)
-        {
-            Clipboard.SetText(text);
-        }
+        public void SetText(string text) => Clipboard.SetText(text);
     }
 }

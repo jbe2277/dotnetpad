@@ -8,20 +8,18 @@ namespace Waf.DotNetPad.Presentation.Converters
 {
     public class ErrorSeverityToImageConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
         {
-            var errorSeverity = (ErrorSeverity)value;
-            string resourceKey;
-            if (errorSeverity == ErrorSeverity.Error) { resourceKey = "ErrorImage"; }
-            else if (errorSeverity == ErrorSeverity.Warning) { resourceKey = "WarningImage"; }
-            else { resourceKey = "InfoImage"; }
-
+            var errorSeverity = (ErrorSeverity)value!;
+            string resourceKey = errorSeverity switch
+            {
+                ErrorSeverity.Error => "ErrorImage",
+                ErrorSeverity.Warning => "WarningImage",
+                _ => "InfoImage",
+            };
             return Application.Current.Resources[resourceKey];
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
+        public object ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture) => throw new NotSupportedException();
     }
 }

@@ -20,9 +20,7 @@ using Waf.DotNetPad.Domain;
 
 namespace Waf.DotNetPad.Applications.Controllers
 {
-    /// <summary>
-    /// Responsible for the file related commands.
-    /// </summary>
+    /// <summary>Responsible for the file related commands.</summary>
     [Export]
     internal class FileController
     {
@@ -109,48 +107,27 @@ namespace Waf.DotNetPad.Applications.Controllers
             }
         }
 
-        private void NewCSharpFile(object? commandParameter = null) 
-        {
-            NewCore(DocumentType.CSharp, TryGetCode(commandParameter));
-        }
+        private void NewCSharpFile(object? commandParameter = null) => NewCore(DocumentType.CSharp, TryGetCode(commandParameter));
 
-        private void NewVisualBasicFile(object? commandParameter = null)
-        {
-            NewCore(DocumentType.VisualBasic, TryGetCode(commandParameter));
-        }
+        private void NewVisualBasicFile(object? commandParameter = null) => NewCore(DocumentType.VisualBasic, TryGetCode(commandParameter));
 
-        private static string? TryGetCode(object? commandParameter)
-        {
-            return commandParameter is Lazy<string> lazyParameter ? lazyParameter.Value : commandParameter as string;
-        }
+        private static string? TryGetCode(object? commandParameter) => commandParameter is Lazy<string> lazyParameter ? lazyParameter.Value : commandParameter as string;
 
-        private bool CanNewFromClipboard()
-        {
-            return clipboardService.ContainsText();
-        }
+        private bool CanNewFromClipboard() => clipboardService.ContainsText();
 
         private void NewCSharpFromClipboard()
         {
             string code = clipboardService.GetText();
-            if (!string.IsNullOrEmpty(code))
-            {
-                NewCore(DocumentType.CSharp, code);
-            }
+            if (!string.IsNullOrEmpty(code)) NewCore(DocumentType.CSharp, code);
         }
 
         private void NewVisualBasicFromClipboard()
         {
             string code = clipboardService.GetText();
-            if (!string.IsNullOrEmpty(code))
-            {
-                NewCore(DocumentType.VisualBasic, code);
-            }
+            if (!string.IsNullOrEmpty(code)) NewCore(DocumentType.VisualBasic, code);
         }
 
-        private void OpenFile()
-        {
-            OpenCore();
-        }
+        private void OpenFile() => OpenCore();
 
         private bool CanCloseFile() => ActiveDocumentFile != null && ActiveDocumentFile != LockedDocumentFile;
 
@@ -238,8 +215,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private void CloseAll()
         {
-            if (!PrepareToClose(fileService.DocumentFiles)) { return; }
-
+            if (!PrepareToClose(fileService.DocumentFiles)) return;
             ActiveDocumentFile = null;
             fileService.ClearDocuments();
         }
@@ -249,17 +225,11 @@ namespace Waf.DotNetPad.Applications.Controllers
             if (string.IsNullOrEmpty(fileName))
             {
                 var result = fileDialogService.ShowOpenFileDialog(shellService.ShellView, allFilesType);
-                if (result.IsValid)
-                {
-                    fileName = result.FileName;
-                }
+                if (result.IsValid) fileName = result.FileName;
             }
 
-            if (string.IsNullOrEmpty(fileName))
-            {
-                return null;
-            }
-
+            if (string.IsNullOrEmpty(fileName)) return null;
+            
             // Check if document is already opened
             var document = fileService.DocumentFiles.SingleOrDefault(d => d.FileName == fileName);
             if (document == null)
@@ -267,22 +237,15 @@ namespace Waf.DotNetPad.Applications.Controllers
                 string fileExtension = Path.GetExtension(fileName);
                 if (!new[] { ".cs", ".vb" }.Contains(fileExtension))
                 {
-                    Trace.TraceError(string.Format(CultureInfo.InvariantCulture,
-                        "The extension of the file '{0}' is not supported.", fileName));
+                    Trace.TraceError(string.Format(CultureInfo.InvariantCulture, "The extension of the file '{0}' is not supported.", fileName));
                     messageService.ShowError(shellService.ShellView, Resources.OpenFileUnsupportedExtension, fileName);
                     return null;
                 }
-
                 var documentType = fileExtension == ".cs" ? DocumentType.CSharp : DocumentType.VisualBasic;
-                document = new DocumentFile(documentType, LoadDocumentContent)
-                {
-                    FileName = fileName
-                };
-
+                document = new DocumentFile(documentType, LoadDocumentContent) { FileName = fileName };
                 fileService.AddDocument(document);
             }
-
-            if (setActiveDocument) { ActiveDocumentFile = document; }
+            if (setActiveDocument) ActiveDocumentFile = document;
             return document;
         }
 
@@ -291,10 +254,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             Trace.WriteLine(">> Load document content: " + documentFile.FileName);
             using var stream = new FileStream(documentFile.FileName ?? throw new InvalidOperationException("FileName is null"), FileMode.Open, FileAccess.Read);
             using var reader = new StreamReader(stream, Encoding.UTF8);
-            var documentContent = new DocumentContent()
-            {
-                Code = reader.ReadToEnd()
-            };
+            var documentContent = new DocumentContent() { Code = reader.ReadToEnd() };
             documentFile.ResetModified();
             return documentContent;
         }
@@ -345,10 +305,7 @@ namespace Waf.DotNetPad.Applications.Controllers
                 }
                 observedDocumentFiles.Clear();
             }
-            else
-            {
-                throw new NotSupportedException("The CollectionChangedAction '" + e.Action + "' is not supported.");
-            }
+            else throw new NotSupportedException("The CollectionChangedAction '" + e.Action + "' is not supported.");
         }
 
         private async void DocumentFilePropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -382,10 +339,7 @@ namespace Waf.DotNetPad.Applications.Controllers
 
         private void ActiveDocumentPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(DocumentFile.Modified))
-            {
-                UpdateCommands();
-            }
+            if (e.PropertyName == nameof(DocumentFile.Modified)) UpdateCommands();
         }
 
         private void UpdateCommands()

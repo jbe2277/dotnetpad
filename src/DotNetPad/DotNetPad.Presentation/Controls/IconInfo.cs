@@ -9,14 +9,8 @@ namespace Waf.DotNetPad.Presentation.Controls
                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         [AttachedPropertyBrowsableForType(typeof(Control))]
-        public static object GetIcon(DependencyObject obj)
-        {
-            return obj.GetValue(IconProperty);
-        }
+        public static object GetIcon(DependencyObject obj) => obj.GetValue(IconProperty);
 
-        public static void SetIcon(DependencyObject obj, object value)
-        {
-            obj.SetValue(IconProperty, value);
-        }
+        public static void SetIcon(DependencyObject obj, object value) => obj.SetValue(IconProperty, value);
     }
 }

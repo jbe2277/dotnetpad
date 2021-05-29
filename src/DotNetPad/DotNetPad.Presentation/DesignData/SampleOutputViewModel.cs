@@ -8,7 +8,6 @@ namespace Waf.DotNetPad.Presentation.DesignData
     {
         public SampleOutputViewModel() : base(new MockOutputView(), new MockFileService())
         {
-
         }
 
 

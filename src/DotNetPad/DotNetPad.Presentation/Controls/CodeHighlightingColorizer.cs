@@ -14,9 +14,6 @@ namespace Waf.DotNetPad.Presentation.Controls
             this.getDocument = getDocument;
         }
 
-        protected override IHighlighter CreateHighlighter(TextView textView, TextDocument document)
-        {
-            return new CodeHighlighter(document, getDocument);
-        }
+        protected override IHighlighter CreateHighlighter(TextView textView, TextDocument document) => new CodeHighlighter(document, getDocument);
     }
 }

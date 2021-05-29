@@ -36,19 +36,11 @@ namespace Waf.DotNetPad.Presentation.DesignData
             public event EventHandler? Closed;
 
 
-            public void Show()
-            {
-            }
+            public void Show() { }
 
-            protected virtual void OnClosing(CancelEventArgs e)
-            {
-                Closing?.Invoke(this, e);
-            }
+            protected virtual void OnClosing(CancelEventArgs e) => Closing?.Invoke(this, e);
 
-            protected virtual void OnClosed(EventArgs e)
-            {
-                Closed?.Invoke(this, e);
-            }
+            protected virtual void OnClosed(EventArgs e) => Closed?.Invoke(this, e);
         }
     }
 }

@@ -63,9 +63,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             ShellViewModel.Show();
         }
 
-        public void Shutdown()
-        {
-        }
+        public void Shutdown() { }
 
         private void ShowInfo()
         {
@@ -73,10 +71,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             infoViewModel.ShowDialog(ShellService.ShellView);
         }
 
-        private DocumentDataModel CreateDocumentDataModel(DocumentFile documentFile)
-        {
-            return new DocumentDataModel(documentFile, new Lazy<object>(() => CreateDocumentViewModel(documentFile).View));
-        }
+        private DocumentDataModel CreateDocumentDataModel(DocumentFile documentFile) => new DocumentDataModel(documentFile, new Lazy<object>(() => CreateDocumentViewModel(documentFile).View));
 
         private CodeEditorViewModel CreateDocumentViewModel(DocumentFile document)
         {

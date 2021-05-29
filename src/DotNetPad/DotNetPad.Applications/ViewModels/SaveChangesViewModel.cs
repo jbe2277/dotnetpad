@@ -15,8 +15,7 @@ namespace Waf.DotNetPad.Applications.ViewModels
         private bool? dialogResult;
 
         [ImportingConstructor]
-        public SaveChangesViewModel(ISaveChangesView view)
-            : base(view)
+        public SaveChangesViewModel(ISaveChangesView view) : base(view)
         {
             YesCommand = new DelegateCommand(() => Close(true));
             NoCommand = new DelegateCommand(() => Close(false));

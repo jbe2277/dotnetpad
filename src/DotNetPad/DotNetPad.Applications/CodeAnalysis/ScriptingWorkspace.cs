@@ -39,10 +39,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             documentationProviders = new ConcurrentDictionary<string, DocumentationProvider>();
         }
 
-        public override bool CanApplyChange(ApplyChangesKind feature)
-        {
-            return feature == ApplyChangesKind.ChangeDocument || base.CanApplyChange(feature);
-        }
+        public override bool CanApplyChange(ApplyChangesKind feature) => feature == ApplyChangesKind.ChangeDocument || base.CanApplyChange(feature);
 
         public DocumentId AddProjectWithDocument(string documentFileName, string text)
         {
@@ -69,15 +66,9 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             return documentId;
         }
 
-        public void RemoveProject(DocumentId id)
-        {
-            OnProjectRemoved(id.ProjectId);
-        }
+        public void RemoveProject(DocumentId id) => OnProjectRemoved(id.ProjectId);
 
-        public void UpdateText(DocumentId documentId, string text)
-        {
-            OnDocumentTextChanged(documentId, SourceText.From(text, Encoding.UTF8), PreservationMode.PreserveValue);
-        }
+        public void UpdateText(DocumentId documentId, string text) => OnDocumentTextChanged(documentId, SourceText.From(text, Encoding.UTF8), PreservationMode.PreserveValue);
 
         public Task<IReadOnlyList<Diagnostic>> GetDiagnosticsAsync(DocumentId documentId, CancellationToken cancellationToken)
         {
@@ -115,10 +106,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             });
         }
 
-        protected override void ApplyDocumentTextChanged(DocumentId documentId, SourceText text)
-        {
-            OnDocumentTextChanged(documentId, text, PreservationMode.PreserveValue);
-        }
+        protected override void ApplyDocumentTextChanged(DocumentId documentId, SourceText text) => OnDocumentTextChanged(documentId, text, PreservationMode.PreserveValue);
 
         private MetadataReference CreateReference(Assembly assembly)
         {
