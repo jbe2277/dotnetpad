@@ -177,32 +177,36 @@
             </DrawingGroup>
         </DrawingImage.Drawing>
     </DrawingImage>
-    <DrawingGroup x:Key="ExtensionMethodImageSource">
-        <DrawingGroup.Children>
-            <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
-            <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M9.9999,5.0002L9.9999,9.5852 7.9999,7.5862 7.9999,12.4142 11.5859,16.0002 12.4139,16.0002 15.9999,12.4142 15.9999,7.5862 14.0009,9.5852 14.0009,5.0002z" />
-            <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M0.167,8.4258L0.167,2.8568 5.051,0.386799999999999 9.755,2.8678 9.755,8.3808 5.291,11.6538z" />
-            <GeometryDrawing Brush="#FF642C90" Geometry="F1M8.1904,7.5986L5.6144,9.4546 5.6144,5.9926 8.1904,4.4256z M4.9704,9.5616L4.9704,9.5776 4.9614,9.5696 4.9534,9.5776 4.9534,9.5616 1.7864,7.4966 1.7864,4.1776 4.9954,5.9706 4.9954,9.5436z M4.9954,2.1876L8.0654,3.7016 5.2014,5.4196 2.1064,3.6546z M8.7544,7.8736L8.7544,3.4706 5.0414,1.5116 1.1674,3.4706 1.1674,7.8736 5.2484,10.4446z" />
-            <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M4.9951,2.1875L8.0651,3.7015 5.2011,5.4195 2.1061,3.6545z">
-                <GeometryDrawing.Pen>
-                    <Pen Brush="#FF642C90" Thickness="0.15000006556510925" DashCap="Flat" />
-                </GeometryDrawing.Pen>
-            </GeometryDrawing>
-            <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M4.9707,9.5615L4.9707,9.5775 4.9607,9.5695 4.9527,9.5775 4.9527,9.5615 1.7857,7.4975 1.7857,4.1775 4.9947,5.9705 4.9947,9.5435z">
-                <GeometryDrawing.Pen>
-                    <Pen Brush="#FF642C90" Thickness="0.15000006556510925" DashCap="Flat" />
-                </GeometryDrawing.Pen>
-            </GeometryDrawing>
-            <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M8.1904,7.5986L5.6144,9.4546 5.6144,5.9926 8.1904,4.4256z">
-                <GeometryDrawing.Pen>
-                    <Pen Brush="#FF642C90" Thickness="0.15000006556510925" DashCap="Flat" />
-                </GeometryDrawing.Pen>
-            </GeometryDrawing>
-            <GeometryDrawing Brush="#FF414141" Geometry="F1M12,15L9,12 9,10 11,12 11,10 13,10 13,12 15,10 15,12z" />
-            <GeometryDrawing Brush="#FF414141" Geometry="F1M11,9L13,9 13,8 11,8z" />
-            <GeometryDrawing Brush="#FF414141" Geometry="F1M11,7L13,7 13,6 11,6z" />
-        </DrawingGroup.Children>
-    </DrawingGroup>
+    <DrawingImage x:Key="ExtensionMethodImageSource">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <DrawingGroup.Children>
+                    <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                    <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M9.9999,5.0002L9.9999,9.5852 7.9999,7.5862 7.9999,12.4142 11.5859,16.0002 12.4139,16.0002 15.9999,12.4142 15.9999,7.5862 14.0009,9.5852 14.0009,5.0002z" />
+                    <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M0.167,8.4258L0.167,2.8568 5.051,0.386799999999999 9.755,2.8678 9.755,8.3808 5.291,11.6538z" />
+                    <GeometryDrawing Brush="#FF642C90" Geometry="F1M8.1904,7.5986L5.6144,9.4546 5.6144,5.9926 8.1904,4.4256z M4.9704,9.5616L4.9704,9.5776 4.9614,9.5696 4.9534,9.5776 4.9534,9.5616 1.7864,7.4966 1.7864,4.1776 4.9954,5.9706 4.9954,9.5436z M4.9954,2.1876L8.0654,3.7016 5.2014,5.4196 2.1064,3.6546z M8.7544,7.8736L8.7544,3.4706 5.0414,1.5116 1.1674,3.4706 1.1674,7.8736 5.2484,10.4446z" />
+                    <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M4.9951,2.1875L8.0651,3.7015 5.2011,5.4195 2.1061,3.6545z">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF642C90" Thickness="0.15000006556510925" DashCap="Flat" />
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M4.9707,9.5615L4.9707,9.5775 4.9607,9.5695 4.9527,9.5775 4.9527,9.5615 1.7857,7.4975 1.7857,4.1775 4.9947,5.9705 4.9947,9.5435z">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF642C90" Thickness="0.15000006556510925" DashCap="Flat" />
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M8.1904,7.5986L5.6144,9.4546 5.6144,5.9926 8.1904,4.4256z">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF642C90" Thickness="0.15000006556510925" DashCap="Flat" />
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF414141" Geometry="F1M12,15L9,12 9,10 11,12 11,10 13,10 13,12 15,10 15,12z" />
+                    <GeometryDrawing Brush="#FF414141" Geometry="F1M11,9L13,9 13,8 11,8z" />
+                    <GeometryDrawing Brush="#FF414141" Geometry="F1M11,7L13,7 13,6 11,6z" />
+                </DrawingGroup.Children>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
     <DrawingImage x:Key="FieldImageSource">
         <DrawingImage.Drawing>
             <DrawingGroup>
