@@ -56,7 +56,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
 
             var projectInfo = ProjectInfo.Create(projectId, VersionStamp.Default, name, name + ".dll", language, metadataReferences: references,
                 parseOptions: language == LanguageNames.CSharp
-                    ? new CSharpParseOptions(Microsoft.CodeAnalysis.CSharp.LanguageVersion.CSharp9, preprocessorSymbols: preprocessorSymbols)
+                    ? new CSharpParseOptions(Microsoft.CodeAnalysis.CSharp.LanguageVersion.Preview, preprocessorSymbols: preprocessorSymbols)
                     : new VisualBasicParseOptions(Microsoft.CodeAnalysis.VisualBasic.LanguageVersion.VisualBasic16_9));
             OnProjectAdded(projectInfo);
 

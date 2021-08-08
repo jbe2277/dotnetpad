@@ -25,8 +25,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis
             TextTags.Constant => ClassificationTypeNames.ConstantName,
             TextTags.Alias or TextTags.Assembly or TextTags.Field or TextTags.ErrorType or TextTags.Event or TextTags.Label or TextTags.Local or TextTags.Method or TextTags.Namespace or TextTags.Parameter or TextTags.Property or TextTags.RangeVariable => ClassificationTypeNames.Identifier,
             TextTags.Space or TextTags.LineBreak => ClassificationTypeNames.WhiteSpace,
-            TextTags.AnonymousTypeIndicator or TextTags.Text => ClassificationTypeNames.Text,
-            _ => throw new NotSupportedException(textTag),
+            _ => ClassificationTypeNames.Text,
         };
     }
 }
