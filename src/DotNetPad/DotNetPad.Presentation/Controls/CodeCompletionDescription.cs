@@ -1,6 +1,4 @@
 ﻿using System.Collections.Immutable;
-using System.Threading.Tasks;
-using System.Waf.Foundation;
 using Microsoft.CodeAnalysis;
 
 namespace Waf.DotNetPad.Presentation.Controls

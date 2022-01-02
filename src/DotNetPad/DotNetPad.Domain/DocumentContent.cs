@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Waf.Foundation;
-
-namespace Waf.DotNetPad.Domain
+﻿namespace Waf.DotNetPad.Domain
 {
     public class DocumentContent : Model
     {

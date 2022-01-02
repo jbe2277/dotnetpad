@@ -1,6 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Classification;
-using System;
 
 namespace Waf.DotNetPad.Applications.CodeAnalysis
 {

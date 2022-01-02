@@ -3,12 +3,7 @@ using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Search;
 using Microsoft.CodeAnalysis.Completion;
-using System;
 using System.Collections.Immutable;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -16,7 +11,6 @@ using Microsoft.CodeAnalysis;
 using Waf.DotNetPad.Applications.Services;
 using Waf.DotNetPad.Domain;
 using System.Waf;
-using System.Waf.Foundation;
 
 namespace Waf.DotNetPad.Presentation.Controls
 {

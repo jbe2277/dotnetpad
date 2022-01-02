@@ -1,17 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Host.Mef;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Composition.Hosting;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Waf.Applications;
-using System.Waf.Foundation;
 using Waf.DotNetPad.Applications.CodeAnalysis;
 using Waf.DotNetPad.Applications.Host;
 using Waf.DotNetPad.Applications.Services;

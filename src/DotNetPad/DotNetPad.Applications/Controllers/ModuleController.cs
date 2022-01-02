@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using System.Waf.Applications;
 using System.Waf.Applications.Services;
-using System.Waf.Foundation;
 using Waf.DotNetPad.Applications.DataModels;
 using Waf.DotNetPad.Applications.Properties;
 using Waf.DotNetPad.Applications.Services;

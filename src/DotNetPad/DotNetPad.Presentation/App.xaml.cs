@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Runtime;
 using System.Waf;
 using System.Waf.Applications;
-using System.Waf.Foundation;
 using System.Windows;
 using System.Windows.Threading;
 using Waf.DotNetPad.Applications.ViewModels;

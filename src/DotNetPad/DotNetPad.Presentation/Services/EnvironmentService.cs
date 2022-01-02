@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Linq;
+﻿using System.ComponentModel.Composition;
 using System.IO;
 using System.Waf.Applications;
 using Waf.DotNetPad.Applications.Services;

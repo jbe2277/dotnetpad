@@ -1,7 +1,5 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Windows.Data;
 
 namespace Waf.DotNetPad.Presentation.Converters

@@ -1,9 +1,7 @@
-﻿using System;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Waf.Applications;
-using System.Waf.Foundation;
 using System.Windows.Input;
 using Waf.DotNetPad.Applications.Views;
 using Waf.DotNetPad.Domain;

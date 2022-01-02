@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.ComponentModel.Composition;
-using System.Waf.Foundation;
+﻿using System.ComponentModel.Composition;
 using Waf.DotNetPad.Applications.Properties;
 using Waf.DotNetPad.Applications.Views;
 

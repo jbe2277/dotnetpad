@@ -1,6 +1,5 @@
 ﻿using ICSharpCode.AvalonEdit.Highlighting;
 using Microsoft.CodeAnalysis.Classification;
-using System.Collections.Generic;
 using System.Windows.Media;
 
 namespace Waf.DotNetPad.Presentation.Controls

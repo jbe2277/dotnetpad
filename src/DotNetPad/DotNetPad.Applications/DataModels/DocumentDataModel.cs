@@ -1,5 +1,4 @@
-﻿using System;
-using Waf.DotNetPad.Domain;
+﻿using Waf.DotNetPad.Domain;
 
 namespace Waf.DotNetPad.Applications.DataModels
 {

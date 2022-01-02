@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 
 namespace Waf.DotNetPad.Applications.Views
 {

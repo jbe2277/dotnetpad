@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Waf.Foundation;
+﻿using System.Diagnostics;
 
 namespace Waf.DotNetPad.Domain
 {

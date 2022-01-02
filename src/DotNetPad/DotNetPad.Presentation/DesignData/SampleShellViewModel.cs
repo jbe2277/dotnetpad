@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using Waf.DotNetPad.Applications.ViewModels;
+﻿using Waf.DotNetPad.Applications.ViewModels;
 using Waf.DotNetPad.Applications.Views;
 
 namespace Waf.DotNetPad.Presentation.DesignData

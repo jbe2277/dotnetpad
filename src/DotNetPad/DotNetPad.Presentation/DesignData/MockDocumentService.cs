@@ -1,5 +1,4 @@
-﻿using System.Waf.Foundation;
-using Waf.DotNetPad.Applications.Services;
+﻿using Waf.DotNetPad.Applications.Services;
 using Waf.DotNetPad.Domain;
 
 namespace Waf.DotNetPad.Presentation.DesignData

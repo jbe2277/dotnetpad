@@ -1,5 +1,4 @@
 ﻿using ICSharpCode.AvalonEdit.Document;
-using System;
 using System.ComponentModel.Composition;
 using System.Waf.Applications;
 using System.Windows;

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Waf.DotNetPad.Applications.Services
+﻿namespace Waf.DotNetPad.Applications.Services
 {
     public interface IEnvironmentService
     {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using Waf.DotNetPad.Domain;
 
 namespace Waf.DotNetPad.Applications.Services

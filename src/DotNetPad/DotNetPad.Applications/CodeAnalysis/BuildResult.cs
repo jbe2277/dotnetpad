@@ -1,5 +1,4 @@
 ﻿using Microsoft.CodeAnalysis;
-using System.Collections.Generic;
 
 namespace Waf.DotNetPad.Applications.CodeAnalysis
 {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.Waf.Applications.Services;
 
 namespace Waf.DotNetPad.Applications.Properties
