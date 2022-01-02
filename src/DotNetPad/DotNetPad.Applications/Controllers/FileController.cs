@@ -350,7 +350,7 @@ namespace Waf.DotNetPad.Applications.Controllers
             saveAsCommand.RaiseCanExecuteChanged();
         }
 
-        private void ShellServiceClosing(object sender, CancelEventArgs e)
+        private void ShellServiceClosing(object? sender, CancelEventArgs e)
         {
             e.Cancel = !PrepareToClose(fileService.DocumentFiles);
             if (!e.Cancel)

@@ -60,6 +60,6 @@ namespace Waf.DotNetPad.Applications.Services
             shellView.Value.Closing += ShellViewClosing;
         }
 
-        private void ShellViewClosing(object sender, CancelEventArgs e) => OnClosing(e);
+        private void ShellViewClosing(object? sender, CancelEventArgs e) => OnClosing(e);
     }
 }
