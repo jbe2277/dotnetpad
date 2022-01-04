@@ -1,15 +1,12 @@
 ﻿using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Globalization;
-using System.IO;
-using System.Runtime;
 using System.Waf;
 using System.Waf.Applications;
 using System.Windows;
 using System.Windows.Threading;
 using Waf.DotNetPad.Applications.ViewModels;
 using Waf.DotNetPad.Domain;
-using Waf.DotNetPad.Presentation.Services;
 
 namespace Waf.DotNetPad.Presentation;
 
@@ -19,18 +16,11 @@ public partial class App
     private CompositionContainer container = null!;
     private IEnumerable<IModuleController> moduleControllers = Array.Empty<IModuleController>();
 
-    public App()
-    {
-        Directory.CreateDirectory(EnvironmentService.ProfilePath);
-        ProfileOptimization.SetProfileRoot(EnvironmentService.ProfilePath);
-        ProfileOptimization.StartProfile("Startup.profile");
-    }
-
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
 
-#if !(DEBUG)
+#if !DEBUG
         DispatcherUnhandledException += AppDispatcherUnhandledException;
         AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
 #endif
