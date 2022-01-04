@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+Version 6.0.0.100 (Release)
+- Migrate to .NET 6
+- Update to Microsoft.CodeAnalysis 4.0.1
+
+
 Version 5.0.0.100 (Release)
 - Migrate to .NET 5
 - Update to Microsoft.CodeAnalysis 3.9.0
