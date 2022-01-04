@@ -1,9 +1,8 @@
 ﻿using System.Diagnostics;
 
-namespace Waf.DotNetPad.Domain
+namespace Waf.DotNetPad.Domain;
+
+public static class Log
 {
-    public static class Log
-    {
-        public static TraceSource Default { get; } = new TraceSource("App");
-    }
+    public static TraceSource Default { get; } = new TraceSource("App");
 }

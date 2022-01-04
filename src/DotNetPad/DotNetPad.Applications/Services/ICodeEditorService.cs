@@ -1,9 +1,8 @@
 ﻿using Waf.DotNetPad.Domain;
 
-namespace Waf.DotNetPad.Applications.Services
+namespace Waf.DotNetPad.Applications.Services;
+
+public interface ICodeEditorService
 {
-    public interface ICodeEditorService
-    {
-        void SetCaret(DocumentFile documentFile, int line, int column);
-    }
+    void SetCaret(DocumentFile documentFile, int line, int column);
 }

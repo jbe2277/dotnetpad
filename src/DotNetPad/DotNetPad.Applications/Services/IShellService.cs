@@ -1,17 +1,16 @@
 ﻿using Waf.DotNetPad.Applications.Properties;
 
-namespace Waf.DotNetPad.Applications.Services
+namespace Waf.DotNetPad.Applications.Services;
+
+public interface IShellService : INotifyPropertyChanged
 {
-    public interface IShellService : INotifyPropertyChanged
-    {
-        AppSettings Settings { get; }
+    AppSettings Settings { get; }
         
-        object ShellView { get; }
+    object ShellView { get; }
         
-        int Line { get; set; }
+    int Line { get; set; }
 
-        int Column { get; set; }
+    int Column { get; set; }
 
-        event CancelEventHandler Closing;
-    }
+    event CancelEventHandler Closing;
 }

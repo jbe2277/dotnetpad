@@ -1,8 +1,7 @@
 ﻿using System.Waf.Applications;
 
-namespace Waf.DotNetPad.Applications.Views
+namespace Waf.DotNetPad.Applications.Views;
+
+public interface IErrorListView : IView
 {
-    public interface IErrorListView : IView
-    {
-    }
 }

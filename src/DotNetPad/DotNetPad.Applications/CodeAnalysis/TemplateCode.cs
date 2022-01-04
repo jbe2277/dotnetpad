@@ -9,18 +9,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sample
+namespace Sample;
+
+internal static class Program
 {
-    internal static class Program
+    internal static void Main()
     {
-        internal static void Main()
-        {
-            
-        }
+        
     }
 }";
 
-        public static int StartCaretPositionCSharp => 244;
+        public static int StartCaretPositionCSharp => 225;
 
         public static string InitialVisualBasicCode =>
 @"Imports System

@@ -4,32 +4,31 @@ using Waf.DotNetPad.Applications.Services;
 using Waf.DotNetPad.Applications.Views;
 using Waf.DotNetPad.Domain;
 
-namespace Waf.DotNetPad.Applications.ViewModels
+namespace Waf.DotNetPad.Applications.ViewModels;
+
+[Export, PartCreationPolicy(CreationPolicy.NonShared)]
+public class CodeEditorViewModel : ViewModel<ICodeEditorView>
 {
-    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
-    public class CodeEditorViewModel : ViewModel<ICodeEditorView>
-    {
-        private DocumentFile documentFile = null!;
+    private DocumentFile documentFile = null!;
         
-        [ImportingConstructor]
-        public CodeEditorViewModel(ICodeEditorView view, IShellService shellService, IWorkspaceService workspaceService, CodeEditorService codeEditorService)
-            : base(view)
-        {
-            ShellService = shellService;
-            WorkspaceService = workspaceService;
-            CodeEditorService = codeEditorService;
-        }
+    [ImportingConstructor]
+    public CodeEditorViewModel(ICodeEditorView view, IShellService shellService, IWorkspaceService workspaceService, CodeEditorService codeEditorService)
+        : base(view)
+    {
+        ShellService = shellService;
+        WorkspaceService = workspaceService;
+        CodeEditorService = codeEditorService;
+    }
 
-        public IShellService ShellService { get; }
+    public IShellService ShellService { get; }
 
-        public IWorkspaceService WorkspaceService { get; }
+    public IWorkspaceService WorkspaceService { get; }
 
-        public CodeEditorService CodeEditorService { get; }
+    public CodeEditorService CodeEditorService { get; }
 
-        public DocumentFile DocumentFile
-        {
-            get => documentFile;
-            set => SetProperty(ref documentFile, value);
-        }
+    public DocumentFile DocumentFile
+    {
+        get => documentFile;
+        set => SetProperty(ref documentFile, value);
     }
 }

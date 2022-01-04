@@ -1,8 +1,7 @@
-﻿namespace Waf.DotNetPad.Domain
+﻿namespace Waf.DotNetPad.Domain;
+
+public enum DocumentType
 {
-    public enum DocumentType
-    {
-        CSharp,
-        VisualBasic
-    }
+    CSharp,
+    VisualBasic
 }

@@ -1,9 +1,8 @@
-﻿namespace Waf.DotNetPad.Domain
+﻿namespace Waf.DotNetPad.Domain;
+
+public enum ErrorSeverity
 {
-    public enum ErrorSeverity
-    {
-        Info,
-        Warning,
-        Error
-    }
+    Info,
+    Warning,
+    Error
 }

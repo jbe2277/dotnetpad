@@ -1,20 +1,19 @@
 ﻿using System.ComponentModel.Composition;
 
-namespace Waf.DotNetPad.Applications.Services
+namespace Waf.DotNetPad.Applications.Services;
+
+[Export]
+public class VisualBasicSampleService
 {
-    [Export]
-    public class VisualBasicSampleService
-    {
-        public Lazy<string> Tuples => new Lazy<string>(() => GetSampleCode("Tuples.vb"));
+    public Lazy<string> Tuples => new(() => GetSampleCode("Tuples.vb"));
 
-        public Lazy<string> NullConditionalOperator => new Lazy<string>(() => GetSampleCode("NullConditionalOperator.vb"));
+    public Lazy<string> NullConditionalOperator => new(() => GetSampleCode("NullConditionalOperator.vb"));
 
-        public Lazy<string> NameOfOperator => new Lazy<string>(() => GetSampleCode("NameOfOperator.vb"));
+    public Lazy<string> NameOfOperator => new(() => GetSampleCode("NameOfOperator.vb"));
 
-        public Lazy<string> AutoPropertyInitializers => new Lazy<string>(() => GetSampleCode("AutoPropertyInitializers.vb"));
+    public Lazy<string> AutoPropertyInitializers => new(() => GetSampleCode("AutoPropertyInitializers.vb"));
 
-        public Lazy<string> StringInterpolation => new Lazy<string>(() => GetSampleCode("StringInterpolation.vb"));
+    public Lazy<string> StringInterpolation => new(() => GetSampleCode("StringInterpolation.vb"));
 
-        internal static string GetSampleCode(string sampleFileName) => CSharpSampleService.GetSampleCode(sampleFileName);
-    }
+    internal static string GetSampleCode(string sampleFileName) => CSharpSampleService.GetSampleCode(sampleFileName);
 }

@@ -1,11 +1,10 @@
-﻿namespace Waf.DotNetPad.Applications.Services
+﻿namespace Waf.DotNetPad.Applications.Services;
+
+public interface IClipboardService
 {
-    public interface IClipboardService
-    {
-        bool ContainsText();
+    bool ContainsText();
 
-        string GetText();
+    string GetText();
 
-        void SetText(string text);
-    }
+    void SetText(string text);
 }

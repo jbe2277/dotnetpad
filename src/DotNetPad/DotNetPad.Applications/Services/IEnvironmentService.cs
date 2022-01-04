@@ -1,7 +1,6 @@
-﻿namespace Waf.DotNetPad.Applications.Services
+﻿namespace Waf.DotNetPad.Applications.Services;
+
+public interface IEnvironmentService
 {
-    public interface IEnvironmentService
-    {
-        IReadOnlyList<string> FilesToLoad { get; }
-    }
+    IReadOnlyList<string> FilesToLoad { get; }
 }

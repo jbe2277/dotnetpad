@@ -1,29 +1,28 @@
 ﻿using System.Waf.Applications;
 
-namespace Waf.DotNetPad.Applications.Views
+namespace Waf.DotNetPad.Applications.Views;
+
+public interface IShellView : IView
 {
-    public interface IShellView : IView
-    {
-        double VirtualScreenWidth { get; }
+    double VirtualScreenWidth { get; }
 
-        double VirtualScreenHeight { get; }
+    double VirtualScreenHeight { get; }
 
-        double Left { get; set; }
+    double Left { get; set; }
 
-        double Top { get; set; }
+    double Top { get; set; }
 
-        double Width { get; set; }
+    double Width { get; set; }
 
-        double Height { get; set; }
+    double Height { get; set; }
 
-        bool IsMaximized { get; set; }
+    bool IsMaximized { get; set; }
 
-        double BottomPanesHeight { get; set; }
+    double BottomPanesHeight { get; set; }
 
-        event CancelEventHandler Closing;
+    event CancelEventHandler Closing;
 
-        event EventHandler Closed;
+    event EventHandler Closed;
 
-        void Show();
-    }
+    void Show();
 }

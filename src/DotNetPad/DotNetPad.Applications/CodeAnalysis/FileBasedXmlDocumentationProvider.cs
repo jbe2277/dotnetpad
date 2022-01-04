@@ -2,76 +2,72 @@
 using System.Globalization;
 using System.Xml.Linq;
 
-namespace Waf.DotNetPad.Applications.CodeAnalysis
+namespace Waf.DotNetPad.Applications.CodeAnalysis;
+
+internal class FileBasedXmlDocumentationProvider : DocumentationProvider
 {
-    internal class FileBasedXmlDocumentationProvider : DocumentationProvider
+    private readonly string filePath;
+    private readonly Lazy<Dictionary<string, string>> docComments;
+
+    public FileBasedXmlDocumentationProvider(string filePath)
     {
-        private readonly string filePath;
-        private readonly Lazy<Dictionary<string, string>> docComments;
+        this.filePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
+        docComments = new Lazy<Dictionary<string, string>>(CreateDocComments, isThreadSafe: true);
+    }
 
-        public FileBasedXmlDocumentationProvider(string filePath)
+    public override bool Equals(object? obj) => obj is FileBasedXmlDocumentationProvider other && filePath.Equals(other.filePath);
+
+    public override int GetHashCode() => filePath.GetHashCode();
+
+    protected override string GetDocumentationForSymbol(string documentationMemberID, CultureInfo preferredCulture, CancellationToken cancellationToken = default)
+    {
+        return docComments.Value.TryGetValue(documentationMemberID, out var docComment) ? docComment : "";
+    }
+
+    private Dictionary<string, string> CreateDocComments()
+    {
+        var commentsDictionary = new Dictionary<string, string>();
+        try
         {
-            this.filePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
-            docComments = new Lazy<Dictionary<string, string>>(CreateDocComments, isThreadSafe: true);
-        }
-
-        public override bool Equals(object? obj) => obj is FileBasedXmlDocumentationProvider other && filePath.Equals(other.filePath);
-
-        public override int GetHashCode() => filePath.GetHashCode();
-
-        protected override string GetDocumentationForSymbol(string documentationMemberID, CultureInfo preferredCulture, CancellationToken cancellationToken = default)
-        {
-            return docComments.Value.TryGetValue(documentationMemberID, out var docComment) ? docComment : "";
-        }
-
-        private Dictionary<string, string> CreateDocComments()
-        {
-            var commentsDictionary = new Dictionary<string, string>();
-            try
+            var foundPath = GetDocumentationFilePath(filePath);
+            if (!string.IsNullOrEmpty(foundPath))
             {
-                var foundPath = GetDocumentationFilePath(filePath);
-                if (!string.IsNullOrEmpty(foundPath))
+                var document = XDocument.Load(foundPath);
+                foreach (var element in document.Descendants("member"))
                 {
-                    var document = XDocument.Load(foundPath);
-                    foreach (var element in document.Descendants("member"))
+                    var nameAttribute = element.Attribute("name");
+                    if (nameAttribute != null)
                     {
-                        var nameAttribute = element.Attribute("name");
-                        if (nameAttribute != null)
-                        {
-                            commentsDictionary[nameAttribute.Value] = string.Concat(element.Nodes());
-                        }
+                        commentsDictionary[nameAttribute.Value] = string.Concat(element.Nodes());
                     }
                 }
             }
-            catch (Exception)
-            {
-                // ignore
-            }
-            return commentsDictionary;
         }
-
-        private static string? GetDocumentationFilePath(string originalPath)
+        catch (Exception)
         {
-            if (File.Exists(originalPath)) return originalPath;
+            // ignore
+        }
+        return commentsDictionary;
+    }
+
+    private static string? GetDocumentationFilePath(string originalPath)
+    {
+        if (File.Exists(originalPath)) return originalPath;
             
-            var fileName = Path.GetFileName(originalPath);
-            string? path = null;
-            foreach (var version in new[] { @"5.0.0\ref\net5.0" })
-            {
-                path = GetNetFrameworkPathOrNull(fileName, version);
-                if (path != null)
-                {
-                    break;
-                }
-            }
-            return path;
-        }
-
-        private static string? GetNetFrameworkPathOrNull(string fileName, string version)
+        var fileName = Path.GetFileName(originalPath);
+        string? path = null;
+        foreach (var version in new[] { @"6.0.1\ref\net6.0" })
         {
-            const string netFrameworkPathPart = @"dotnet\packs\Microsoft.NETCore.App.Ref";
-            var newPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), netFrameworkPathPart, version, fileName);
-            return File.Exists(newPath) ? newPath : null;
+            path = GetNetFrameworkPathOrNull(fileName, version);
+            if (path != null) break;
         }
+        return path;
+    }
+
+    private static string? GetNetFrameworkPathOrNull(string fileName, string version)
+    {
+        const string netFrameworkPathPart = @"dotnet\packs\Microsoft.NETCore.App.Ref";
+        var newPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), netFrameworkPathPart, version, fileName);
+        return File.Exists(newPath) ? newPath : null;
     }
 }
