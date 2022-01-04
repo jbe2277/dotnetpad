@@ -1,12 +1,11 @@
 ﻿using System.Globalization;
 using System.Windows.Data;
 
-namespace Waf.DotNetPad.Presentation.Converters
-{
-    public class IndexToNumberConverter : IValueConverter
-    {
-        public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture) => (int)value! + 1;
+namespace Waf.DotNetPad.Presentation.Converters;
 
-        public object ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture) => (int)value! - 1;
-    }
+public class IndexToNumberConverter : IValueConverter
+{
+    public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture) => (int)value! + 1;
+
+    public object ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture) => (int)value! - 1;
 }

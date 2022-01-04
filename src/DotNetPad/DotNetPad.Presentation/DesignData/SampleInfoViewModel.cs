@@ -1,20 +1,17 @@
 ﻿using Waf.DotNetPad.Applications.ViewModels;
 using Waf.DotNetPad.Applications.Views;
 
-namespace Waf.DotNetPad.Presentation.DesignData
+namespace Waf.DotNetPad.Presentation.DesignData;
+
+public class SampleInfoViewModel : InfoViewModel
 {
-    public class SampleInfoViewModel : InfoViewModel
+    public SampleInfoViewModel() : base(new MockInfoView())
     {
-        public SampleInfoViewModel() : base(new MockInfoView())
-        {
-        }
+    }
 
 
-        private class MockInfoView : MockView, IInfoView
-        {
-            public void ShowDialog(object owner)
-            {
-            }
-        }
+    private class MockInfoView : MockView, IInfoView
+    {
+        public void ShowDialog(object owner) { }
     }
 }

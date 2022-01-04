@@ -1,9 +1,8 @@
 ﻿using System.Waf.Applications;
 
-namespace Waf.DotNetPad.Presentation.DesignData
+namespace Waf.DotNetPad.Presentation.DesignData;
+
+public class MockView : IView
 {
-    public class MockView : IView
-    {
-        public object? DataContext { get; set; }
-    }
+    public object? DataContext { get; set; }
 }

@@ -6,27 +6,26 @@ using Waf.DotNetPad.Applications.ViewModels;
 using Waf.DotNetPad.Applications.Views;
 using Waf.DotNetPad.Domain;
 
-namespace Waf.DotNetPad.Presentation.Views
+namespace Waf.DotNetPad.Presentation.Views;
+
+[Export(typeof(IErrorListView))]
+public partial class ErrorListView : IErrorListView
 {
-    [Export(typeof(IErrorListView))]
-    public partial class ErrorListView : IErrorListView
-    {
-        private readonly Lazy<ErrorListViewModel> viewModel;
+    private readonly Lazy<ErrorListViewModel> viewModel;
         
-        public ErrorListView()
-        {
-            InitializeComponent();
-            viewModel = new Lazy<ErrorListViewModel>(() => this.GetViewModel<ErrorListViewModel>()!);
-        }
+    public ErrorListView()
+    {
+        InitializeComponent();
+        viewModel = new Lazy<ErrorListViewModel>(() => this.GetViewModel<ErrorListViewModel>()!);
+    }
 
-        public ErrorListViewModel ViewModel => viewModel.Value;
+    public ErrorListViewModel ViewModel => viewModel.Value;
 
-        private void ErrorListDoubleClick(object sender, MouseButtonEventArgs e)
+    private void ErrorListDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        if (e.OriginalSource is FrameworkElement element && element.DataContext is ErrorListItem)
         {
-            if (e.OriginalSource is FrameworkElement element && element.DataContext is ErrorListItem)
-            {
-                ViewModel.GotoErrorCommand.Execute(null);
-            }
+            ViewModel.GotoErrorCommand.Execute(null);
         }
     }
 }

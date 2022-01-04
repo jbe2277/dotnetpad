@@ -2,25 +2,24 @@
 using Waf.DotNetPad.Applications.Views;
 using Waf.DotNetPad.Domain;
 
-namespace Waf.DotNetPad.Presentation.DesignData
+namespace Waf.DotNetPad.Presentation.DesignData;
+
+public class SampleErrorListViewModel : ErrorListViewModel
 {
-    public class SampleErrorListViewModel : ErrorListViewModel
+    public SampleErrorListViewModel() : base(new MockErrorListView(), new MockDocumentService(), null!, null!)
     {
-        public SampleErrorListViewModel() : base(new MockErrorListView(), new MockDocumentService(), null!, null!)
+        var documentFile = new DocumentFile(DocumentType.CSharp, "Script 1.cs", "");
+        documentFile.Content!.ErrorList = new[] 
         {
-            var documentFile = new DocumentFile(DocumentType.CSharp, "Script 1.cs", "");
-            documentFile.Content!.ErrorList = new[] 
-            {
-                new ErrorListItem(ErrorSeverity.Info, "Info", 0, 0, 0, 0),
-                new ErrorListItem(ErrorSeverity.Warning, "Warning", 3, 13, 3, 13),
-                new ErrorListItem(ErrorSeverity.Error, "Error", 20, 8, 20, 8)
-            };
-            DocumentService.ActiveDocumentFile = documentFile;
-        }
+            new ErrorListItem(ErrorSeverity.Info, "Info", 0, 0, 0, 0),
+            new ErrorListItem(ErrorSeverity.Warning, "Warning", 3, 13, 3, 13),
+            new ErrorListItem(ErrorSeverity.Error, "Error", 20, 8, 20, 8)
+        };
+        DocumentService.ActiveDocumentFile = documentFile;
+    }
 
 
-        private class MockErrorListView : MockView, IErrorListView
-        {
-        }
+    private class MockErrorListView : MockView, IErrorListView
+    {
     }
 }

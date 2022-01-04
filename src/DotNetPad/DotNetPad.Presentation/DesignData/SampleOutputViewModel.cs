@@ -2,28 +2,19 @@
 using Waf.DotNetPad.Applications.Views;
 using Waf.DotNetPad.Domain;
 
-namespace Waf.DotNetPad.Presentation.DesignData
+namespace Waf.DotNetPad.Presentation.DesignData;
+
+public class SampleOutputViewModel : OutputViewModel
 {
-    public class SampleOutputViewModel : OutputViewModel
+    public SampleOutputViewModel() : base(new MockOutputView(), new MockFileService()) { }
+
+
+    private class MockOutputView : MockView, IOutputView
     {
-        public SampleOutputViewModel() : base(new MockOutputView(), new MockFileService())
-        {
-        }
+        public void AppendOutputText(DocumentFile document, string text) { }
 
+        public void AppendErrorText(DocumentFile document, string text) { }
 
-        private class MockOutputView : MockView, IOutputView
-        {
-            public void AppendOutputText(DocumentFile document, string text)
-            {
-            }
-
-            public void AppendErrorText(DocumentFile document, string text)
-            {
-            }
-
-            public void ClearOutput(DocumentFile document)
-            {
-            }
-        }
+        public void ClearOutput(DocumentFile document) { }
     }
 }

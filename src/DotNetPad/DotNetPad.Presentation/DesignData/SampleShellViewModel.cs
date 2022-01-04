@@ -1,44 +1,39 @@
 ﻿using Waf.DotNetPad.Applications.ViewModels;
 using Waf.DotNetPad.Applications.Views;
 
-namespace Waf.DotNetPad.Presentation.DesignData
+namespace Waf.DotNetPad.Presentation.DesignData;
+
+public class SampleShellViewModel : ShellViewModel
 {
-    public class SampleShellViewModel : ShellViewModel
+    public SampleShellViewModel() : base(new MockShellView(), new MockShellService(), new MockFileService(), null!, null!) { }
+
+
+    private class MockShellView : MockView, IShellView
     {
-        public SampleShellViewModel() : base(new MockShellView(), new MockShellService(), new MockFileService(), null!, null!)
-        {
-        }
+        public double VirtualScreenWidth => 0;
 
+        public double VirtualScreenHeight => 0;
 
-        private class MockShellView : MockView, IShellView
-        {
-            public double VirtualScreenWidth => 0;
+        public double Left { get; set; }
 
-            public double VirtualScreenHeight => 0;
+        public double Top { get; set; }
 
-            public double Left { get; set; }
+        public double Width { get; set; }
 
-            public double Top { get; set; }
+        public double Height { get; set; }
 
-            public double Width { get; set; }
+        public bool IsMaximized { get; set; }
 
-            public double Height { get; set; }
+        public double BottomPanesHeight { get; set; }
 
-            public bool IsMaximized { get; set; }
+        public event CancelEventHandler? Closing;
 
-            public double BottomPanesHeight { get; set; }
+        public event EventHandler? Closed;
 
+        public void Show() { }
 
-            public event CancelEventHandler? Closing;
+        protected virtual void OnClosing(CancelEventArgs e) => Closing?.Invoke(this, e);
 
-            public event EventHandler? Closed;
-
-
-            public void Show() { }
-
-            protected virtual void OnClosing(CancelEventArgs e) => Closing?.Invoke(this, e);
-
-            protected virtual void OnClosed(EventArgs e) => Closed?.Invoke(this, e);
-        }
+        protected virtual void OnClosed(EventArgs e) => Closed?.Invoke(this, e);
     }
 }

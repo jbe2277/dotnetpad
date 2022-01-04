@@ -1,9 +1,8 @@
-﻿namespace Waf.DotNetPad.Presentation.Controls
+﻿namespace Waf.DotNetPad.Presentation.Controls;
+
+public enum HorizontalFlyoutAlignment
 {
-    public enum HorizontalFlyoutAlignment
-    {
-        Left,
-        Center,
-        Right
-    }
+    Left,
+    Center,
+    Right
 }
