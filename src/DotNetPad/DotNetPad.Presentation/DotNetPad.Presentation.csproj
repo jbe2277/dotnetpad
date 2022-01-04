@@ -5,6 +5,7 @@
     <UseWPF>true</UseWPF>
     <RootNamespace>Waf.DotNetPad.Presentation</RootNamespace>
     <AssemblyName>DotNetPad</AssemblyName>
+    <AssemblyTitle>Waf DotNetPad</AssemblyTitle>
     <ApplicationIcon>Resources\Images\DotNetPad.ico</ApplicationIcon>
   </PropertyGroup>
 

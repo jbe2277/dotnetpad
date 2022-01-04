@@ -1,9 +1,16 @@
 ﻿<Project>
   <PropertyGroup>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Product>Waf DotNetPad</Product>
+    <Company>Waf</Company>
+    <Copyright>Copyright © 2016-2022 jbe2277</Copyright>
+    <Version>6.0.0.100</Version>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    
     <Nullable>enable</Nullable>
-    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <ImplicitUsings>enable</ImplicitUsings>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    <NoWarn>$(NoWarn);CA1014</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,9 +19,5 @@
     <Using Include="System.ComponentModel" />
     <Using Include="System.Diagnostics.CodeAnalysis" />
     <Using Include="System.Waf.Foundation" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
   </ItemGroup>
 </Project>
