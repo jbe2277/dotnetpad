@@ -15,7 +15,7 @@
         </Border>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Image x:Name="applicationImage" Stretch="None" Margin="11,22,11,11"/>
+            <Image x:Name="applicationImage" Stretch="None" Margin="22"/>
 
             <Grid Margin="0,0,22,11" VerticalAlignment="Center">
                 <Grid.Resources>
