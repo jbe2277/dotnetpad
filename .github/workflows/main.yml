@@ -9,5 +9,7 @@ jobs:
     runs-on: windows-2022
     steps:
     - uses: actions/checkout@v2
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
     - name: Build
-      run: dotnet build ./src/DotNetPad/DotNetPad.sln -c Release
+      run: msbuild ./src/DotNetPad/DotNetPad.sln /restore /p:Configuration=Release /p:GenerateAppxPackageOnBuild=false
