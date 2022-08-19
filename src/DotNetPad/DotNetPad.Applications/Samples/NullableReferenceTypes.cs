@@ -4,9 +4,9 @@ using static System.Console;
 
 namespace Waf.DotNetPad.Samples;
 
-public static class NullableReferenceTypes
+internal static class NullableReferenceTypes
 {
-    public static void Main()
+    private static void Main()
     {
         string notNull = "Hello";
         string? nullable = null;

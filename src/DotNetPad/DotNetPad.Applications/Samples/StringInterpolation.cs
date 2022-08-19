@@ -2,9 +2,9 @@
 
 namespace Waf.DotNetPad.Samples;
 
-public static class StringInterpolation
+internal static class StringInterpolation
 {
-    public static void Main()
+    private static void Main()
     {
         var p = new Person() { Name = "Luke", Age = 50 };
             

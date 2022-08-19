@@ -6,7 +6,7 @@ internal static class SwitchExpression
 {
     public enum Orientation { West, North, East, South }
 
-    internal static void Main()
+    private static void Main()
     {
         int input = 3;
         var orientation = input switch

@@ -1,10 +1,10 @@
 ﻿namespace Waf.DotNetPad.Samples;
 
-public static class NameOfOperator
+internal static class NameOfOperator
 {
     private static readonly ObservableCollection<string> list = new();
 
-    public static void Main()
+    private static void Main()
     {
         // Use nameof to compare with the property name provided by the event args.
         ((INotifyPropertyChanged)list).PropertyChanged += ListPropertyChanged;

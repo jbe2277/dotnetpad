@@ -2,7 +2,7 @@
 
 internal static class Record
 {
-    internal static void Main()
+    private static void Main()
     {
         var person = new Person("Obi-Wan", "Kenobi");
         Console.WriteLine(person);

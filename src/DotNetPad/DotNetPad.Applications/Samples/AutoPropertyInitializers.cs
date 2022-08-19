@@ -1,8 +1,8 @@
 ﻿namespace Waf.DotNetPad.Samples;
 
-public static class AutoPropertyInitializers
+internal static class AutoPropertyInitializers
 {
-    public static void Main()
+    private static void Main()
     {
         var customer = new Customer(3);
 

@@ -2,7 +2,7 @@
 
 internal static class LocalFunctions
 {
-    internal static void Main()
+    private static void Main()
     {
         Console.Write(Fibonacci(6));
     }

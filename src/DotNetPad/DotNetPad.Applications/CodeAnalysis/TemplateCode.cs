@@ -7,13 +7,13 @@
 
 internal static class Program
 {
-    internal static void Main()
+    private static void Main()
     {
         
     }
 }";
 
-        public static int StartCaretPositionCSharp => 103;
+        public static int StartCaretPositionCSharp => 102;
 
         public static string InitialVisualBasicCode =>
 @"Imports System

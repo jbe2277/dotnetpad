@@ -2,7 +2,7 @@
 
 internal static class OutVariables
 {
-    internal static void Main()
+    private static void Main()
     {
         // declare out variables in the argument list of a method call
         if (int.TryParse("42", out var result))

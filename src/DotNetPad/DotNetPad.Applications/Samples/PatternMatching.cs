@@ -4,7 +4,7 @@ namespace Waf.DotNetPad.Samples;
 
 internal static class PatternMatching
 {
-    internal static void Main()
+    private static void Main()
     {
         // Use 'is' pattern expression with variable initialization
         Shape shape = new Circle { Radius = 2 };

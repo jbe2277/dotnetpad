@@ -3,9 +3,9 @@ using static System.Console;
 
 namespace Waf.DotNetPad.Samples;
 
-public static class NullConditionalOperator
+internal static class NullConditionalOperator
 {
-    public static void Main()
+    private static void Main()
     {
         // Use ?. to access the Name property
         Person? person = null;

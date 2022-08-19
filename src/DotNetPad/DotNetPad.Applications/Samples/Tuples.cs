@@ -4,7 +4,7 @@ namespace Waf.DotNetPad.Samples;
 
 internal static class Tuples
 {
-    internal static void Main()
+    private static void Main()
     {
         // Create a tuple with semantic names
         (string alpha, string beta) namedLetters1 = ("a", "b");
