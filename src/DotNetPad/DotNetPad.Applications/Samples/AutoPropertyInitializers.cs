@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Waf.DotNetPad.Samples;
+﻿namespace Waf.DotNetPad.Samples;
 
 public static class AutoPropertyInitializers
 {

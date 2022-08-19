@@ -1,17 +1,17 @@
-﻿using System;
-
-namespace Waf.DotNetPad.Samples;
+﻿namespace Waf.DotNetPad.Samples;
 
 internal static class OutVariables
 {
     internal static void Main()
     {
-        if (int.TryParse("42", out var result))  // declare out variables in the argument list of a method call
+        // declare out variables in the argument list of a method call
+        if (int.TryParse("42", out var result))
         {
             Console.WriteLine($"Result: {result}");
         }
 
-        if (int.TryParse("42", out _))  // ignore value with '_'
+        // ignore value with '_'
+        if (int.TryParse("42", out _))  
         {
             Console.WriteLine("This is a number");
         }

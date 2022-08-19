@@ -1,5 +1,4 @@
-﻿using System;
-using static System.Console;
+﻿using static System.Console;
 
 namespace Waf.DotNetPad.Samples;
 
@@ -19,7 +18,7 @@ public static class StringInterpolation
 
 public class Person
 {
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     public int Age { get; set; }
 }

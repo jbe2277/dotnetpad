@@ -32,6 +32,8 @@ internal class ScriptingWorkspace : Workspace
     {
         "System",
         "System.Collections.Generic",
+        "System.Collections.ObjectModel",
+        "System.ComponentModel",
         "System.IO",
         "System.Linq",
         "System.Net",

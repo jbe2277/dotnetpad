@@ -1,5 +1,4 @@
-﻿using System;
-using static System.Console;
+﻿using static System.Console;
 
 namespace Waf.DotNetPad.Samples;
 
@@ -19,7 +18,7 @@ internal static class PatternMatching
         PrintShape(new Rectangle { Length = 5, Height = 3 });
     }
 
-    private static void PrintShape(Shape shape)
+    private static void PrintShape(Shape? shape)
     {
         // Use 'case' with pattern expressions
         switch (shape)

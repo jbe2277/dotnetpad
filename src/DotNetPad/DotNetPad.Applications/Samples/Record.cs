@@ -1,33 +1,27 @@
-﻿#nullable enable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Waf.DotNetPad.Samples;
+﻿namespace Waf.DotNetPad.Samples;
 
 internal static class Record
 {
     internal static void Main()
     {
         var person = new Person("Obi-Wan", "Kenobi");
-        Console.WriteLine(person.ToString());
+        Console.WriteLine(person);
 
         // Target-typed new expressions
         Student student = new("Luke", "Skywalker") { Style = "Jedi" };
         // student.Style = "Sith";  // not allowed
-        Console.WriteLine(student.ToString());
+        Console.WriteLine(student);
 
         // with ... create clone
         var lukeClone = student with { };
         Console.WriteLine($"Luke and LukeClone: Equals: {student == lukeClone}; ReferenceEquals: {ReferenceEquals(student, lukeClone)}");
 
         var lea = student with { FirstName = "Lea" };  
-        Console.WriteLine(lea.ToString());
+        Console.WriteLine(lea);
 
         // Target typed ?? and ?
         var result = student ?? person;  // Shared base type
-        Console.WriteLine(result.ToString());
+        Console.WriteLine(result);
 
         // "not" pattern
         if (person is not Person) Console.WriteLine("Not of type person");
