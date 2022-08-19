@@ -3,13 +3,7 @@
     internal static class TemplateCode
     {
         public static string InitialCSharpCode =>
-@"#nullable enable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Sample;
+@"namespace Sample;
 
 internal static class Program
 {
@@ -19,7 +13,7 @@ internal static class Program
     }
 }";
 
-        public static int StartCaretPositionCSharp => 225;
+        public static int StartCaretPositionCSharp => 103;
 
         public static string InitialVisualBasicCode =>
 @"Imports System

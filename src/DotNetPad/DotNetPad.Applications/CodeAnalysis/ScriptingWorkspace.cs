@@ -7,6 +7,8 @@ using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.VisualBasic;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
+using System.Net;
+using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Text;
 
@@ -14,6 +16,7 @@ namespace Waf.DotNetPad.Applications.CodeAnalysis;
 
 internal class ScriptingWorkspace : Workspace
 {
+    private static readonly ImmutableArray<string> preprocessorSymbols = ImmutableArray.CreateRange(new[] { "TRACE", "DEBUG" });
     private static readonly ImmutableArray<Assembly> defaultReferences = ImmutableArray.CreateRange(new[]
     {
         typeof(object).Assembly,                                // System.Runtime
@@ -21,9 +24,22 @@ internal class ScriptingWorkspace : Workspace
         typeof(Enumerable).Assembly,                            // System.Link
         typeof(ImmutableArray).Assembly,                        // System.Collections.Immutable
         typeof(INotifyPropertyChanged).Assembly,                // System.ObjectModel
+        typeof(IPAddress).Assembly,                             // System.Net.Primitives
+        typeof(PhysicalAddress).Assembly,                       // System.Net.NetworkInformation
+        typeof(HttpClient).Assembly,                            // System.Net.Http
     });
-
-    private static readonly ImmutableArray<string> preprocessorSymbols = ImmutableArray.CreateRange(new[] { "TRACE", "DEBUG" });
+    private static readonly ImmutableArray<string> implicitUsings = ImmutableArray.CreateRange(new[]
+    {
+        "System",
+        "System.Collections.Generic",
+        "System.IO",
+        "System.Linq",
+        "System.Net",
+        "System.Net.NetworkInformation",
+        "System.Net.Http",
+        "System.Threading",
+        "System.Threading.Tasks"
+    });
 
     private readonly ConcurrentDictionary<string, DocumentationProvider> documentationProviders;
 
@@ -48,6 +64,9 @@ internal class ScriptingWorkspace : Workspace
         else if (language == LanguageNames.CSharp) { references.Add(CreateReference(typeof(RuntimeBinderException).Assembly)); }
 
         var projectInfo = ProjectInfo.Create(projectId, VersionStamp.Default, name, name + ".dll", language, metadataReferences: references,
+            compilationOptions: language == LanguageNames.CSharp
+                ? new CSharpCompilationOptions(OutputKind.ConsoleApplication, usings: implicitUsings, nullableContextOptions: NullableContextOptions.Enable)
+                : new VisualBasicCompilationOptions(OutputKind.ConsoleApplication),
             parseOptions: language == LanguageNames.CSharp
                 ? new CSharpParseOptions(Microsoft.CodeAnalysis.CSharp.LanguageVersion.Preview, preprocessorSymbols: preprocessorSymbols)
                 : new VisualBasicParseOptions(Microsoft.CodeAnalysis.VisualBasic.LanguageVersion.VisualBasic16_9));
@@ -56,6 +75,14 @@ internal class ScriptingWorkspace : Workspace
         var documentId = DocumentId.CreateNewId(projectId);
         var documentInfo = DocumentInfo.Create(documentId, fileName, loader: TextLoader.From(TextAndVersion.Create(SourceText.From(text, Encoding.UTF8), VersionStamp.Create())));
         OnDocumentAdded(documentInfo);
+
+        if (language == LanguageNames.CSharp)
+        {
+            var generatedId = DocumentId.CreateNewId(projectId);
+            var generatedCode = string.Join(Environment.NewLine, implicitUsings.Select(x => $"global using {x};"));
+            var generatedInfo = DocumentInfo.Create(generatedId, "Generated.cs", loader: TextLoader.From(TextAndVersion.Create(SourceText.From(generatedCode, Encoding.UTF8), VersionStamp.Create())));
+            OnDocumentAdded(generatedInfo);
+        }
         return documentId;
     }
 
