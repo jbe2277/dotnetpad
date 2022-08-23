@@ -3,7 +3,7 @@
     <Product>Waf DotNetPad</Product>
     <Company>Waf</Company>
     <Copyright>Copyright © 2016-2022 jbe2277</Copyright>
-    <Version>6.1.0.100</Version>
+    <Version>6.1.1.100</Version>
     <NeutralLanguage>en-US</NeutralLanguage>
     
     <Nullable>enable</Nullable>

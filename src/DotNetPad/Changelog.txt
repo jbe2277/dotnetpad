@@ -1,6 +1,13 @@
 Changelog
 ---------
 
+Version 6.1.1.100 (Release)
+- Update to Microsoft.CodeAnalysis 4.2.0
+- Simplify C# default templates by using implicit usings.
+- Add reference for System.Net.
+- Improve C# sample files.
+
+
 Version 6.1.0.100 (Release)
 - Deploy via Microsoft Store.
 
