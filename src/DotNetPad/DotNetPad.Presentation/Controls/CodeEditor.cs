@@ -95,10 +95,11 @@ public class CodeEditor : TextEditor
             if (completionWindow == null && (triggerChar == null || triggerChar == '.' || IsAllowedLanguageLetter(triggerChar.Value)))
             {
                 var position = CaretOffset;
-                var word = GetWord(position);
+                var (wordStart, text) = GetWord(position);
 
                 var document = WorkspaceService.GetDocument(DocumentFile);
                 var completionService = CompletionService.GetService(document);
+                if (completionService is null) return;
 
                 var completionList = await Task.Run(async () => await completionService.GetCompletionsAsync(document, position, cancellationToken: cancellationToken), cancellationToken);
                 if (completionList == null) return;
@@ -114,7 +115,7 @@ public class CodeEditor : TextEditor
                     };
                     completionWindow.MaxWidth = completionWindow.Width = 340;
                     completionWindow.MaxHeight = completionWindow.Height = 206;
-                    foreach (var completionItem in completionList.Items)
+                    foreach (var completionItem in completionList.ItemsList)
                     {
                         completionWindow.CompletionList.CompletionData.Add(new CodeCompletionData(completionItem.DisplayText,
                             () => GetDescriptionAsync(completionService, document, completionItem), completionItem.Tags));
@@ -122,8 +123,8 @@ public class CodeEditor : TextEditor
 
                     if (triggerChar == null || IsAllowedLanguageLetter(triggerChar.Value))
                     {
-                        completionWindow.StartOffset = word.wordStart;
-                        completionWindow.CompletionList.SelectItem(word.text);
+                        completionWindow.StartOffset = wordStart;
+                        completionWindow.CompletionList.SelectItem(text);
                     }
                     completionWindow.Show();
                     completionWindow.Closed += (s2, e2) => completionWindow = null;
@@ -135,7 +136,7 @@ public class CodeEditor : TextEditor
 
     private static async Task<ImmutableArray<TaggedText>> GetDescriptionAsync(CompletionService completionService, Document document, CompletionItem completionItem)
     {
-        return (await Task.Run(async () => await completionService.GetDescriptionAsync(document, completionItem))).TaggedParts;
+        return (await Task.Run(async () => await completionService.GetDescriptionAsync(document, completionItem)))?.TaggedParts ?? default;
     }
 
     private (int wordStart, string text) GetWord(int position)
