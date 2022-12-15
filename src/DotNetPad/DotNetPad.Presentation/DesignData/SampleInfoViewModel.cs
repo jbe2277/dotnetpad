@@ -10,7 +10,7 @@ public class SampleInfoViewModel : InfoViewModel
     }
 
 
-    private class MockInfoView : MockView, IInfoView
+    private sealed class MockInfoView : MockView, IInfoView
     {
         public void ShowDialog(object owner) { }
     }

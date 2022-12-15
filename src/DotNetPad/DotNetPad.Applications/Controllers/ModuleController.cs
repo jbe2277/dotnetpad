@@ -10,7 +10,7 @@ using Waf.DotNetPad.Domain;
 namespace Waf.DotNetPad.Applications.Controllers;
 
 [Export(typeof(IModuleController))]
-internal class ModuleController : IModuleController
+internal sealed class ModuleController : IModuleController
 {
     private readonly Lazy<ShellService> shellService;
     private readonly ISettingsService settingsService;

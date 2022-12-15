@@ -17,7 +17,7 @@ public class SampleSaveChangesViewModel : SaveChangesViewModel
     }
 
 
-    private class MockSaveChangesView : MockView, ISaveChangesView
+    private sealed class MockSaveChangesView : MockView, ISaveChangesView
     {
         public void ShowDialog(object owner) { }
 

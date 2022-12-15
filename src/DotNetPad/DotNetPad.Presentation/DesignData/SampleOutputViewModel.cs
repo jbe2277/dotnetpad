@@ -9,7 +9,7 @@ public class SampleOutputViewModel : OutputViewModel
     public SampleOutputViewModel() : base(new MockOutputView(), new MockFileService()) { }
 
 
-    private class MockOutputView : MockView, IOutputView
+    private sealed class MockOutputView : MockView, IOutputView
     {
         public void AppendOutputText(DocumentFile document, string text) { }
 

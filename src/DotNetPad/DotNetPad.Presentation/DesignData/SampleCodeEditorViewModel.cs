@@ -25,7 +25,7 @@ namespace Sample
     }
 
 
-    private class MockCodeEditorView : MockView, ICodeEditorView
+    private sealed class MockCodeEditorView : MockView, ICodeEditorView
     {
     }
 }

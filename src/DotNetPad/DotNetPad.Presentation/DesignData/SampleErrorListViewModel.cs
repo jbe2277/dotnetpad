@@ -19,7 +19,7 @@ public class SampleErrorListViewModel : ErrorListViewModel
     }
 
 
-    private class MockErrorListView : MockView, IErrorListView
+    private sealed class MockErrorListView : MockView, IErrorListView
     {
     }
 }

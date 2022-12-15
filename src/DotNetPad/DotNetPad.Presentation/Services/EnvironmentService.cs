@@ -6,7 +6,7 @@ using Waf.DotNetPad.Applications.Services;
 namespace Waf.DotNetPad.Presentation.Services;
 
 [Export(typeof(IEnvironmentService))]
-internal class EnvironmentService : IEnvironmentService
+internal sealed class EnvironmentService : IEnvironmentService
 {
     private readonly Lazy<IReadOnlyList<string>> filesToLoad;
 

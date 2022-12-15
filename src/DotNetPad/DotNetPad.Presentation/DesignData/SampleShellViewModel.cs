@@ -8,7 +8,7 @@ public class SampleShellViewModel : ShellViewModel
     public SampleShellViewModel() : base(new MockShellView(), new MockShellService(), new MockFileService(), null!, null!) { }
 
 
-    private class MockShellView : MockView, IShellView
+    private sealed class MockShellView : MockView, IShellView
     {
         public double VirtualScreenWidth => 0;
 
@@ -32,8 +32,8 @@ public class SampleShellViewModel : ShellViewModel
 
         public void Show() { }
 
-        protected virtual void OnClosing(CancelEventArgs e) => Closing?.Invoke(this, e);
+        public void OnClosing(CancelEventArgs e) => Closing?.Invoke(this, e);
 
-        protected virtual void OnClosed(EventArgs e) => Closed?.Invoke(this, e);
+        public void OnClosed(EventArgs e) => Closed?.Invoke(this, e);
     }
 }

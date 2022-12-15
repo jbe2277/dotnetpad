@@ -14,7 +14,7 @@ using System.Text;
 
 namespace Waf.DotNetPad.Applications.CodeAnalysis;
 
-internal class ScriptingWorkspace : Workspace
+internal sealed class ScriptingWorkspace : Workspace
 {
     private static readonly ImmutableArray<string> preprocessorSymbols = ImmutableArray.CreateRange(new[] { "TRACE", "DEBUG" });
     private static readonly ImmutableArray<Assembly> defaultReferences = ImmutableArray.CreateRange(new[]

@@ -14,7 +14,7 @@ namespace Waf.DotNetPad.Applications.Controllers;
 
 /// <summary>Responsible for the file related commands.</summary>
 [Export]
-internal class FileController
+internal sealed class FileController
 {
     private readonly IMessageService messageService;
     private readonly IFileDialogService fileDialogService;

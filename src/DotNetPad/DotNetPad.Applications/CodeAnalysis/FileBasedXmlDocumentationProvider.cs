@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 namespace Waf.DotNetPad.Applications.CodeAnalysis;
 
-internal class FileBasedXmlDocumentationProvider : DocumentationProvider
+internal sealed class FileBasedXmlDocumentationProvider : DocumentationProvider
 {
     private readonly string filePath;
     private readonly Lazy<Dictionary<string, string>> docComments;

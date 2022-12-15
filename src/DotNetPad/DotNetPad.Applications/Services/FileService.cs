@@ -6,7 +6,7 @@ using Waf.DotNetPad.Domain;
 namespace Waf.DotNetPad.Applications.Services;
 
 [Export(typeof(IDocumentService)), Export(typeof(IFileService)), Export]
-internal class FileService : Model, IFileService
+internal sealed class FileService : Model, IFileService
 {
     private readonly ObservableCollection<DocumentFile> documentFiles;
     private readonly ReadOnlyObservableList<DocumentFile> readOnlyDocumentFiles;

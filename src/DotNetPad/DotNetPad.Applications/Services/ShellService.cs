@@ -5,7 +5,7 @@ using Waf.DotNetPad.Applications.Views;
 namespace Waf.DotNetPad.Applications.Services;
 
 [Export(typeof(IShellService)), Export]
-internal class ShellService : Model, IShellService
+internal sealed class ShellService : Model, IShellService
 {
     private readonly Lazy<IShellView> shellView;
     private int line;
@@ -45,10 +45,7 @@ internal class ShellService : Model, IShellService
         remove { closing -= value; }
     }
 
-    protected virtual void OnClosing(CancelEventArgs e)
-    {
-        closing?.Invoke(this, e);
-    }
+    private void OnClosing(CancelEventArgs e) => closing?.Invoke(this, e);
 
     private void InitializeClosingEvent()
     {

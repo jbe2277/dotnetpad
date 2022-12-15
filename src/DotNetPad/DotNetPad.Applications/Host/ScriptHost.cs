@@ -25,7 +25,7 @@ public static class ScriptHost
         }, cancellationToken);
     }
 
-    private class ScriptLoadContext : AssemblyLoadContext
+    private sealed class ScriptLoadContext : AssemblyLoadContext
     {
         public ScriptLoadContext() : base(isCollectible: true) { }
 

@@ -5,7 +5,7 @@ using Waf.DotNetPad.Applications.Services;
 namespace Waf.DotNetPad.Presentation.Services;
 
 [Export(typeof(IClipboardService))]
-internal class ClipboardService : IClipboardService
+internal sealed class ClipboardService : IClipboardService
 {
     public bool ContainsText() => Clipboard.ContainsText();
 

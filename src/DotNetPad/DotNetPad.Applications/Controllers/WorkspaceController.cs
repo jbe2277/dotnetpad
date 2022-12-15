@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.Host.Mef;
 using System.ComponentModel.Composition;
 using System.Composition.Hosting;
+using System.Globalization;
 using System.Waf.Applications;
 using Waf.DotNetPad.Applications.CodeAnalysis;
 using Waf.DotNetPad.Applications.Host;
@@ -12,7 +13,7 @@ using Waf.DotNetPad.Domain;
 namespace Waf.DotNetPad.Applications.Controllers;
 
 [Export, Export(typeof(IWorkspaceService))]
-internal class WorkspaceController : IWorkspaceService
+internal sealed class WorkspaceController : IWorkspaceService
 {
     private readonly TaskScheduler taskScheduler;
     private readonly IDocumentService documentService;
@@ -286,7 +287,7 @@ internal class WorkspaceController : IWorkspaceService
             DiagnosticSeverity.Warning => ErrorSeverity.Warning,
             _ => ErrorSeverity.Info
         };
-        return new ErrorListItem(errorSeverity, diagnostic.GetMessage(), mappedSpan.Span.Start.Line, mappedSpan.Span.Start.Character,
+        return new ErrorListItem(errorSeverity, diagnostic.GetMessage(CultureInfo.CurrentCulture), mappedSpan.Span.Start.Line, mappedSpan.Span.Start.Character,
             mappedSpan.Span.End.Line, mappedSpan.Span.End.Character);
     }
 }
