@@ -158,6 +158,8 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DotNetPad.Presentation\DotNetPad.Presentation.csproj" />
+	  <ProjectReference Include="..\DotNetPad.Presentation\DotNetPad.Presentation.csproj">
+		  <SkipGetTargetFrameworkProperties>True</SkipGetTargetFrameworkProperties>
+	  </ProjectReference>
   </ItemGroup>
 </Project>
