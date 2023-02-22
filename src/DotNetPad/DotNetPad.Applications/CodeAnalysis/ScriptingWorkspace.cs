@@ -27,6 +27,7 @@ internal sealed class ScriptingWorkspace : Workspace
         typeof(IPAddress).Assembly,                             // System.Net.Primitives
         typeof(PhysicalAddress).Assembly,                       // System.Net.NetworkInformation
         typeof(HttpClient).Assembly,                            // System.Net.Http
+        typeof(Uri).Assembly,                                   // System.Uri
     });
     private static readonly ImmutableArray<string> implicitUsings = ImmutableArray.CreateRange(new[]
     {
