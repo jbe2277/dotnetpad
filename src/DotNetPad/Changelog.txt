@@ -1,6 +1,13 @@
 Changelog
 ---------
 
+Version 7.1.0.100 (Release)
+- Update Win Application Framework (WAF) to 7.0.0
+- Update to Microsoft.CodeAnalysis 4.5.0
+- Add support for Uri class.
+- Improve retrieving the code documentation.
+
+
 Version 7.0.0.100 (Release)
 - Migrate to .NET 7
 - Update to Microsoft.CodeAnalysis 4.4.0
