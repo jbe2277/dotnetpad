@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+Version 7.2.0.100 (Release)
+- Update to Microsoft.CodeAnalysis 4.6.0
+- First C# 12 features can be tested.
+
+
 Version 7.1.0.100 (Release)
 - Update Win Application Framework (WAF) to 7.0.0
 - Update to Microsoft.CodeAnalysis 4.5.0
