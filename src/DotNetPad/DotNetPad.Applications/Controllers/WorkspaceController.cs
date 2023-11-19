@@ -25,7 +25,7 @@ internal sealed class WorkspaceController : IWorkspaceService
     private readonly DelegateCommand startCommand;
     private readonly DelegateCommand stopCommand;
     private readonly DelegateCommand formatDocumentCommand;
-    private readonly Dictionary<DocumentFile, DocumentId> documentIds;
+    private readonly Dictionary<DocumentFile, DocumentId> documentIds = [];
     private Tuple<DocumentFile, BuildResult>? lastBuildResult;
     private ScriptingWorkspace workspace = null!;
     private CancellationTokenSource? updateDiagnosticsCancellation;
@@ -42,11 +42,10 @@ internal sealed class WorkspaceController : IWorkspaceService
         this.outputViewModel = outputViewModel;
         updateDiagnosticsAction = new ThrottledAction(UpdateDiagnostics, ThrottledActionMode.InvokeOnlyIfIdleForDelayTime, TimeSpan.FromSeconds(2));
         Console.SetOut(new DelegateTextWriter(AppendOutputText));
-        errorTextWriter = new DelegateTextWriter(AppendErrorText);
-        startCommand = new DelegateCommand(StartScript, CanStartScript);
-        stopCommand = new DelegateCommand(StopScript, CanStopScript);
-        formatDocumentCommand = new DelegateCommand(FormatDocument, CanFormatDocument);
-        documentIds = new Dictionary<DocumentFile, DocumentId>();
+        errorTextWriter = new(AppendErrorText);
+        startCommand = new(StartScript, CanStartScript);
+        stopCommand = new(StopScript, CanStopScript);
+        formatDocumentCommand = new(FormatDocument, CanFormatDocument);
     }
 
     private ShellViewModel ShellViewModel => shellViewModel.Value;
@@ -167,9 +166,9 @@ internal sealed class WorkspaceController : IWorkspaceService
         {
             foreach (DocumentFile x in e.OldItems!) RemoveProject(x);
         }
-        else if (e.Action == NotifyCollectionChangedAction.Reset && !documentService.DocumentFiles.Any())
+        else if (e.Action == NotifyCollectionChangedAction.Reset)
         {
-            foreach (var x in documentIds.Keys.ToArray()) RemoveProject(x);
+            if (!documentService.DocumentFiles.Any()) foreach (var x in documentIds.Keys.ToArray()) RemoveProject(x);
         }
         else throw new NotSupportedException("Collection modification is not supported!");
     }
@@ -177,7 +176,7 @@ internal sealed class WorkspaceController : IWorkspaceService
     private async void UpdateDiagnostics()
     {
         updateDiagnosticsCancellation?.Cancel();
-        updateDiagnosticsCancellation = new CancellationTokenSource();
+        updateDiagnosticsCancellation = new();
         var token = updateDiagnosticsCancellation.Token;
         try
         {
@@ -209,7 +208,7 @@ internal sealed class WorkspaceController : IWorkspaceService
     private async void StartScript()
     {
         var documentFile = documentService.ActiveDocumentFile!;
-        runScriptCancellation = new CancellationTokenSource();
+        runScriptCancellation = new();
         var cancellationToken = runScriptCancellation.Token;
         RunningDocument = documentFile;
 

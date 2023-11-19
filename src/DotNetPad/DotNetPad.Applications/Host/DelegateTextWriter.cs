@@ -3,15 +3,8 @@ using System.Text;
 
 namespace Waf.DotNetPad.Applications.Host;
 
-public class DelegateTextWriter : TextWriter
+public class DelegateTextWriter(Action<string?> appendTextAction) : TextWriter(CultureInfo.CurrentCulture)
 {
-    private readonly Action<string?> appendTextAction;
-
-    public DelegateTextWriter(Action<string?> appendTextAction) : base(CultureInfo.CurrentCulture)
-    {
-        this.appendTextAction = appendTextAction;
-    }
-
     public override Encoding Encoding => Encoding.UTF8;
         
     public override void Write(char value) => appendTextAction(value.ToString(CultureInfo.CurrentCulture));

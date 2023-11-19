@@ -20,8 +20,8 @@ public partial class OutputView : IOutputView
     public OutputView()
     {
         InitializeComponent();
-        viewModel = new Lazy<OutputViewModel>(() => this.GetViewModel<OutputViewModel>()!);
-        outputParagraphs = new Dictionary<DocumentFile, Paragraph>();
+        viewModel = new(() => this.GetViewModel<OutputViewModel>()!);
+        outputParagraphs = [];
 
         Loaded += FirstTimeLoadedHandler;
         outputBox.TextChanged += OutputBoxTextChanged;
@@ -59,9 +59,9 @@ public partial class OutputView : IOutputView
         {
             foreach (DocumentFile x in e.OldItems!) outputParagraphs.Remove(x);
         }
-        else if (e.Action == NotifyCollectionChangedAction.Reset && !ViewModel.DocumentService.DocumentFiles.Any())
+        else if (e.Action == NotifyCollectionChangedAction.Reset)
         {
-            outputParagraphs.Clear();
+            if (!ViewModel.DocumentService.DocumentFiles.Any()) outputParagraphs.Clear();
         }
         else throw new NotSupportedException("Collection modification is not supported!");
     }

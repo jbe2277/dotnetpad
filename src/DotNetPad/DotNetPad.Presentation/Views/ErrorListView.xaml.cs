@@ -16,7 +16,7 @@ public partial class ErrorListView : IErrorListView
     public ErrorListView()
     {
         InitializeComponent();
-        viewModel = new Lazy<ErrorListViewModel>(() => this.GetViewModel<ErrorListViewModel>()!);
+        viewModel = new(() => this.GetViewModel<ErrorListViewModel>()!);
     }
 
     public ErrorListViewModel ViewModel => viewModel.Value;

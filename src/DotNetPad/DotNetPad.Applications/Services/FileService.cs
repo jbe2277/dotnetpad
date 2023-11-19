@@ -25,8 +25,8 @@ internal sealed class FileService : Model, IFileService
     [ImportingConstructor]
     public FileService()
     {
-        documentFiles = new ObservableCollection<DocumentFile>();
-        readOnlyDocumentFiles = new ReadOnlyObservableList<DocumentFile>(documentFiles);
+        documentFiles = [];
+        readOnlyDocumentFiles = new(documentFiles);
     }
 
     public IReadOnlyObservableList<DocumentFile> DocumentFiles => readOnlyDocumentFiles;

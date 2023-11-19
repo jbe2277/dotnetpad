@@ -2,16 +2,9 @@
 
 namespace Waf.DotNetPad.Domain;
 
-public sealed class PerformanceTrace : IDisposable
+public sealed class PerformanceTrace(string name) : IDisposable
 {
-    private readonly Stopwatch stopwatch;
-    private readonly string name;
-
-    public PerformanceTrace(string name)
-    {
-        stopwatch = Stopwatch.StartNew();
-        this.name = name;
-    }
+    private readonly Stopwatch stopwatch = Stopwatch.StartNew();
 
     public PerformanceTrace(string name, DocumentFile document) : this(document.FileName + ": " + name)
     {

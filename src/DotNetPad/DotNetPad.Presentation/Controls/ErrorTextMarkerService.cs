@@ -17,7 +17,7 @@ public class ErrorTextMarkerService : IBackgroundRenderer, IVisualLineTransforme
     public ErrorTextMarkerService(TextEditor textEditor)
     {
         this.textEditor = textEditor;
-        markers = new TextSegmentCollection<ErrorTextMarker>(textEditor.Document);
+        markers = new(textEditor.Document);
 
         TextView textView = textEditor.TextArea.TextView;
         textView.BackgroundRenderers.Add(this);
@@ -50,9 +50,9 @@ public class ErrorTextMarkerService : IBackgroundRenderer, IVisualLineTransforme
         if (!markers.Any() || !textView.VisualLinesValid) return;
         var visualLines = textView.VisualLines;
         if (visualLines.Count == 0) return;
-            
-        int viewStart = visualLines.First().FirstDocumentLine.Offset;
-        int viewEnd = visualLines.Last().LastDocumentLine.EndOffset;
+
+        int viewStart = visualLines[0].FirstDocumentLine.Offset;
+        int viewEnd = visualLines[^1].LastDocumentLine.EndOffset;
         foreach (var marker in markers.FindOverlappingSegments(viewStart, viewEnd - viewStart))
         {
             foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, marker))

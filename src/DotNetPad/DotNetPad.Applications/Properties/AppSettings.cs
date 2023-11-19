@@ -18,11 +18,11 @@ public sealed class AppSettings : UserSettingsBase
 
     [DataMember] public double BottomPanesHeight { get; set; }
 
-    [DataMember] public IReadOnlyList<string> LastOpenedFiles { get; set; } = Array.Empty<string>();
+    [DataMember] public IReadOnlyList<string> LastOpenedFiles { get; set; } = [];
 
     protected override void SetDefaultValues()
     {
         BottomPanesHeight = 75;
-        LastOpenedFiles = Array.Empty<string>();
+        LastOpenedFiles = [];
     }
 }

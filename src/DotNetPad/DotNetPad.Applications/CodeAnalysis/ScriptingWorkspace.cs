@@ -14,11 +14,10 @@ using System.Text;
 
 namespace Waf.DotNetPad.Applications.CodeAnalysis;
 
-internal sealed class ScriptingWorkspace : Workspace
+internal sealed class ScriptingWorkspace(HostServices hostServices) : Workspace(hostServices, WorkspaceKind.Host)
 {
-    private static readonly ImmutableArray<string> preprocessorSymbols = ImmutableArray.CreateRange(new[] { "TRACE", "DEBUG" });
-    private static readonly ImmutableArray<Assembly> defaultReferences = ImmutableArray.CreateRange(new[]
-    {
+    private static readonly ImmutableArray<string> preprocessorSymbols = ["TRACE", "DEBUG"];
+    private static readonly ImmutableArray<Assembly> defaultReferences = [
         typeof(object).Assembly,                                // System.Runtime
         typeof(Console).Assembly,                               // System.Console
         typeof(Enumerable).Assembly,                            // System.Link
@@ -28,9 +27,8 @@ internal sealed class ScriptingWorkspace : Workspace
         typeof(PhysicalAddress).Assembly,                       // System.Net.NetworkInformation
         typeof(HttpClient).Assembly,                            // System.Net.Http
         typeof(Uri).Assembly,                                   // System.Uri
-    });
-    private static readonly ImmutableArray<string> implicitUsings = ImmutableArray.CreateRange(new[]
-    {
+    ];
+    private static readonly ImmutableArray<string> implicitUsings = [
         "System",
         "System.Collections.Generic",
         "System.Collections.ObjectModel",
@@ -42,14 +40,9 @@ internal sealed class ScriptingWorkspace : Workspace
         "System.Net.Http",
         "System.Threading",
         "System.Threading.Tasks"
-    });
+    ];
 
-    private readonly ConcurrentDictionary<string, DocumentationProvider> documentationProviders;
-
-    public ScriptingWorkspace(HostServices hostServices) : base(hostServices, WorkspaceKind.Host)
-    {
-        documentationProviders = new ConcurrentDictionary<string, DocumentationProvider>();
-    }
+    private readonly ConcurrentDictionary<string, DocumentationProvider> documentationProviders = new();
 
     public override bool CanApplyChange(ApplyChangesKind feature) => feature == ApplyChangesKind.ChangeDocument || base.CanApplyChange(feature);
 

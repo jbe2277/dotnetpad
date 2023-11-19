@@ -19,10 +19,10 @@ public class CodeCompletionData : ICompletionData
     public CodeCompletionData(string text, Func<Task<ImmutableArray<TaggedText>>> getDescriptionFunc, ImmutableArray<string> tags)
     {
         Text = text;
-        description = new Lazy<object>(CreateDescription);
+        description = new(CreateDescription);
         this.getDescriptionFunc = getDescriptionFunc;
         this.tags = tags;
-        image = new Lazy<ImageSource?>(GetImage);
+        image = new(GetImage);
     }
 
     public double Priority => 0;
@@ -37,7 +37,7 @@ public class CodeCompletionData : ICompletionData
 
     public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs) => textArea.Document.Replace(completionSegment, Text);
 
-    private object CreateDescription() => new CodeCompletionDescription(getDescriptionFunc());
+    private CodeCompletionDescription CreateDescription() => new(getDescriptionFunc());
 
     private ImageSource? GetImage()
     {

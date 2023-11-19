@@ -11,7 +11,7 @@ internal sealed class ShellService : Model, IShellService
     private int line;
     private int column;
     private bool isClosingEventInitialized;
-    private event CancelEventHandler? closing;
+    private CancelEventHandler? closing;
 
     [ImportingConstructor]
     public ShellService(Lazy<IShellView> shellView)

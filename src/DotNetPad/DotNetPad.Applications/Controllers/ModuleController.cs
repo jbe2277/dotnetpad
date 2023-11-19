@@ -20,7 +20,7 @@ internal sealed class ModuleController : IModuleController
     private readonly ExportFactory<CodeEditorViewModel> codeEditorViewModelFactory;
     private readonly ExportFactory<InfoViewModel> infoViewModelFactory;
     private readonly DelegateCommand infoCommand;
-    private readonly ReadOnlyObservableCollection<DocumentDataModel> documentDataModels;
+    private readonly ObservableList<DocumentDataModel> documentDataModels;
         
     [ImportingConstructor]
     public ModuleController(Lazy<ShellService> shellService, ISettingsService settingsService, FileController fileController, WorkspaceController workspaceController, IFileService fileService,
@@ -33,8 +33,8 @@ internal sealed class ModuleController : IModuleController
         this.shellViewModel = shellViewModel;
         this.codeEditorViewModelFactory = codeEditorViewModelFactory;
         this.infoViewModelFactory = infoViewModelFactory;
-        infoCommand = new DelegateCommand(ShowInfo);
-        documentDataModels = new SynchronizingCollection<DocumentDataModel, DocumentFile>(fileService.DocumentFiles, CreateDocumentDataModel);
+        infoCommand = new(ShowInfo);
+        documentDataModels = new SynchronizingList<DocumentDataModel, DocumentFile>(fileService.DocumentFiles, CreateDocumentDataModel);
     }
 
     private ShellService ShellService => shellService.Value;
@@ -67,7 +67,7 @@ internal sealed class ModuleController : IModuleController
         infoViewModel.ShowDialog(ShellService.ShellView);
     }
 
-    private DocumentDataModel CreateDocumentDataModel(DocumentFile documentFile) => new(documentFile, new Lazy<object>(() => CreateDocumentViewModel(documentFile).View));
+    private DocumentDataModel CreateDocumentDataModel(DocumentFile documentFile) => new(documentFile, new(() => CreateDocumentViewModel(documentFile).View));
 
     private CodeEditorViewModel CreateDocumentViewModel(DocumentFile document)
     {

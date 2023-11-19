@@ -14,18 +14,11 @@ public class CodeEditorService : ICodeEditorService
 }
 
 
-public class SetCaretEventArgs : EventArgs
+public class SetCaretEventArgs(DocumentFile documentFile, int line, int column) : EventArgs
 {
-    public SetCaretEventArgs(DocumentFile documentFile, int line, int column)
-    {
-        DocumentFile = documentFile;
-        Line = line;
-        Column = column;
-    }
+    public DocumentFile DocumentFile { get; } = documentFile;
 
-    public DocumentFile DocumentFile { get; }
+    public int Line { get; } = line;
 
-    public int Line { get; }
-
-    public int Column { get; }
+    public int Column { get; } = column;
 }

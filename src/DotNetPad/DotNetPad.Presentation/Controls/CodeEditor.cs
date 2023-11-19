@@ -85,10 +85,10 @@ public class CodeEditor : TextEditor
 
     private async Task ShowCompletionAsync(char? triggerChar)
     {
-        completionCancellation.Cancel();
+        await completionCancellation.CancelAsync();
         if (WorkspaceService == null || DocumentFile == null) return;
 
-        completionCancellation = new CancellationTokenSource();
+        completionCancellation = new();
         var cancellationToken = completionCancellation.Token;
         try
         {

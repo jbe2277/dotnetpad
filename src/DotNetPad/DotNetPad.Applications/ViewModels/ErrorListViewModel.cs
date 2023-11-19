@@ -22,8 +22,8 @@ public class ErrorListViewModel : ViewModel<IErrorListView>
         DocumentService = documentService;
         this.codeEditorService = codeEditorService;
         this.clipboardService = clipboardService;
-        gotoErrorCommand = new DelegateCommand(GotoError, CanGotoError);
-        copyErrorCommand = new DelegateCommand(CopyError, CanCopyError);
+        gotoErrorCommand = new(GotoError, CanGotoError);
+        copyErrorCommand = new(CopyError, CanCopyError);
     }
 
     public IDocumentService DocumentService { get; }

@@ -14,7 +14,7 @@ public partial class ShellWindow : IShellView
     public ShellWindow()
     {
         InitializeComponent();
-        viewModel = new Lazy<ShellViewModel>(() => this.GetViewModel<ShellViewModel>()!);
+        viewModel = new(() => this.GetViewModel<ShellViewModel>()!);
     }
 
     public double VirtualScreenWidth => SystemParameters.VirtualScreenWidth;

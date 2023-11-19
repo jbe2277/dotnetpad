@@ -16,6 +16,11 @@ namespace Waf.DotNetPad.Applications.Controllers;
 [Export]
 internal sealed class FileController
 {
+    private static readonly string[] supportedFileExtensions = [".cs", ".vb"];
+    private static readonly FileType cSharpFileType = new(Resources.CSharpFile, ".cs");
+    private static readonly FileType visualBasicFileType = new(Resources.VisualBasicFile, ".vb");
+    private static readonly FileType allFilesType = new(Resources.CodeFile, ".cs;*.vb");
+
     private readonly IMessageService messageService;
     private readonly IFileDialogService fileDialogService;
     private readonly IShellService shellService;
@@ -27,9 +32,6 @@ internal sealed class FileController
     private readonly DelegateCommand closeAllCommand;
     private readonly DelegateCommand saveCommand;
     private readonly DelegateCommand saveAsCommand;
-    private readonly FileType cSharpFileType;
-    private readonly FileType visualBasicFileType;
-    private readonly FileType allFilesType;
     private readonly List<DocumentFile> observedDocumentFiles;
     private DocumentFile? lastActiveDocumentFile;
     private IWeakEventProxy? activeDocumentPropertyChangedProxy;
@@ -46,10 +48,10 @@ internal sealed class FileController
         this.clipboardService = clipboardService;
         this.fileService = fileService;
         this.saveChangesViewModelFactory = saveChangesViewModelFactory;
-        closeCommand = new DelegateCommand(CloseFile, CanCloseFile);
-        closeAllCommand = new DelegateCommand(CloseAll, CanCloseAll);
-        saveCommand = new DelegateCommand(SaveFile, CanSaveFile);
-        saveAsCommand = new DelegateCommand(SaveAsFile, CanSaveAsFile);
+        closeCommand = new(CloseFile, CanCloseFile);
+        closeAllCommand = new(CloseAll, CanCloseAll);
+        saveCommand = new(SaveFile, CanSaveFile);
+        saveAsCommand = new(SaveAsFile, CanSaveAsFile);
 
         this.fileService.NewCSharpCommand = new DelegateCommand(NewCSharpFile);
         this.fileService.NewVisualBasicCommand = new DelegateCommand(NewVisualBasicFile);
@@ -61,10 +63,7 @@ internal sealed class FileController
         this.fileService.SaveCommand = saveCommand;
         this.fileService.SaveAsCommand = saveAsCommand;
 
-        cSharpFileType = new FileType(Resources.CSharpFile, ".cs");
-        visualBasicFileType = new FileType(Resources.VisualBasicFile, ".vb");
-        allFilesType = new FileType(Resources.CodeFile, ".cs;*.vb");
-        observedDocumentFiles = new List<DocumentFile>();
+        observedDocumentFiles = [];
         WeakEvent.PropertyChanged.Add(fileService, FileServicePropertyChanged);
         shellService.Closing += ShellServiceClosing;
     }
@@ -177,12 +176,11 @@ internal sealed class FileController
 
     private void CloseCore(DocumentFile document)
     {
-        if (!PrepareToClose(new[] { document })) return;
+        if (!PrepareToClose([document])) return;
 
         if (ActiveDocumentFile == document)
         {
-            var nextDocument = fileService.DocumentFiles.GetNextElementOrDefault(ActiveDocumentFile)
-                ?? fileService.DocumentFiles.Take(fileService.DocumentFiles.Count - 1).LastOrDefault();
+            var nextDocument = fileService.DocumentFiles.GetNextElementOrDefault(ActiveDocumentFile) ?? fileService.DocumentFiles.LastOrDefault();
             ActiveDocumentFile = nextDocument;
         }
         fileService.RemoveDocument(document);
@@ -210,13 +208,13 @@ internal sealed class FileController
         if (document == null)
         {
             string fileExtension = Path.GetExtension(fileName);
-            if (!new[] { ".cs", ".vb" }.Contains(fileExtension))
+            if (!supportedFileExtensions.Contains(fileExtension))
             {
                 Trace.TraceError(string.Format(CultureInfo.InvariantCulture, "The extension of the file '{0}' is not supported.", fileName));
                 messageService.ShowError(shellService.ShellView, Resources.OpenFileUnsupportedExtension, fileName);
                 return null;
             }
-            var documentType = fileExtension == ".cs" ? DocumentType.CSharp : DocumentType.VisualBasic;
+            var documentType = cSharpFileType.FileExtensions.Contains(fileExtension) ? DocumentType.CSharp : DocumentType.VisualBasic;
             document = new DocumentFile(documentType, LoadDocumentContent) { FileName = fileName };
             fileService.AddDocument(document);
         }
