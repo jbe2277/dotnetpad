@@ -14,7 +14,7 @@ public partial class App
 {
     private AggregateCatalog catalog = null!;
     private CompositionContainer container = null!;
-    private IEnumerable<IModuleController> moduleControllers = Array.Empty<IModuleController>();
+    private IEnumerable<IModuleController> moduleControllers = [];
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -25,12 +25,12 @@ public partial class App
         AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
 #endif
 
-        catalog = new AggregateCatalog();
+        catalog = new();
         catalog.Catalogs.Add(new AssemblyCatalog(typeof(WafConfiguration).Assembly));
         catalog.Catalogs.Add(new AssemblyCatalog(typeof(ShellViewModel).Assembly));
         catalog.Catalogs.Add(new AssemblyCatalog(typeof(App).Assembly));
 
-        container = new CompositionContainer(catalog, CompositionOptions.DisableSilentRejection);
+        container = new(catalog, CompositionOptions.DisableSilentRejection);
         var batch = new CompositionBatch();
         batch.AddExportedValue(container);
         container.Compose(batch);

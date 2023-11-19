@@ -19,7 +19,7 @@ public sealed class CodeHighlighter : IHighlighter
         uiTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
         Document = document;
         this.getDocument = getDocument;
-        cachedLines = new List<VersionedHighlightedLine?>();
+        cachedLines = [];
         initialDelayTask = CreateInitialDelayTask();
     }
 
@@ -115,7 +115,7 @@ public sealed class CodeHighlighter : IHighlighter
         {
             return await Classifier.GetClassifiedSpansAsync(document, new TextSpan(documentLine.Offset, documentLine.TotalLength), cancellationToken).ConfigureAwait(false);
         }
-        return Array.Empty<ClassifiedSpan>();
+        return [];
     }
 
     public void BeginHighlighting() { }

@@ -3,17 +3,9 @@
 public class DocumentContent : Model
 {
     private string code = "";
-    private IReadOnlyList<ErrorListItem> errorList = Array.Empty<ErrorListItem>();
+    private IReadOnlyList<ErrorListItem> errorList = [];
 
-    public string Code
-    {
-        get => code;
-        set => SetProperty(ref code, value);
-    }
+    public string Code { get => code; set => SetProperty(ref code, value); }
 
-    public IReadOnlyList<ErrorListItem> ErrorList
-    {
-        get => errorList;
-        set => SetProperty(ref errorList, value);
-    }
+    public IReadOnlyList<ErrorListItem> ErrorList { get => errorList; set => SetProperty(ref errorList, value); }
 }

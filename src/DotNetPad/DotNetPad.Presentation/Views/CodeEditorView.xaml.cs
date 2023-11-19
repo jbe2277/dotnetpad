@@ -16,7 +16,7 @@ public partial class CodeEditorView : ICodeEditorView
     public CodeEditorView()
     {
         InitializeComponent();
-        viewModel = new Lazy<CodeEditorViewModel>(() => this.GetViewModel<CodeEditorViewModel>()!);
+        viewModel = new(() => this.GetViewModel<CodeEditorViewModel>()!);
         Loaded += FirstTimeLoadedHandler;
         Loaded += LoadedHandler;
         Unloaded += UnloadedHandler;

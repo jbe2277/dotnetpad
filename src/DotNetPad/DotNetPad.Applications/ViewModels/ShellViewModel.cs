@@ -21,7 +21,7 @@ public class ShellViewModel : ViewModel<IShellView>
     private bool isScriptRunning;
     private ICommand infoCommand = null!;
     private object? currentStatusView;
-    private IReadOnlyList<DocumentDataModel> documentDataModels = Array.Empty<DocumentDataModel>();
+    private IReadOnlyList<DocumentDataModel> documentDataModels = [];
     private DocumentDataModel? activeDocumentDataModel;
     private string? statusText;
 
@@ -33,7 +33,7 @@ public class ShellViewModel : ViewModel<IShellView>
         CSharpSampleService = csharpSampleService;
         VisualBasicSampleService = visualBasicSampleService;
         settings = shellService.Settings;
-        garbageCollectorCommand = new DelegateCommand(GC.Collect);
+        garbageCollectorCommand = new(GC.Collect);
         statusText = Resources.Ready;
 
         WeakEvent.PropertyChanged.Add(fileService, FileServicePropertyChanged);

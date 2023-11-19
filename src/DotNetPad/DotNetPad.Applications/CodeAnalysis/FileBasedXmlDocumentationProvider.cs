@@ -12,7 +12,7 @@ internal sealed class FileBasedXmlDocumentationProvider : DocumentationProvider
     public FileBasedXmlDocumentationProvider(string filePath)
     {
         this.filePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
-        docComments = new Lazy<Dictionary<string, string>>(CreateDocComments, isThreadSafe: true);
+        docComments = new(CreateDocComments);
     }
 
     public override bool Equals(object? obj) => obj is FileBasedXmlDocumentationProvider other && filePath.Equals(other.filePath);

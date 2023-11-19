@@ -26,38 +26,26 @@ public class DocumentFile : Model
 
     public DocumentType DocumentType { get; }
 
+    public int StartCaretPosition { get; }
+
     public bool IsContentLoaded => content.IsValueCreated;
 
-    public Exception? LoadError
-    {
-        get => loadError;
-        private set => SetProperty(ref loadError, value);
-    }
+    public Exception? LoadError { get => loadError; private set => SetProperty(ref loadError, value); }
 
-    public DocumentContent? Content 
-    { 
-        get 
+    public DocumentContent? Content
+    {
+        get
         {
             var wasContentLoaded = IsContentLoaded;
             var value = content.Value;
             if (!wasContentLoaded && IsContentLoaded) RaisePropertyChanged(nameof(IsContentLoaded));
             return value;
-        } 
+        }
     }
 
-    public int StartCaretPosition { get; }
+    public bool Modified { get => modified; private set => SetProperty(ref modified, value); }
 
-    public bool Modified
-    {
-        get => modified;
-        private set => SetProperty(ref modified, value);
-    }
-
-    public string? FileName
-    {
-        get => fileName;
-        set => SetProperty(ref fileName, value);
-    }
+    public string? FileName { get => fileName; set => SetProperty(ref fileName, value); }
 
     public void ResetModified() => Modified = false;
 
