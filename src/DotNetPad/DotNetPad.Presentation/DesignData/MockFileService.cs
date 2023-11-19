@@ -25,7 +25,7 @@ public class MockFileService : Model, IFileService
 
     public ICommand SaveAsCommand { get; set; } = null!;
 
-    public IReadOnlyObservableList<DocumentFile> DocumentFiles { get; set; } = null!;
+    public ReadOnlyObservableList<DocumentFile> DocumentFiles { get; set; } = null!;
         
     public DocumentFile? ActiveDocumentFile { get; set; }
         

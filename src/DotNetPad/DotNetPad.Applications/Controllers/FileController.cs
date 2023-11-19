@@ -32,7 +32,6 @@ internal sealed class FileController
     private readonly DelegateCommand closeAllCommand;
     private readonly DelegateCommand saveCommand;
     private readonly DelegateCommand saveAsCommand;
-    private readonly List<DocumentFile> observedDocumentFiles;
     private DocumentFile? lastActiveDocumentFile;
     private IWeakEventProxy? activeDocumentPropertyChangedProxy;
     private int documentCounter;
@@ -63,7 +62,6 @@ internal sealed class FileController
         this.fileService.SaveCommand = saveCommand;
         this.fileService.SaveAsCommand = saveAsCommand;
 
-        observedDocumentFiles = [];
         WeakEvent.PropertyChanged.Add(fileService, FileServicePropertyChanged);
         shellService.Closing += ShellServiceClosing;
     }
@@ -76,7 +74,7 @@ internal sealed class FileController
 
     private DocumentFile? LockedDocumentFile => fileService.LockedDocumentFile;
 
-    public void Initialize() => fileService.DocumentFiles.CollectionChanged += FileServiceDocumentsCollectionChanged;
+    public void Initialize() => fileService.DocumentFiles.CollectionItemChanged += DocumentFilePropertyChanged;
 
     public async void Run()
     {
@@ -250,35 +248,6 @@ internal sealed class FileController
             Trace.TraceError(e.ToString());
             messageService.ShowError(shellService.ShellView, Resources.SaveFileError, fileName);
         }
-    }
-
-    private void FileServiceDocumentsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-    {
-        if (e.Action == NotifyCollectionChangedAction.Add)
-        {
-            foreach (DocumentFile documentFile in e.NewItems!)
-            {
-                documentFile.PropertyChanged += DocumentFilePropertyChanged;
-                observedDocumentFiles.Add(documentFile);
-            }
-        }
-        else if (e.Action == NotifyCollectionChangedAction.Remove)
-        {
-            foreach (DocumentFile documentFile in e.OldItems!)
-            {
-                documentFile.PropertyChanged -= DocumentFilePropertyChanged;
-                observedDocumentFiles.Remove(documentFile);
-            }
-        }
-        else if (e.Action == NotifyCollectionChangedAction.Reset && !fileService.DocumentFiles.Any())
-        {
-            foreach (DocumentFile documentFile in observedDocumentFiles)
-            {
-                documentFile.PropertyChanged -= DocumentFilePropertyChanged;
-            }
-            observedDocumentFiles.Clear();
-        }
-        else throw new NotSupportedException("The CollectionChangedAction '" + e.Action + "' is not supported.");
     }
 
     private async void DocumentFilePropertyChanged(object? sender, PropertyChangedEventArgs e)
