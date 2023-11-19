@@ -8,8 +8,7 @@ namespace Waf.DotNetPad.Applications.Services;
 [Export(typeof(IDocumentService)), Export(typeof(IFileService)), Export]
 internal sealed class FileService : Model, IFileService
 {
-    private readonly ObservableCollection<DocumentFile> documentFiles;
-    private readonly ReadOnlyObservableList<DocumentFile> readOnlyDocumentFiles;
+    private readonly ObservableList<DocumentFile> documentFiles;
     private DocumentFile? activeDocumentFile;
     private DocumentFile? lockedDocumentFile;
     private ICommand newCSharpCommand = null!;
@@ -26,10 +25,10 @@ internal sealed class FileService : Model, IFileService
     public FileService()
     {
         documentFiles = [];
-        readOnlyDocumentFiles = new(documentFiles);
+        DocumentFiles = new(documentFiles);
     }
 
-    public IReadOnlyObservableList<DocumentFile> DocumentFiles => readOnlyDocumentFiles;
+    public ReadOnlyObservableList<DocumentFile> DocumentFiles { get; }
 
     public DocumentFile? ActiveDocumentFile
     {

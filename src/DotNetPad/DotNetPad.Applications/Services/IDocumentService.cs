@@ -4,7 +4,7 @@ namespace Waf.DotNetPad.Applications.Services;
 
 public interface IDocumentService : INotifyPropertyChanged
 {
-    IReadOnlyObservableList<DocumentFile> DocumentFiles { get; }
+    ReadOnlyObservableList<DocumentFile> DocumentFiles { get; }
         
     DocumentFile? ActiveDocumentFile { get; set; }
 
