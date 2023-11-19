@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <AssemblyName>Waf.DotNetPad.Applications</AssemblyName>
     <RootNamespace>Waf.DotNetPad.Applications</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Waf.Wpf" Version="7.0.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="4.7.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic.Features" Version="4.7.0" />
+    <PackageReference Include="System.Waf.Wpf" Version="7.0.1-alpha.0.51" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="4.8.0-3.final" />
+    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic.Features" Version="4.8.0-3.final" />
   </ItemGroup>
 
   <ItemGroup>
