@@ -25,10 +25,10 @@ internal sealed class FileService : Model, IFileService
     public FileService()
     {
         documentFiles = [];
-        DocumentFiles = new(documentFiles);
+        DocumentFiles = new ReadOnlyObservableList<DocumentFile>(documentFiles);
     }
 
-    public ReadOnlyObservableList<DocumentFile> DocumentFiles { get; }
+    public IReadOnlyObservableList<DocumentFile> DocumentFiles { get; }
 
     public DocumentFile? ActiveDocumentFile
     {
