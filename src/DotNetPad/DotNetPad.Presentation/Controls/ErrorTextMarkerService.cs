@@ -19,7 +19,7 @@ public class ErrorTextMarkerService : IBackgroundRenderer, IVisualLineTransforme
         this.textEditor = textEditor;
         markers = new(textEditor.Document);
 
-        TextView textView = textEditor.TextArea.TextView;
+        var textView = textEditor.TextArea.TextView;
         textView.BackgroundRenderers.Add(this);
         textView.LineTransformers.Add(this);
         textView.Services.AddService(typeof(ErrorTextMarkerService), this);

@@ -151,7 +151,7 @@ public sealed class CodeHighlighter : IHighlighter
                 {
                     if (IsOutsideLine(documentLine, oldSection.Offset, oldSection.Length)) continue;
                     
-                    Sections.Add(new HighlightedSection
+                    Sections.Add(new()
                     {
                         Color = oldSection.Color,
                         Offset = oldSection.Offset,
@@ -170,7 +170,7 @@ public sealed class CodeHighlighter : IHighlighter
 
     private sealed class HighlightedSectionComparer : IEqualityComparer<HighlightedSection>
     {
-        public static HighlightedSectionComparer Default { get; } = new HighlightedSectionComparer();
+        public static HighlightedSectionComparer Default { get; } = new();
 
         public bool Equals(HighlightedSection? x, HighlightedSection? y)
         {

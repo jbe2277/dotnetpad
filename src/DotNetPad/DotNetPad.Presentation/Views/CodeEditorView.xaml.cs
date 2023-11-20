@@ -1,5 +1,4 @@
-﻿using ICSharpCode.AvalonEdit.Document;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using System.Waf.Applications;
 using System.Windows;
 using Waf.DotNetPad.Applications.Services;
@@ -58,7 +57,7 @@ public partial class CodeEditorView : ICodeEditorView
     private void CodeEditorServiceRequestSetCaret(object? sender, SetCaretEventArgs e)
     {
         if (e.DocumentFile != ViewModel.DocumentFile) return;
-        var offset = codeEditor.Document.GetOffset(new TextLocation(e.Line + 1, e.Column + 1));
+        var offset = codeEditor.Document.GetOffset(new(e.Line + 1, e.Column + 1));
         codeEditor.TextArea.Caret.Offset = offset;
         codeEditor.Focus();
     }

@@ -21,7 +21,7 @@ namespace Sample
         }
     }
 }";          
-        DocumentFile = new DocumentFile(DocumentType.CSharp, "Script 1.cs", code);
+        DocumentFile = new(DocumentType.CSharp, "Script 1.cs", code);
     }
 
 

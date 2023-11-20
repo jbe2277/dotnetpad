@@ -166,9 +166,9 @@ internal sealed class WorkspaceController : IWorkspaceService
         {
             foreach (DocumentFile x in e.OldItems!) RemoveProject(x);
         }
-        else if (e.Action == NotifyCollectionChangedAction.Reset)
+        else if (e.Action == NotifyCollectionChangedAction.Reset && !documentService.DocumentFiles.Any())  // Clear
         {
-            if (!documentService.DocumentFiles.Any()) foreach (var x in documentIds.Keys.ToArray()) RemoveProject(x);
+            foreach (var x in documentIds.Keys.ToArray()) RemoveProject(x);
         }
         else throw new NotSupportedException("Collection modification is not supported!");
     }
