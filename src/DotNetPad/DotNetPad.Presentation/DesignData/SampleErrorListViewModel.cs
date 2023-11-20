@@ -9,12 +9,11 @@ public class SampleErrorListViewModel : ErrorListViewModel
     public SampleErrorListViewModel() : base(new MockErrorListView(), new MockDocumentService(), null!, null!)
     {
         var documentFile = new DocumentFile(DocumentType.CSharp, "Script 1.cs", "");
-        documentFile.Content!.ErrorList = new[] 
-        {
-            new ErrorListItem(ErrorSeverity.Info, "Info", 0, 0, 0, 0),
-            new ErrorListItem(ErrorSeverity.Warning, "Warning", 3, 13, 3, 13),
-            new ErrorListItem(ErrorSeverity.Error, "Error", 20, 8, 20, 8)
-        };
+        documentFile.Content!.ErrorList = [ 
+            new(ErrorSeverity.Info, "Info", 0, 0, 0, 0),
+            new(ErrorSeverity.Warning, "Warning", 3, 13, 3, 13),
+            new(ErrorSeverity.Error, "Error", 20, 8, 20, 8)
+        ];
         DocumentService.ActiveDocumentFile = documentFile;
     }
 

@@ -8,12 +8,11 @@ public class SampleSaveChangesViewModel : SaveChangesViewModel
 {
     public SampleSaveChangesViewModel() : base(new MockSaveChangesView())
     {
-        DocumentFiles = new[]
-        {
-            new DocumentFile(DocumentType.CSharp, null!) { FileName = "Script 1.cs" },
-            new DocumentFile(DocumentType.CSharp, null!) { FileName = "Script 2.cs" },
-            new DocumentFile(DocumentType.VisualBasic, null!) { FileName = @"C:\Users\Luke\Documents\Waf DotNetPad\Script 3.vb" },
-        };
+        DocumentFiles = [
+            new(DocumentType.CSharp, null!) { FileName = "Script 1.cs" },
+            new(DocumentType.CSharp, null!) { FileName = "Script 2.cs" },
+            new(DocumentType.VisualBasic, null!) { FileName = @"C:\Users\Luke\Documents\Waf DotNetPad\Script 3.vb" },
+        ];
     }
 
 

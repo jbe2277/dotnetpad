@@ -5,12 +5,7 @@ namespace Waf.DotNetPad.Presentation.DesignData;
 
 public class MockShellService : Model, IShellService
 {
-    public MockShellService()
-    {
-        Settings = new AppSettings();
-    }
-
-    public AppSettings Settings { get; set; } = null!;
+    public AppSettings Settings { get; set; } = new AppSettings();
 
     public object ShellView { get; set; } = null!;
 
