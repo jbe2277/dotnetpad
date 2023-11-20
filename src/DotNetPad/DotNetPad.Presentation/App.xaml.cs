@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Diagnostics;
 using System.Globalization;
 using System.Waf;
 using System.Waf.Applications;
@@ -21,10 +22,13 @@ public partial class App
         base.OnStartup(e);
 
 #if !DEBUG
+        Log.Default.Switch.Level = SourceLevels.Information;
         DispatcherUnhandledException += AppDispatcherUnhandledException;
         AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
+#else
+        Log.Default.Switch.Level = SourceLevels.Verbose;
 #endif
-
+        Log.Default.Info("{0} {1} is starting; OS: {2}", ApplicationInfo.ProductName, ApplicationInfo.Version, Environment.OSVersion);
         catalog = new();
         catalog.Catalogs.Add(new AssemblyCatalog(typeof(WafConfiguration).Assembly));
         catalog.Catalogs.Add(new AssemblyCatalog(typeof(ShellViewModel).Assembly));
@@ -46,6 +50,7 @@ public partial class App
         container.Dispose();
         catalog.Dispose();
         base.OnExit(e);
+        Log.Default.Info("{0} closed", ApplicationInfo.ProductName);
     }
 
     private static void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) => HandleException(e.Exception, false);
