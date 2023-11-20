@@ -208,7 +208,7 @@ internal sealed class FileController
             string fileExtension = Path.GetExtension(fileName);
             if (!supportedFileExtensions.Contains(fileExtension))
             {
-                Trace.TraceError(string.Format(CultureInfo.InvariantCulture, "The extension of the file '{0}' is not supported.", fileName));
+                Log.Default.Error("The extension of the file '{0}' is not supported.", fileName);
                 messageService.ShowError(shellService.ShellView, Resources.OpenFileUnsupportedExtension, fileName);
                 return null;
             }
@@ -222,7 +222,7 @@ internal sealed class FileController
 
     private static DocumentContent LoadDocumentContent(DocumentFile documentFile)
     {            
-        Trace.WriteLine(">> Load document content: " + documentFile.FileName);
+        Log.Default.Trace("Load document content: {0}", documentFile.FileName);
         using var stream = new FileStream(documentFile.FileName ?? throw new InvalidOperationException("FileName is null"), FileMode.Open, FileAccess.Read);
         using var reader = new StreamReader(stream, Encoding.UTF8);
         var documentContent = new DocumentContent() { Code = reader.ReadToEnd() };
@@ -243,9 +243,9 @@ internal sealed class FileController
             document.FileName = fileName;
             document.ResetModified();
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Trace.TraceError(e.ToString());
+            Log.Default.Error("Save error: {0}", ex);
             messageService.ShowError(shellService.ShellView, Resources.SaveFileError, fileName);
         }
     }

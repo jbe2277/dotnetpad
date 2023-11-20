@@ -10,5 +10,5 @@ public sealed class PerformanceTrace(string name) : IDisposable
     {
     }
 
-    public void Dispose() => Trace.WriteLine(">>> " + name + ": " + stopwatch.ElapsedMilliseconds + " ms");
+    public void Dispose() => Log.Default.Trace(">>> {0}: {1} ms", name, stopwatch.ElapsedMilliseconds);
 }

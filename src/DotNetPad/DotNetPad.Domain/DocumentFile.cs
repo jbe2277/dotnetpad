@@ -58,7 +58,7 @@ public class DocumentFile : Model
         }
         catch (Exception ex)
         {
-            Trace.TraceError(ex.ToString());
+            Log.Default.Error("LoadContent error: {0}", ex);
             LoadError = ex;
         }
             

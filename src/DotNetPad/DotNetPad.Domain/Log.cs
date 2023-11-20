@@ -4,5 +4,5 @@ namespace Waf.DotNetPad.Domain;
 
 public static class Log
 {
-    public static TraceSource Default { get; } = new TraceSource("App");
+    public static TraceSource Default { get; } = new("App");
 }
