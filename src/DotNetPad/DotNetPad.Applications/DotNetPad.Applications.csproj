@@ -6,9 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Waf.Wpf" Version="7.0.1-alpha.0.53" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="4.8.0-3.final" />
-    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic.Features" Version="4.8.0-3.final" />
+    <PackageReference Include="System.Waf.Wpf" Version="8.0.0-beta.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="4.8.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic.Features" Version="4.8.0" />
   </ItemGroup>
 
   <ItemGroup>
