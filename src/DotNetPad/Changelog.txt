@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+Version 8.0.1.100 (Release)
+- Update to Microsoft.CodeAnalysis 4.9.2
+
+
 Version 8.0.0.100 (Release)
 - Migrate to .NET 8.
 - Support C# 12.
