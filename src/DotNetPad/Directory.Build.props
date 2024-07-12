@@ -2,8 +2,8 @@
   <PropertyGroup>
     <Product>Waf DotNetPad</Product>
     <Company>Waf</Company>
-    <Copyright>Copyright © 2016-2023 jbe2277</Copyright>
-    <Version>8.0.1.100</Version>
+    <Copyright>Copyright © 2016-2024 jbe2277</Copyright>
+    <Version>8.0.2.100</Version>
     <NeutralLanguage>en-US</NeutralLanguage>
     
     <Nullable>enable</Nullable>
