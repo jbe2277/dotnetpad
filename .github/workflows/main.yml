@@ -4,12 +4,18 @@ on:
     paths: 
       - 'src/**'
       - '.github/workflows/**'
+
 jobs:
   build:
+    name: 🛠️ Build and test
     runs-on: windows-2022
-    steps:
-    - uses: actions/checkout@v3
-    - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.1
-    - name: Build
+
+    steps:      
+    - name: 🔖 Check-out
+      uses: actions/checkout@v4
+  
+    - name: ⚙️ Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+    
+    - name: 🛠️ Build
       run: msbuild ./src/DotNetPad/DotNetPad.sln /restore /p:Configuration=Release /p:GenerateAppxPackageOnBuild=false
