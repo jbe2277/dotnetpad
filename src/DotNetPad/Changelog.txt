@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+Version 9.0.0.100 (Release)
+- Migrate to .NET 9.
+- Support C# 13.
+
+
 Version 8.0.2.100 (Release)
 - Update to Microsoft.CodeAnalysis 4.10.0
 

@@ -9,7 +9,7 @@
   <Identity
     Name="50628JuergenBerchtel.WafDotNetPad"
     Publisher="CN=3C8CBF61-934D-4358-AA07-F08013E88454"
-    Version="8.0.2.0" />
+    Version="9.0.0.0" />
 
   <Properties>
     <DisplayName>Waf DotNetPad</DisplayName>
