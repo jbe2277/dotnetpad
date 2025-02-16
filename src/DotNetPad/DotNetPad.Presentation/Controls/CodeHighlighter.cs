@@ -93,7 +93,7 @@ public sealed class CodeHighlighter : IHighlighter
                         foreach (var newSection in newLineSections) { line.Sections.Add(newSection); }
                         HighlightingStateChanged?.Invoke(documentLine.LineNumber, documentLine.LineNumber);
                     }
-                }, uiTaskScheduler).ConfigureAwait(false);
+                }, uiTaskScheduler, line.CancellationToken).ConfigureAwait(false);
             }, line.CancellationToken);
         }
         catch (OperationCanceledException) { }
