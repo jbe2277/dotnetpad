@@ -38,7 +38,7 @@ internal sealed class FileBasedXmlDocumentationProvider : DocumentationProvider
                     var nameAttribute = element.Attribute("name");
                     if (nameAttribute != null)
                     {
-                        commentsDictionary[nameAttribute.Value] = string.Concat(element.Nodes());
+                        commentsDictionary[nameAttribute.Value] = element.ToString();
                     }
                 }
             }
@@ -57,10 +57,15 @@ internal sealed class FileBasedXmlDocumentationProvider : DocumentationProvider
         var fileName = Path.GetFileName(originalPath);
         string? path = null;
         // TOOD: Bad design with hard-coded path. Required Roslyn API is internal.
-        foreach (var version in Enumerable.Range(0, 19).Select(x => $"8.0.{18-x}\\ref\\net8.0"))
+        foreach (var version in Enumerable.Range(0, 19).Select(x => $"9.0.{18-x}\\ref\\net9.0"))
         {
             path = GetNetFrameworkPathOrNull(fileName, version);
             if (path != null) break;
+            if (fileName == "System.Private.CoreLib.xml")  // The documentation of the core types might be in another file: https://github.com/dotnet/runtime/discussions/48264
+            {
+                path = GetNetFrameworkPathOrNull("System.Runtime.xml", version);
+                if (path != null) break;
+            }
         }
         return path;
     }

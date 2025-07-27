@@ -89,7 +89,7 @@ public class CodeEditor : TextEditor
         if (WorkspaceService == null || DocumentFile == null) return;
 
         completionCancellation = new();
-        var cancellationToken = completionCancellation.Token;
+        var cancellation = completionCancellation.Token;
         try
         {
             if (completionWindow == null && (triggerChar == null || triggerChar == '.' || IsAllowedLanguageLetter(triggerChar.Value)))
@@ -101,10 +101,10 @@ public class CodeEditor : TextEditor
                 var completionService = CompletionService.GetService(document);
                 if (completionService is null) return;
 
-                var completionList = await Task.Run(async () => await completionService.GetCompletionsAsync(document, position, cancellationToken: cancellationToken), cancellationToken);
-                if (completionList == null) return;
+                var completionList = await Task.Run(async () => await completionService.GetCompletionsAsync(document, position, cancellationToken: cancellation), cancellation);
+                if (completionList is null) return;
 
-                cancellationToken.ThrowIfCancellationRequested();
+                cancellation.ThrowIfCancellationRequested();
 
                 using (new PerformanceTrace("CompletionWindow.Show", DocumentFile))
                 {

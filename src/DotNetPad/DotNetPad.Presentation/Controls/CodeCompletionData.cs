@@ -11,16 +11,14 @@ namespace Waf.DotNetPad.Presentation.Controls;
 
 public class CodeCompletionData : ICompletionData
 {
-    private readonly Lazy<object> description;
-    private readonly Func<Task<ImmutableArray<TaggedText>>> getDescriptionFunc;
+    private readonly Lazy<CodeCompletionDescription> description;
     private readonly ImmutableArray<string> tags;
     private readonly Lazy<ImageSource?> image;
 
     public CodeCompletionData(string text, Func<Task<ImmutableArray<TaggedText>>> getDescriptionFunc, ImmutableArray<string> tags)
     {
         Text = text;
-        description = new(CreateDescription);
-        this.getDescriptionFunc = getDescriptionFunc;
+        description = new(new CodeCompletionDescription(getDescriptionFunc()));
         this.tags = tags;
         image = new(GetImage);
     }
@@ -36,8 +34,6 @@ public class CodeCompletionData : ICompletionData
     public ImageSource? Image => image.Value;
 
     public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs) => textArea.Document.Replace(completionSegment, Text);
-
-    private CodeCompletionDescription CreateDescription() => new(getDescriptionFunc());
 
     private ImageSource? GetImage()
     {
