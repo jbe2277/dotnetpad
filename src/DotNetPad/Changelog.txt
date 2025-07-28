@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+Version 9.0.2.100 (Release)
+- Fix XML document description for core types are missing #23
+- Update to Microsoft.CodeAnalysis 4.14.0
+
+
 Version 9.0.1.100 (Release)
 - Update to Microsoft.CodeAnalysis 4.13.0
 
