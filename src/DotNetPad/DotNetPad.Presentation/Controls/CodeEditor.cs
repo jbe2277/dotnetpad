@@ -102,7 +102,6 @@ public class CodeEditor : TextEditor
                 if (completionService is null) return;
 
                 var completionList = await Task.Run(async () => await completionService.GetCompletionsAsync(document, position, cancellationToken: cancellation), cancellation);
-                if (completionList is null) return;
 
                 cancellation.ThrowIfCancellationRequested();
 

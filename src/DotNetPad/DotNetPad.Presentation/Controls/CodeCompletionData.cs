@@ -18,7 +18,7 @@ public class CodeCompletionData : ICompletionData
     public CodeCompletionData(string text, Func<Task<ImmutableArray<TaggedText>>> getDescriptionFunc, ImmutableArray<string> tags)
     {
         Text = text;
-        description = new(new CodeCompletionDescription(getDescriptionFunc()));
+        description = new(() => new CodeCompletionDescription(getDescriptionFunc()));
         this.tags = tags;
         image = new(GetImage);
     }
