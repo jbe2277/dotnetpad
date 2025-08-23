@@ -1,12 +1,10 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Windows;
 using Waf.DotNetPad.Applications.ViewModels;
 using Waf.DotNetPad.Applications.Views;
 
 namespace Waf.DotNetPad.Presentation.Views;
 
-[Export(typeof(IShellView))]
 public partial class ShellWindow : IShellView
 {
     private readonly Lazy<ShellViewModel> viewModel;

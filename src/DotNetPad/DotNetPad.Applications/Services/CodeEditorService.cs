@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.Composition;
-using Waf.DotNetPad.Domain;
+﻿using Waf.DotNetPad.Domain;
 
 namespace Waf.DotNetPad.Applications.Services;
 
-[Export(typeof(ICodeEditorService)), Export]
 public class CodeEditorService : ICodeEditorService
 {
     public event EventHandler<SetCaretEventArgs>? RequestSetCaret;

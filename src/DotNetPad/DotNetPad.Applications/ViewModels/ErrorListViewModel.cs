@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Windows.Input;
 using Waf.DotNetPad.Applications.Services;
 using Waf.DotNetPad.Applications.Views;
@@ -7,7 +6,6 @@ using Waf.DotNetPad.Domain;
 
 namespace Waf.DotNetPad.Applications.ViewModels;
 
-[Export]
 public class ErrorListViewModel : ViewModel<IErrorListView>
 {
     private readonly ICodeEditorService codeEditorService;
@@ -16,7 +14,6 @@ public class ErrorListViewModel : ViewModel<IErrorListView>
     private readonly DelegateCommand copyErrorCommand;
     private ErrorListItem? selectedErrorListItem;
 
-    [ImportingConstructor]
     public ErrorListViewModel(IErrorListView view, IDocumentService documentService, ICodeEditorService codeEditorService, IClipboardService clipboardService) : base(view)
     {
         DocumentService = documentService;

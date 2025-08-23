@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.Composition;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media.Imaging;
 using Waf.DotNetPad.Applications.Views;
 
 namespace Waf.DotNetPad.Presentation.Views;
 
-[Export(typeof(IInfoView)), PartCreationPolicy(CreationPolicy.NonShared)]
 public partial class InfoWindow : IInfoView
 {
     public InfoWindow()

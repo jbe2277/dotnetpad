@@ -1,10 +1,8 @@
-﻿using System.ComponentModel.Composition;
-using Waf.DotNetPad.Applications.Properties;
+﻿using Waf.DotNetPad.Applications.Properties;
 using Waf.DotNetPad.Applications.Views;
 
 namespace Waf.DotNetPad.Applications.Services;
 
-[Export(typeof(IShellService)), Export]
 internal sealed class ShellService : Model, IShellService
 {
     private readonly Lazy<IShellView> shellView;
@@ -13,7 +11,6 @@ internal sealed class ShellService : Model, IShellService
     private bool isClosingEventInitialized;
     private CancelEventHandler? closing;
 
-    [ImportingConstructor]
     public ShellService(Lazy<IShellView> shellView)
     {
         this.shellView = shellView;

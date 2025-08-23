@@ -1,21 +1,19 @@
-﻿using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
+﻿using Autofac;
 using System.Diagnostics;
 using System.Globalization;
-using System.Waf;
 using System.Waf.Applications;
 using System.Windows;
 using System.Windows.Threading;
-using Waf.DotNetPad.Applications.ViewModels;
+using Waf.DotNetPad.Applications;
 using Waf.DotNetPad.Domain;
+using IContainer = Autofac.IContainer;
 
 namespace Waf.DotNetPad.Presentation;
 
 public partial class App
 {
-    private AggregateCatalog catalog = null!;
-    private CompositionContainer container = null!;
-    private IEnumerable<IModuleController> moduleControllers = [];
+    private IContainer? container;
+    private IReadOnlyList<IModuleController> moduleControllers = [];
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -29,17 +27,12 @@ public partial class App
         Log.Default.Switch.Level = SourceLevels.Verbose;
 #endif
         Log.Default.Info("{0} {1} is starting; OS: {2}", ApplicationInfo.ProductName, ApplicationInfo.Version, Environment.OSVersion);
-        catalog = new();
-        catalog.Catalogs.Add(new AssemblyCatalog(typeof(WafConfiguration).Assembly));
-        catalog.Catalogs.Add(new AssemblyCatalog(typeof(ShellViewModel).Assembly));
-        catalog.Catalogs.Add(new AssemblyCatalog(typeof(App).Assembly));
+        var builder = new ContainerBuilder();
+        builder.RegisterModule(new ApplicationsModule());
+        builder.RegisterModule(new PresentationModule());
+        container = builder.Build();
 
-        container = new(catalog, CompositionOptions.DisableSilentRejection);
-        var batch = new CompositionBatch();
-        batch.AddExportedValue(container);
-        container.Compose(batch);
-
-        moduleControllers = container.GetExportedValues<IModuleController>();
+        moduleControllers = container.Resolve<IReadOnlyList<IModuleController>>();
         foreach (var x in moduleControllers) x.Initialize();
         foreach (var x in moduleControllers) x.Run();
     }
@@ -47,8 +40,7 @@ public partial class App
     protected override void OnExit(ExitEventArgs e)
     {
         foreach (var x in moduleControllers.Reverse()) x.Shutdown();
-        container.Dispose();
-        catalog.Dispose();
+        container?.Dispose();
         base.OnExit(e);
         Log.Default.Info("{0} closed", ApplicationInfo.ProductName);
     }

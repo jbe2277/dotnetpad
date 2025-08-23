@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Waf.Applications.Services;
 using Waf.DotNetPad.Applications.DataModels;
 using Waf.DotNetPad.Applications.Properties;
@@ -9,7 +8,6 @@ using Waf.DotNetPad.Domain;
 
 namespace Waf.DotNetPad.Applications.Controllers;
 
-[Export(typeof(IModuleController))]
 internal sealed class ModuleController : IModuleController
 {
     private readonly Lazy<ShellService> shellService;
@@ -17,14 +15,13 @@ internal sealed class ModuleController : IModuleController
     private readonly FileController fileController;
     private readonly WorkspaceController workspaceController;
     private readonly Lazy<ShellViewModel> shellViewModel;
-    private readonly ExportFactory<CodeEditorViewModel> codeEditorViewModelFactory;
-    private readonly ExportFactory<InfoViewModel> infoViewModelFactory;
+    private readonly Func<CodeEditorViewModel> codeEditorViewModelFactory;
+    private readonly Func<InfoViewModel> infoViewModelFactory;
     private readonly DelegateCommand infoCommand;
     private readonly ObservableList<DocumentDataModel> documentDataModels;
         
-    [ImportingConstructor]
     public ModuleController(Lazy<ShellService> shellService, ISettingsService settingsService, FileController fileController, WorkspaceController workspaceController, IFileService fileService,
-        Lazy<ShellViewModel> shellViewModel, ExportFactory<CodeEditorViewModel> codeEditorViewModelFactory, ExportFactory<InfoViewModel> infoViewModelFactory)
+        Lazy<ShellViewModel> shellViewModel, Func<CodeEditorViewModel> codeEditorViewModelFactory, Func<InfoViewModel> infoViewModelFactory)
     {
         this.shellService = shellService;
         this.settingsService = settingsService;
@@ -63,7 +60,7 @@ internal sealed class ModuleController : IModuleController
 
     private void ShowInfo()
     {
-        var infoViewModel = infoViewModelFactory.CreateExport().Value;
+        var infoViewModel = infoViewModelFactory();
         infoViewModel.ShowDialog(ShellService.ShellView);
     }
 
@@ -71,7 +68,7 @@ internal sealed class ModuleController : IModuleController
 
     private CodeEditorViewModel CreateDocumentViewModel(DocumentFile document)
     {
-        var viewModel = codeEditorViewModelFactory.CreateExport().Value;
+        var viewModel = codeEditorViewModelFactory();
         viewModel.DocumentFile = document;
         return viewModel;
     }

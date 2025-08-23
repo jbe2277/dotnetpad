@@ -1,18 +1,15 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Windows.Input;
 using Waf.DotNetPad.Applications.Views;
 using Waf.DotNetPad.Domain;
 
 namespace Waf.DotNetPad.Applications.ViewModels;
 
-[Export, PartCreationPolicy(CreationPolicy.NonShared)]
 public class SaveChangesViewModel : ViewModel<ISaveChangesView>
 {
-    private IReadOnlyList<DocumentFile> documentFiles = Array.Empty<DocumentFile>();
+    private IReadOnlyList<DocumentFile> documentFiles = [];
     private bool? dialogResult;
 
-    [ImportingConstructor]
     public SaveChangesViewModel(ISaveChangesView view) : base(view)
     {
         YesCommand = new DelegateCommand(() => Close(true));

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -11,7 +10,6 @@ using Waf.DotNetPad.Domain;
 
 namespace Waf.DotNetPad.Presentation.Views;
 
-[Export(typeof(IOutputView))]
 public partial class OutputView : IOutputView
 {
     private readonly Lazy<OutputViewModel> viewModel;

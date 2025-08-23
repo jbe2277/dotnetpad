@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Windows.Input;
 using Waf.DotNetPad.Applications.DataModels;
 using Waf.DotNetPad.Applications.Properties;
@@ -8,7 +7,6 @@ using Waf.DotNetPad.Applications.Views;
 
 namespace Waf.DotNetPad.Applications.ViewModels;
 
-[Export]
 public class ShellViewModel : ViewModel<IShellView>
 {
     private readonly AppSettings settings;
@@ -25,7 +23,6 @@ public class ShellViewModel : ViewModel<IShellView>
     private DocumentDataModel? activeDocumentDataModel;
     private string? statusText;
 
-    [ImportingConstructor]
     public ShellViewModel(IShellView view, IShellService shellService, IFileService fileService, CSharpSampleService csharpSampleService, VisualBasicSampleService visualBasicSampleService) : base(view)
     {
         ShellService = shellService;

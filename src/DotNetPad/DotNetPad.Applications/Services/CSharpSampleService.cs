@@ -1,8 +1,5 @@
-﻿using System.ComponentModel.Composition;
+﻿namespace Waf.DotNetPad.Applications.Services;
 
-namespace Waf.DotNetPad.Applications.Services;
-
-[Export]
 public class CSharpSampleService
 {
     public Lazy<string> OutVariables => new(() => GetSampleCode("OutVariables.cs"));

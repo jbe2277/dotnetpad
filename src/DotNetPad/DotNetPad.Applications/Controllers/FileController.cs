@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Diagnostics;
-using System.Globalization;
-using System.Text;
+﻿using System.Text;
 using System.Waf.Applications;
 using System.Waf.Applications.Services;
 using Waf.DotNetPad.Applications.CodeAnalysis;
@@ -13,7 +10,6 @@ using Waf.DotNetPad.Domain;
 namespace Waf.DotNetPad.Applications.Controllers;
 
 /// <summary>Responsible for the file related commands.</summary>
-[Export]
 internal sealed class FileController
 {
     private static readonly string[] supportedFileExtensions = [".cs", ".vb"];
@@ -27,7 +23,7 @@ internal sealed class FileController
     private readonly IEnvironmentService environmentService;
     private readonly IClipboardService clipboardService;
     private readonly FileService fileService;
-    private readonly ExportFactory<SaveChangesViewModel> saveChangesViewModelFactory;
+    private readonly Func<SaveChangesViewModel> saveChangesViewModelFactory;
     private readonly DelegateCommand closeCommand;
     private readonly DelegateCommand closeAllCommand;
     private readonly DelegateCommand saveCommand;
@@ -36,9 +32,8 @@ internal sealed class FileController
     private IWeakEventProxy? activeDocumentPropertyChangedProxy;
     private int documentCounter;
 
-    [ImportingConstructor]
     public FileController(IMessageService messageService, IFileDialogService fileDialogService, IShellService shellService, IEnvironmentService environmentService, 
-        IClipboardService clipboardService, FileService fileService, ExportFactory<SaveChangesViewModel> saveChangesViewModelFactory)
+        IClipboardService clipboardService, FileService fileService, Func<SaveChangesViewModel> saveChangesViewModelFactory)
     {
         this.messageService = messageService;
         this.fileDialogService = fileDialogService;
@@ -162,7 +157,7 @@ internal sealed class FileController
         var modifiedDocuments = documentsToClose.Where(d => d.Modified).ToArray();
         if (!modifiedDocuments.Any()) return true;
 
-        var saveChangesViewModel = saveChangesViewModelFactory.CreateExport().Value;
+        var saveChangesViewModel = saveChangesViewModelFactory();
         saveChangesViewModel.DocumentFiles = modifiedDocuments;
         bool? dialogResult = saveChangesViewModel.ShowDialog(shellService.ShellView);
         if (dialogResult == true)

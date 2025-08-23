@@ -1,6 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Host.Mef;
-using System.ComponentModel.Composition;
 using System.Composition.Hosting;
 using System.Globalization;
 using System.Waf.Applications;
@@ -12,7 +11,6 @@ using Waf.DotNetPad.Domain;
 
 namespace Waf.DotNetPad.Applications.Controllers;
 
-[Export, Export(typeof(IWorkspaceService))]
 internal sealed class WorkspaceController : IWorkspaceService
 {
     private readonly TaskScheduler taskScheduler;
@@ -32,7 +30,6 @@ internal sealed class WorkspaceController : IWorkspaceService
     private CancellationTokenSource? runScriptCancellation;
     private DocumentFile? runningDocument;
 
-    [ImportingConstructor]
     public WorkspaceController(IDocumentService documentService, Lazy<ShellViewModel> shellViewModel, Lazy<ErrorListViewModel> errorListViewModel, Lazy<OutputViewModel> outputViewModel)
     {
         taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();

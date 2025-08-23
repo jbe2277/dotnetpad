@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Windows;
 using Waf.DotNetPad.Applications.Services;
 using Waf.DotNetPad.Applications.ViewModels;
@@ -7,7 +6,6 @@ using Waf.DotNetPad.Applications.Views;
 
 namespace Waf.DotNetPad.Presentation.Views;
 
-[Export(typeof(ICodeEditorView)), PartCreationPolicy(CreationPolicy.NonShared)]
 public partial class CodeEditorView : ICodeEditorView
 {
     private readonly Lazy<CodeEditorViewModel> viewModel;

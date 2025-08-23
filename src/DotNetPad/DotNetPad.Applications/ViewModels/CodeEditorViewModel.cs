@@ -1,17 +1,14 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using Waf.DotNetPad.Applications.Services;
 using Waf.DotNetPad.Applications.Views;
 using Waf.DotNetPad.Domain;
 
 namespace Waf.DotNetPad.Applications.ViewModels;
 
-[Export, PartCreationPolicy(CreationPolicy.NonShared)]
 public class CodeEditorViewModel : ViewModel<ICodeEditorView>
 {
     private DocumentFile documentFile = null!;
         
-    [ImportingConstructor]
     public CodeEditorViewModel(ICodeEditorView view, IShellService shellService, IWorkspaceService workspaceService, CodeEditorService codeEditorService)
         : base(view)
     {

@@ -1,8 +1,5 @@
-﻿using System.ComponentModel.Composition;
+﻿namespace Waf.DotNetPad.Applications.Services;
 
-namespace Waf.DotNetPad.Applications.Services;
-
-[Export]
 public class VisualBasicSampleService
 {
     public Lazy<string> Tuples => new(() => GetSampleCode("Tuples.vb"));

@@ -1,27 +1,24 @@
-﻿using System.ComponentModel.Composition;
-using System.Waf.Applications;
+﻿using System.Waf.Applications;
 using System.Windows.Input;
 using Waf.DotNetPad.Domain;
 
 namespace Waf.DotNetPad.Applications.Services;
 
-[Export(typeof(IDocumentService)), Export(typeof(IFileService)), Export]
 internal sealed class FileService : Model, IFileService
 {
     private readonly ObservableList<DocumentFile> documentFiles;
     private DocumentFile? activeDocumentFile;
     private DocumentFile? lockedDocumentFile;
-    private ICommand newCSharpCommand = null!;
-    private ICommand newVisualBasicCommand = null!;
-    private DelegateCommand newCSharpFromClipboardCommand = null!;
-    private DelegateCommand newVisualBasicFromClipboardCommand = null!;
-    private ICommand openCommand = null!;
-    private ICommand closeCommand = null!;
-    private ICommand closeAllCommand = null!;
-    private ICommand saveCommand = null!;
-    private ICommand saveAsCommand = null!;
+    private ICommand newCSharpCommand = DelegateCommand.DisabledCommand;
+    private ICommand newVisualBasicCommand = DelegateCommand.DisabledCommand;
+    private DelegateCommand newCSharpFromClipboardCommand = DelegateCommand.DisabledCommand;
+    private DelegateCommand newVisualBasicFromClipboardCommand = DelegateCommand.DisabledCommand;
+    private ICommand openCommand = DelegateCommand.DisabledCommand;
+    private ICommand closeCommand = DelegateCommand.DisabledCommand;
+    private ICommand closeAllCommand = DelegateCommand.DisabledCommand;
+    private ICommand saveCommand = DelegateCommand.DisabledCommand;
+    private ICommand saveAsCommand = DelegateCommand.DisabledCommand;
 
-    [ImportingConstructor]
     public FileService()
     {
         documentFiles = [];
