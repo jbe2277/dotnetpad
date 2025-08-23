@@ -6,10 +6,12 @@ namespace Waf.DotNetPad.Presentation.Converters;
 
 public class WindowTitleConverter : IMultiValueConverter
 {
+    public static WindowTitleConverter Default { get; } = new();
+
     public object Convert(object?[] values, Type? targetType, object? parameter, CultureInfo? culture)
     {
         var stringList = values.OfType<string>().Where(x => !string.IsNullOrEmpty(x)).ToArray();
-        if (stringList.Length == 2) stringList = new[] { Path.GetFileName(stringList[0]), stringList[1] };
+        if (stringList.Length == 2) stringList = [Path.GetFileName(stringList[0]), stringList[1]];
         return string.Join(" - ", stringList);
     }
 

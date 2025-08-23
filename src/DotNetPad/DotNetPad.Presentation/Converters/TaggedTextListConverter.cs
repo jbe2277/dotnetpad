@@ -13,6 +13,8 @@ namespace Waf.DotNetPad.Presentation.Converters;
 
 public class TaggedTextListConverter : IValueConverter
 {
+    public static TaggedTextListConverter Default { get; } = new();
+
     public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
     {
         var list = (ImmutableArray<TaggedText>)value!;

@@ -7,6 +7,8 @@ namespace Waf.DotNetPad.Presentation.Converters;
 
 public class ErrorSeverityToImageConverter : IValueConverter
 {
+    public static ErrorSeverityToImageConverter Default { get; } = new();
+
     public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture)
     {
         var errorSeverity = (ErrorSeverity)value!;

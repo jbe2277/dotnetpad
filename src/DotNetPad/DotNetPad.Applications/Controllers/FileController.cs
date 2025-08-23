@@ -279,13 +279,7 @@ internal sealed class FileController
         if (e.PropertyName == nameof(DocumentFile.Modified)) UpdateCommands();
     }
 
-    private void UpdateCommands()
-    {
-        closeCommand.RaiseCanExecuteChanged();
-        closeAllCommand.RaiseCanExecuteChanged();
-        saveCommand.RaiseCanExecuteChanged();
-        saveAsCommand.RaiseCanExecuteChanged();
-    }
+    private void UpdateCommands() => DelegateCommand.RaiseCanExecuteChanged(closeCommand, closeAllCommand, saveCommand, saveAsCommand);
 
     private void ShellServiceClosing(object? sender, CancelEventArgs e)
     {

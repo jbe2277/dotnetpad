@@ -5,7 +5,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/BrushResources.xaml"/>
-                <ResourceDictionary Source="Resources/ConverterResources.xaml"/>
                 <ResourceDictionary Source="Resources/ImageResources.xaml"/>
                 <ResourceDictionary Source="Resources/ButtonResources.xaml"/>
                 <ResourceDictionary Source="Resources/ControlResources.xaml"/>

@@ -17,7 +17,7 @@ public class ShellViewModel : ViewModel<IShellView>
     private ICommand? stopCommand;
     private ICommand? formatDocumentCommand;
     private bool isScriptRunning;
-    private ICommand infoCommand = null!;
+    private ICommand infoCommand = DelegateCommand.DisabledCommand;
     private object? currentStatusView;
     private IReadOnlyList<DocumentDataModel> documentDataModels = [];
     private DocumentDataModel? activeDocumentDataModel;

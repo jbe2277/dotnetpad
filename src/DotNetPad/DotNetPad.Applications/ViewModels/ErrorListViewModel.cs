@@ -35,8 +35,7 @@ public class ErrorListViewModel : ViewModel<IErrorListView>
         set
         {
             if (!SetProperty(ref selectedErrorListItem, value)) return;
-            gotoErrorCommand.RaiseCanExecuteChanged();
-            copyErrorCommand.RaiseCanExecuteChanged();
+            DelegateCommand.RaiseCanExecuteChanged(gotoErrorCommand, copyErrorCommand);
         }
     }
 

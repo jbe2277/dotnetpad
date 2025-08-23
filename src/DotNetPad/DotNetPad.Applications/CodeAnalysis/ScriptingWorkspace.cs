@@ -86,22 +86,22 @@ internal sealed class ScriptingWorkspace(HostServices hostServices) : Workspace(
 
     public void UpdateText(DocumentId documentId, string text) => OnDocumentTextChanged(documentId, SourceText.From(text, Encoding.UTF8), PreservationMode.PreserveValue);
 
-    public Task<IReadOnlyList<Diagnostic>> GetDiagnosticsAsync(DocumentId documentId, CancellationToken cancellationToken)
+    public Task<IReadOnlyList<Diagnostic>> GetDiagnosticsAsync(DocumentId documentId, CancellationToken cancellation)
     {
         return Task.Run(async () =>
         {
             var project = CurrentSolution.GetProject(documentId.ProjectId);
-            var compilation = await project!.GetCompilationAsync(cancellationToken);
-            return (IReadOnlyList<Diagnostic>)compilation!.GetDiagnostics(cancellationToken);
-        }, cancellationToken);
+            var compilation = await project!.GetCompilationAsync(cancellation);
+            return (IReadOnlyList<Diagnostic>)compilation!.GetDiagnostics(cancellation);
+        }, cancellation);
     }
 
-    public Task<BuildResult> BuildAsync(DocumentId documentId, CancellationToken cancellationToken)
+    public Task<BuildResult> BuildAsync(DocumentId documentId, CancellationToken cancellation)
     {
         return Task.Run(async () =>
         {
             var project = CurrentSolution.GetProject(documentId.ProjectId);
-            var compilation = await project!.GetCompilationAsync(cancellationToken);
+            var compilation = await project!.GetCompilationAsync(cancellation);
 
             using var peStream = new MemoryStream();
             using var pdbStream = new MemoryStream();
@@ -109,7 +109,7 @@ internal sealed class ScriptingWorkspace(HostServices hostServices) : Workspace(
             var inMemoryAssembly = result.Success ? peStream.ToArray() : null;
             var inMemorySymbolStore = result.Success ? pdbStream.ToArray() : null;
             return new BuildResult(result.Diagnostics, inMemoryAssembly, inMemorySymbolStore);
-        }, cancellationToken);
+        }, cancellation);
     }
 
     public Task FormatDocumentAsync(DocumentId documentId)

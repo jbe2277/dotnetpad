@@ -5,6 +5,8 @@ namespace Waf.DotNetPad.Presentation.Converters;
 
 public class IndexToNumberConverter : IValueConverter
 {
+    public static IndexToNumberConverter Default { get; } = new();
+
     public object Convert(object? value, Type? targetType, object? parameter, CultureInfo? culture) => (int)value! + 1;
 
     public object ConvertBack(object? value, Type? targetType, object? parameter, CultureInfo? culture) => (int)value! - 1;
