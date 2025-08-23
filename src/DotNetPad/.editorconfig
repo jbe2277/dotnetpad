@@ -33,3 +33,6 @@ csharp_style_expression_bodied_methods = when_on_single_line
 
 # IDE0061: Use block body for local functions
 csharp_style_expression_bodied_local_functions = when_on_single_line
+
+# IDE0160: Convert to block scoped namespace
+csharp_style_namespace_declarations = file_scoped
