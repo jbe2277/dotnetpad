@@ -57,7 +57,7 @@ internal sealed class FileBasedXmlDocumentationProvider : DocumentationProvider
         var fileName = Path.GetFileName(originalPath);
         string? path = null;
         // TOOD: Bad design with hard-coded path. Required Roslyn API is internal.
-        foreach (var version in Enumerable.Range(0, 19).Select(x => $"9.0.{18-x}\\ref\\net9.0"))
+        foreach (var version in Enumerable.Range(0, 19).Select(x => $"10.0.{18-x}\\ref\\net10.0"))
         {
             path = GetNetFrameworkPathOrNull(fileName, version);
             if (path != null) break;
