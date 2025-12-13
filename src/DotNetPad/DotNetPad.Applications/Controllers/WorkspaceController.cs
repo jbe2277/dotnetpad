@@ -72,7 +72,7 @@ internal sealed class WorkspaceController : IWorkspaceService
         using (new PerformanceTrace("new Workspace"))
         {
             workspace = new ScriptingWorkspace(CreateHostServices());
-            workspace.WorkspaceChanged += WorkspaceChanged;
+            workspace.RegisterWorkspaceChangedHandler(WorkspaceChanged);
         }
         WeakEvent.PropertyChanged.Add(documentService, DocumentServicePropertyChanged);
         WeakEvent.CollectionChanged.Add(documentService.DocumentFiles, DocumentsCollectionChanged);
@@ -99,7 +99,7 @@ internal sealed class WorkspaceController : IWorkspaceService
         workspace.UpdateText(documentId, text);
     }
 
-    private void WorkspaceChanged(object? sender, WorkspaceChangeEventArgs e)
+    private void WorkspaceChanged(WorkspaceChangeEventArgs e)
     {
         if (e.Kind == WorkspaceChangeKind.DocumentChanged)
         {
