@@ -12,7 +12,6 @@ public class ErrorListViewModel : ViewModel<IErrorListView>
     private readonly IClipboardService clipboardService;
     private readonly DelegateCommand gotoErrorCommand;
     private readonly DelegateCommand copyErrorCommand;
-    private ErrorListItem? selectedErrorListItem;
 
     public ErrorListViewModel(IErrorListView view, IDocumentService documentService, ICodeEditorService codeEditorService, IClipboardService clipboardService) : base(view)
     {
@@ -31,10 +30,10 @@ public class ErrorListViewModel : ViewModel<IErrorListView>
 
     public ErrorListItem? SelectedErrorListItem
     {
-        get => selectedErrorListItem;
+        get;
         set
         {
-            if (!SetProperty(ref selectedErrorListItem, value)) return;
+            if (!SetProperty(ref field, value)) return;
             DelegateCommand.RaiseCanExecuteChanged(gotoErrorCommand, copyErrorCommand);
         }
     }

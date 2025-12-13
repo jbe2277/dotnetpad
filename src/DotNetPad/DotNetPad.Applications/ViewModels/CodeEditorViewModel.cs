@@ -5,27 +5,14 @@ using Waf.DotNetPad.Domain;
 
 namespace Waf.DotNetPad.Applications.ViewModels;
 
-public class CodeEditorViewModel : ViewModel<ICodeEditorView>
+public class CodeEditorViewModel(ICodeEditorView view, IShellService shellService, IWorkspaceService workspaceService, CodeEditorService codeEditorService) 
+    : ViewModel<ICodeEditorView>(view)
 {
-    private DocumentFile documentFile = null!;
-        
-    public CodeEditorViewModel(ICodeEditorView view, IShellService shellService, IWorkspaceService workspaceService, CodeEditorService codeEditorService)
-        : base(view)
-    {
-        ShellService = shellService;
-        WorkspaceService = workspaceService;
-        CodeEditorService = codeEditorService;
-    }
+    public IShellService ShellService { get; } = shellService;
 
-    public IShellService ShellService { get; }
+    public IWorkspaceService WorkspaceService { get; } = workspaceService;
 
-    public IWorkspaceService WorkspaceService { get; }
+    public CodeEditorService CodeEditorService { get; } = codeEditorService;
 
-    public CodeEditorService CodeEditorService { get; }
-
-    public DocumentFile DocumentFile
-    {
-        get => documentFile;
-        set => SetProperty(ref documentFile, value);
-    }
+    public DocumentFile DocumentFile { get; set => SetProperty(ref field, value); } = null!;
 }

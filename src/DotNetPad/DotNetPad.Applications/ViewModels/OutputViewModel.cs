@@ -5,14 +5,9 @@ using Waf.DotNetPad.Domain;
 
 namespace Waf.DotNetPad.Applications.ViewModels;
 
-public class OutputViewModel : ViewModel<IOutputView>
+public class OutputViewModel(IOutputView view, IDocumentService documentService) : ViewModel<IOutputView>(view)
 {
-    public OutputViewModel(IOutputView view, IDocumentService documentService) : base(view)
-    {
-        DocumentService = documentService;
-    }
-
-    public IDocumentService DocumentService { get; }
+    public IDocumentService DocumentService { get; } = documentService;
 
     public void AppendOutputText(DocumentFile document, string text) => ViewCore.AppendOutputText(document, text);
 

@@ -260,9 +260,7 @@ internal sealed class FileController
     {
         if (e.PropertyName == nameof(IFileService.ActiveDocumentFile))
         {
-            activeDocumentPropertyChangedProxy?.Remove();
-            activeDocumentPropertyChangedProxy = null;
-
+            WeakEvent.TryRemove(ref activeDocumentPropertyChangedProxy);
             lastActiveDocumentFile = ActiveDocumentFile;
 
             if (lastActiveDocumentFile != null) { activeDocumentPropertyChangedProxy = WeakEvent.PropertyChanged.Add(lastActiveDocumentFile, ActiveDocumentPropertyChanged); }

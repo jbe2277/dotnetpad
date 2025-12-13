@@ -6,22 +6,10 @@ namespace Waf.DotNetPad.Applications.Services;
 
 internal sealed class FileService : Model, IFileService
 {
-    private readonly ObservableList<DocumentFile> documentFiles;
-    private DocumentFile? activeDocumentFile;
-    private DocumentFile? lockedDocumentFile;
-    private ICommand newCSharpCommand = DelegateCommand.DisabledCommand;
-    private ICommand newVisualBasicCommand = DelegateCommand.DisabledCommand;
-    private DelegateCommand newCSharpFromClipboardCommand = DelegateCommand.DisabledCommand;
-    private DelegateCommand newVisualBasicFromClipboardCommand = DelegateCommand.DisabledCommand;
-    private ICommand openCommand = DelegateCommand.DisabledCommand;
-    private ICommand closeCommand = DelegateCommand.DisabledCommand;
-    private ICommand closeAllCommand = DelegateCommand.DisabledCommand;
-    private ICommand saveCommand = DelegateCommand.DisabledCommand;
-    private ICommand saveAsCommand = DelegateCommand.DisabledCommand;
+    private readonly ObservableList<DocumentFile> documentFiles = [];
 
     public FileService()
     {
-        documentFiles = [];
         DocumentFiles = new ReadOnlyObservableList<DocumentFile>(documentFiles);
     }
 
@@ -29,75 +17,35 @@ internal sealed class FileService : Model, IFileService
 
     public DocumentFile? ActiveDocumentFile
     {
-        get => activeDocumentFile;
+        get;
         set
         {
-            if (activeDocumentFile == value) return;
+            if (field == value) return;
             if (value != null && !documentFiles.Contains(value)) throw new ArgumentException("value is not an item of the Documents collection.");
-            activeDocumentFile = value;
+            field = value;
             RaisePropertyChanged();
         }
     }
 
-    public DocumentFile? LockedDocumentFile
-    {
-        get => lockedDocumentFile;
-        set => SetProperty(ref lockedDocumentFile, value);
-    }
+    public DocumentFile? LockedDocumentFile { get; set => SetProperty(ref field, value); }
 
-    public ICommand NewCSharpCommand
-    {
-        get => newCSharpCommand;
-        set => SetProperty(ref newCSharpCommand, value);
-    }
+    public ICommand NewCSharpCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand NewVisualBasicCommand
-    {
-        get => newVisualBasicCommand;
-        set => SetProperty(ref newVisualBasicCommand, value);
-    }
+    public ICommand NewVisualBasicCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public DelegateCommand NewCSharpFromClipboardCommand
-    {
-        get => newCSharpFromClipboardCommand;
-        set => SetProperty(ref newCSharpFromClipboardCommand, value);
-    }
+    public DelegateCommand NewCSharpFromClipboardCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public DelegateCommand NewVisualBasicFromClipboardCommand
-    {
-        get => newVisualBasicFromClipboardCommand;
-        set => SetProperty(ref newVisualBasicFromClipboardCommand, value);
-    }
+    public DelegateCommand NewVisualBasicFromClipboardCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand OpenCommand
-    {
-        get => openCommand;
-        set => SetProperty(ref openCommand, value);
-    }
+    public ICommand OpenCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand CloseCommand
-    {
-        get => closeCommand;
-        set => SetProperty(ref closeCommand, value);
-    }
+    public ICommand CloseCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand CloseAllCommand
-    {
-        get => closeAllCommand;
-        set => SetProperty(ref closeAllCommand, value);
-    }
+    public ICommand CloseAllCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand SaveCommand
-    {
-        get => saveCommand;
-        set => SetProperty(ref saveCommand, value);
-    }
+    public ICommand SaveCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
-    public ICommand SaveAsCommand
-    {
-        get => saveAsCommand;
-        set => SetProperty(ref saveAsCommand, value);
-    }
+    public ICommand SaveAsCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
     public void AddDocument(DocumentFile document) => documentFiles.Add(document);
 
