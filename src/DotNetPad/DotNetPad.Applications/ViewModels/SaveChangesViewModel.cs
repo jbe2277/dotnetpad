@@ -7,7 +7,6 @@ namespace Waf.DotNetPad.Applications.ViewModels;
 
 public class SaveChangesViewModel : ViewModel<ISaveChangesView>
 {
-    private IReadOnlyList<DocumentFile> documentFiles = [];
     private bool? dialogResult;
 
     public SaveChangesViewModel(ISaveChangesView view) : base(view)
@@ -22,11 +21,7 @@ public class SaveChangesViewModel : ViewModel<ISaveChangesView>
 
     public ICommand NoCommand { get; }
 
-    public IReadOnlyList<DocumentFile> DocumentFiles
-    {
-        get => documentFiles;
-        set => SetProperty(ref documentFiles, value);
-    }
+    public IReadOnlyList<DocumentFile> DocumentFiles { get; set => SetProperty(ref field, value); } = [];
 
     public bool? ShowDialog(object owner)
     {

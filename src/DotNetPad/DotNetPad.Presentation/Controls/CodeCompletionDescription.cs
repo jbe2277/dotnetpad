@@ -5,18 +5,12 @@ namespace Waf.DotNetPad.Presentation.Controls;
 
 public class CodeCompletionDescription : Model
 {
-    private ImmutableArray<TaggedText> summary;
-
     public CodeCompletionDescription(Task<ImmutableArray<TaggedText>> lazySummary)
     {
         UpdateSummary(lazySummary);
     }
 
-    public ImmutableArray<TaggedText> Summary
-    {
-        get => summary;
-        private set => SetProperty(ref summary, value);
-    }
+    public ImmutableArray<TaggedText> Summary { get; private set => SetProperty(ref field, value); }
 
     private async void UpdateSummary(Task<ImmutableArray<TaggedText>> lazySummary)
     {

@@ -6,14 +6,14 @@ public static class TaskUtility
     {
         if (predicate(observable)) return Task.CompletedTask;
             
-        var tcs = new TaskCompletionSource<object?>();
+        var tcs = new TaskCompletionSource();
         observable.PropertyChanged += Handler;
         tcs.Task.ContinueWith(t => observable.PropertyChanged -= Handler, TaskContinuationOptions.ExecuteSynchronously);
         return tcs.Task;
 
         void Handler(object? sender, PropertyChangedEventArgs e)
         {
-            if (predicate(observable)) tcs.SetResult(null);
+            if (predicate(observable)) tcs.SetResult();
         }
     }
 }

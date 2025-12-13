@@ -3,34 +3,18 @@ using Waf.DotNetPad.Applications.Views;
 
 namespace Waf.DotNetPad.Applications.Services;
 
-internal sealed class ShellService : Model, IShellService
+internal sealed class ShellService(Lazy<IShellView> shellView) : Model, IShellService
 {
-    private readonly Lazy<IShellView> shellView;
-    private int line;
-    private int column;
     private bool isClosingEventInitialized;
     private CancelEventHandler? closing;
-
-    public ShellService(Lazy<IShellView> shellView)
-    {
-        this.shellView = shellView;
-    }
 
     public AppSettings Settings { get; set; } = null!;
         
     public object ShellView => shellView.Value;
 
-    public int Line
-    {
-        get => line;
-        set => SetProperty(ref line, value);
-    }
+    public int Line { get; set => SetProperty(ref field, value); }
 
-    public int Column
-    {
-        get => column;
-        set => SetProperty(ref column, value);
-    }
+    public int Column { get; set => SetProperty(ref field, value); }
 
     public event CancelEventHandler? Closing
     {

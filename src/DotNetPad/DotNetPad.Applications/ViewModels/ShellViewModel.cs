@@ -11,17 +11,6 @@ public class ShellViewModel : ViewModel<IShellView>
 {
     private readonly AppSettings settings;
     private readonly DelegateCommand garbageCollectorCommand;
-    private object? errorListView;
-    private object? outputView;
-    private ICommand? startCommand;
-    private ICommand? stopCommand;
-    private ICommand? formatDocumentCommand;
-    private bool isScriptRunning;
-    private ICommand infoCommand = DelegateCommand.DisabledCommand;
-    private object? currentStatusView;
-    private IReadOnlyList<DocumentDataModel> documentDataModels = [];
-    private DocumentDataModel? activeDocumentDataModel;
-    private string? statusText;
 
     public ShellViewModel(IShellView view, IShellService shellService, IFileService fileService, CSharpSampleService csharpSampleService, VisualBasicSampleService visualBasicSampleService) : base(view)
     {
@@ -31,7 +20,6 @@ public class ShellViewModel : ViewModel<IShellView>
         VisualBasicSampleService = visualBasicSampleService;
         settings = shellService.Settings;
         garbageCollectorCommand = new(GC.Collect);
-        statusText = Resources.Ready;
 
         WeakEvent.PropertyChanged.Add(fileService, FileServicePropertyChanged);
         view.Closed += ViewClosed;
@@ -60,55 +48,23 @@ public class ShellViewModel : ViewModel<IShellView>
 
     public VisualBasicSampleService VisualBasicSampleService { get; }
 
-    public object? ErrorListView
-    {
-        get => errorListView;
-        set => SetProperty(ref errorListView, value);
-    }
+    public object? ErrorListView { get; set => SetProperty(ref field, value); }
 
-    public object? OutputView
-    {
-        get => outputView;
-        set => SetProperty(ref outputView, value);
-    }
+    public object? OutputView { get; set => SetProperty(ref field, value); }
 
-    public ICommand? StartCommand
-    {
-        get => startCommand;
-        set => SetProperty(ref startCommand, value);
-    }
+    public ICommand? StartCommand { get; set => SetProperty(ref field, value); }
 
-    public ICommand? StopCommand
-    {
-        get => stopCommand;
-        set => SetProperty(ref stopCommand, value);
-    }
+    public ICommand? StopCommand { get; set => SetProperty(ref field, value); }
 
-    public ICommand? FormatDocumentCommand
-    {
-        get => formatDocumentCommand;
-        set => SetProperty(ref formatDocumentCommand, value);
-    }
+    public ICommand? FormatDocumentCommand { get; set => SetProperty(ref field, value); }
 
-    public bool IsScriptRunning
-    {
-        get => isScriptRunning;
-        set => SetProperty(ref isScriptRunning, value);
-    }
+    public bool IsScriptRunning { get; set => SetProperty(ref field, value); }
 
-    public ICommand InfoCommand
-    {
-        get => infoCommand;
-        set => SetProperty(ref infoCommand, value);
-    }
+    public ICommand InfoCommand { get; set => SetProperty(ref field, value); } = DelegateCommand.DisabledCommand;
 
     public ICommand GarbageCollectorCommand => garbageCollectorCommand;
 
-    public object? CurrentStatusView
-    {
-        get => currentStatusView;
-        private set => SetProperty(ref currentStatusView, value);
-    }
+    public object? CurrentStatusView { get; private set => SetProperty(ref field, value); }
 
     public bool IsErrorListViewVisible
     {
@@ -122,29 +78,21 @@ public class ShellViewModel : ViewModel<IShellView>
         set { if (value) { CurrentStatusView = OutputView; } }
     }
 
-    public IReadOnlyList<DocumentDataModel> DocumentDataModels
-    {
-        get => documentDataModels;
-        set => SetProperty(ref documentDataModels, value);
-    }
+    public IReadOnlyList<DocumentDataModel> DocumentDataModels { get; set => SetProperty(ref field, value); } = [];
 
     public DocumentDataModel? ActiveDocumentDataModel
     {
-        get => activeDocumentDataModel;
+        get;
         set
         {
-            if (SetProperty(ref activeDocumentDataModel, value) && value != null)
+            if (SetProperty(ref field, value) && value != null)
             {
                 FileService.ActiveDocumentFile = value.DocumentFile;
             }
         }
     }
 
-    public string? StatusText
-    {
-        get => statusText;
-        set => SetProperty(ref statusText, value ?? Resources.Ready);
-    }
+    public string? StatusText { get; set => SetProperty(ref field, value ?? Resources.Ready); } = Resources.Ready;
 
     public void Show() => ViewCore.Show();
 

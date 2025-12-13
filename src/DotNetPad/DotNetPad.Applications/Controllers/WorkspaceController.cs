@@ -28,7 +28,6 @@ internal sealed class WorkspaceController : IWorkspaceService
     private ScriptingWorkspace workspace = null!;
     private CancellationTokenSource? updateDiagnosticsCancellation;
     private CancellationTokenSource? runScriptCancellation;
-    private DocumentFile? runningDocument;
 
     public WorkspaceController(IDocumentService documentService, Lazy<ShellViewModel> shellViewModel, Lazy<ErrorListViewModel> errorListViewModel, Lazy<OutputViewModel> outputViewModel)
     {
@@ -53,14 +52,14 @@ internal sealed class WorkspaceController : IWorkspaceService
 
     private DocumentFile? RunningDocument
     {
-        get => runningDocument;
+        get;
         set
         {
-            if (runningDocument == value) return;
-            runningDocument = value;
+            if (field == value) return;
+            field = value;
             documentService.LockedDocumentFile = value;
-            ShellViewModel.IsScriptRunning = runningDocument != null;
-            ShellViewModel.StatusText = runningDocument is null ? null : Path.GetFileName(runningDocument.FileName) + " is running...";
+            ShellViewModel.IsScriptRunning = field != null;
+            ShellViewModel.StatusText = field is null ? null : Path.GetFileName(field.FileName) + " is running...";
             startCommand.RaiseCanExecuteChanged();
             stopCommand.RaiseCanExecuteChanged();
             formatDocumentCommand.RaiseCanExecuteChanged();
@@ -248,7 +247,7 @@ internal sealed class WorkspaceController : IWorkspaceService
     private void StopScript()
     {
         runScriptCancellation?.Cancel();
-        ShellViewModel.StatusText = "Stopping the execution of " + Path.GetFileName(runningDocument!.FileName) + "...";
+        ShellViewModel.StatusText = "Stopping the execution of " + Path.GetFileName(RunningDocument!.FileName) + "...";
     }
 
     private bool CanFormatDocument() => RunningDocument == null && documentService.ActiveDocumentFile != null;
