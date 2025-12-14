@@ -17,24 +17,12 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Image x:Name="applicationImage" Stretch="None" Margin="22"/>
 
-            <Grid Margin="0,0,22,11" VerticalAlignment="Center">
+            <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" Margin="0,0,22,11" VerticalAlignment="Center">
                 <Grid.Resources>
                     <Style TargetType="Label">
                         <Setter Property="Margin" Value="6"/>
                     </Style>
                 </Grid.Resources>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
 
                 <Label Content="{x:Static p:Resources.Product}" Grid.Row="0"/>
                 <Label Content="{Binding ProductName, Mode=OneTime}" Grid.Column="1"/>
