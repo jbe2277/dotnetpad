@@ -18,4 +18,4 @@ jobs:
       uses: microsoft/setup-msbuild@v2
     
     - name: 🛠️ Build
-      run: msbuild ./src/DotNetPad/DotNetPad.sln /restore /p:Configuration=Release /p:GenerateAppxPackageOnBuild=false
+      run: msbuild ./src/DotNetPad/DotNetPad.slnx /restore /p:Configuration=Release /p:GenerateAppxPackageOnBuild=false
