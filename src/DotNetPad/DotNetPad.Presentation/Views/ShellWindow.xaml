@@ -35,13 +35,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Background="{StaticResource DarkBackground}" UseLayoutRounding="True">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-
+        <Grid ColumnDefinitions="*,Auto,*" Background="{StaticResource DarkBackground}" UseLayoutRounding="True">
             <StackPanel Grid.Column="0" Background="{StaticResource DarkBorderBrush}" Orientation="Horizontal" HorizontalAlignment="Left">
                 <Button x:Name="newFileButton" Click="NewFileButtonClick" Content="New" Style="{StaticResource MenuButton}"/>
                 <ctrl:Flyout x:Name="newFilePopup" PlacementTarget="{Binding ElementName=newFileButton}" Placement="Bottom"
@@ -75,7 +69,7 @@
                 <Button x:Name="samplesButton" Content="Samples" Click="SamplesButtonClick" Style="{StaticResource MenuButton}" Margin="0,0,1,0"/>
                 <ctrl:Flyout x:Name="samplesPopup" PlacementTarget="{Binding ElementName=samplesButton}" Placement="Bottom" HorizontalOffset="-160">
                     <Border Background="{StaticResource DarkBackground}">
-                        <Grid Background="{StaticResource DarkBorderBrush}">
+                        <Grid ColumnDefinitions="160,74,73" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" Background="{StaticResource DarkBorderBrush}">
                             <Grid.Resources>
                                 <Style TargetType="Label">
                                     <Setter Property="Foreground" Value="{StaticResource DarkForeground}"/>
@@ -89,25 +83,6 @@
                                     <Setter Property="Height" Value="23"/>
                                 </Style>
                             </Grid.Resources>
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="160"/>
-                                <ColumnDefinition Width="74"/>
-                                <ColumnDefinition Width="73"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
 
                             <Label Grid.Row="0" Content="String interpolation"/>
                             <Button Grid.Column="1" Grid.Row="0" Command="{Binding FileService.NewCSharpCommand}" Content="C# 6" 
