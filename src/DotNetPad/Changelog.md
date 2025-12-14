@@ -1,79 +1,64 @@
-Changelog
----------
+﻿# Changelog
 
-Version 9.0.2.100 (Release)
+### Version 9.0.2.100 (Release)
 - Fix XML document description for core types are missing #23
 - Update to Microsoft.CodeAnalysis 4.14.0
 
-
-Version 9.0.1.100 (Release)
+### Version 9.0.1.100 (Release)
 - Update to Microsoft.CodeAnalysis 4.13.0
 
-
-Version 9.0.0.100 (Release)
+### Version 9.0.0.100 (Release)
 - Migrate to .NET 9.
 - Support C# 13.
 
-
-Version 8.0.2.100 (Release)
+### Version 8.0.2.100 (Release)
 - Update to Microsoft.CodeAnalysis 4.10.0
 
-
-Version 8.0.1.100 (Release)
+### Version 8.0.1.100 (Release)
 - Update to Microsoft.CodeAnalysis 4.9.2
 
-
-Version 8.0.0.100 (Release)
+### Version 8.0.0.100 (Release)
 - Migrate to .NET 8.
 - Support C# 12.
 
-
-Version 7.2.0.100 (Release)
+### Version 7.2.0.100 (Release)
 - Update to Microsoft.CodeAnalysis 4.6.0
 - First C# 12 features can be tested.
 
-
-Version 7.1.0.100 (Release)
+### Version 7.1.0.100 (Release)
 - Update Win Application Framework (WAF) to 7.0.0
 - Update to Microsoft.CodeAnalysis 4.5.0
 - Add support for Uri class.
 - Improve retrieving the code documentation.
 
-
-Version 7.0.0.100 (Release)
+### Version 7.0.0.100 (Release)
 - Migrate to .NET 7
 - Update to Microsoft.CodeAnalysis 4.4.0
 - Change package deployment from x86 to X64|ARM64.
 
-
-Version 6.1.1.100 (Release)
+### Version 6.1.1.100 (Release)
 - Update to Microsoft.CodeAnalysis 4.2.0
 - Simplify C# default templates by using implicit usings.
 - Add reference for System.Net.
 - Improve C# sample files.
 
-
-Version 6.1.0.100 (Release)
+### Version 6.1.0.100 (Release)
 - Deploy via Microsoft Store.
 
-
-Version 6.0.0.100 (Release)
+### Version 6.0.0.100 (Release)
 - Migrate to .NET 6
 - Update to Microsoft.CodeAnalysis 4.0.1
 
-
-Version 5.0.0.100 (Release)
+### Version 5.0.0.100 (Release)
 - Migrate to .NET 5
 - Update to Microsoft.CodeAnalysis 3.9.0
 
-
-Version 4.1.0.100 (Release)
+### Version 4.1.0.100 (Release)
 - Update to Microsoft.CodeAnalysis 3.8.0
 - Enable C# 9 final support
 - Replace CS9Preview sample with Record sample
 
-
-Version 4.0.0.100 (Release)
+### Version 4.0.0.100 (Release)
 - Update target framework to 4.7.2
 - Update to Microsoft.CodeAnalysis 3.7.0
 - Enable C# 9 preview support
@@ -84,98 +69,80 @@ Version 4.0.0.100 (Release)
 - Add SwitchExpression sample
 - Add CS9Preview sample
 
-
-Version 3.0.1.100 (Release)
+### Version 3.0.1.100 (Release)
 - Fix crash that could occur in code completion
 - Update to Microsoft.CodeAnalysis 3.2.1
 
-
-Version 3.0.0.100 (Release)
+### Version 3.0.0.100 (Release)
 - Support C# 8.0 and VB 16 (Preview 2)
 
-
-Version 2.8.0.100 (Release)
+### Version 2.8.0.100 (Release)
 - Update and simplify csproj files (e.g. PackageReference)
 - Update to Microsoft.CodeAnalysis 2.10.0
 - Update System.Buffers to 4.5.0
 - Update WAF to 5.0.0-alpha1
 
-
-Version 2.7.1.100 (Release)
-- Add support for System.Memory (Span<T>, Memory<T>)
-- Add support for System.Buffers (ArrayPool<T>)
+### Version 2.7.1.100 (Release)
+- Add support for System.Memory (`Span<T>`, `Memory<T>`)
+- Add support for System.Buffers (`ArrayPool<T>`)
 - Update System.Composition to 1.2.0
 - Add recognition of .NET 4.7.2 in Info dialog
 
-
-Version 2.7.0.100 (Release)
+### Version 2.7.0.100 (Release)
 - Update to Microsoft.CodeAnalysis 2.9.0 (Support for C# 7.3 and VB 15.5)
 - Update WAF to 4.3.0
 - Use new SettingsService from WAF
 
-
-Version 2.6.1.100 (Release)
+### Version 2.6.1.100 (Release)
 - Update to Microsoft.CodeAnalysis 2.7.0
 - Update WAF to 4.2.0
 
-
-Version 2.6.0.100 (Release)
+### Version 2.6.0.100 (Release)
 - Update to Microsoft.CodeAnalysis 2.6.1 (Support for C# 7.2 and VB 15.5)
 - Update AvalonEdit to 5.04
 - Update WAF to 4.1.0
 - Add new .NET versions to search for the XML documentation
 - Support .NET 4.7.1 in version detection
 
-
-Version 2.5.1.100 (Release)
+### Version 2.5.1.100 (Release)
 - Update WAF to 4.1.0-rc1
 
-
-Version 2.5.0.100 (Release)
+### Version 2.5.0.100 (Release)
 - Enable C# 7.1 and latest Visual Basic support
 - Update Microsoft.CodeAnalysis to 2.3.1
 - Improve some C# 7 samples
 
-
-Version 2.4.1.100 (Release)
+### Version 2.4.1.100 (Release)
 - Add format document feature
 - Fix a race condition that could happen when using CTRL+X in a large document (Issue #9)
 - Add two popular namespaces to the default templates #8
 
-
-Version 2.4.0.100 (Release)
+### Version 2.4.0.100 (Release)
 - Update Microsoft.CodeAnalysis to 2.2.0
 - Fix issue with the ValueTuple reference when running on .NET Framework 4.7+
 
-
-Version 2.3.0.100 (Release)
+### Version 2.3.0.100 (Release)
 - Update Microsoft.CodeAnalysis to 2.1.0
 
-
-Version 2.2.1.100 (Release)
+### Version 2.2.1.100 (Release)
 - Improve responsiveness of typing when the document has a lot of lines (Issue #6)
 - Update Microsoft.CodeAnalysis to 2.0.0 RC2
 
-
-Version 2.2.0.100 (Release)
+### Version 2.2.0.100 (Release)
 - Add System.ValueTuple package so that the new Tuple C#/VB feature works
 - Add code samples for the new C# 7 and VB 15 language features
 
-
-Version 2.1.0.100 (Release)
+### Version 2.1.0.100 (Release)
 - Update TargetFrameworkVersion to 4.6.1
 - Update Microsoft.CodeAnalysis to 2.0.0 RC (Support for C# 7.0 and VB 15.0)
 
-
-Version 2.0.2.100 (Release)
+### Version 2.0.2.100 (Release)
 - CodeHighlighter: Use faster approach; fix cleaning up the cache
 
-
-Version 2.0.1.100 (Release)
+### Version 2.0.1.100 (Release)
 - Fix an exception that could occur in CodeHighlighter because of multi-threaded access of the Sections list
 
-
-Version 2.0.0.100 (Release)
+### Version 2.0.0.100 (Release)
 - Update Microsoft.CodeAnalysis (Roslyn) to 1.3.2
 - Replace the GetRecommendedSymbolsAtPositionAsync call with the CompletionService
 - Show syntax highlighting in the description of code completion
@@ -183,50 +150,41 @@ Version 2.0.0.100 (Release)
 - Remove CSharpIndentationStrategy because it does not work as expected
 - New color theme
 
-
-Version 1.3.3.100 (Release)
+### Version 1.3.3.100 (Release)
 - Update Microsoft.CodeAnalysis (Roslyn) to 1.3.0
 
-
-Version 1.3.2.100 (Release)
+### Version 1.3.2.100 (Release)
 - Update Microsoft.CodeAnalysis (Roslyn) to 1.2.2
 - Update AvalonEdit to 5.0.3
 
-
-Version 1.3.1.100 (Release)
+### Version 1.3.1.100 (Release)
 - Fix a bug in the ClickOnce installer.
 - Improve responsiveness of typing in the code editor. 
 
-
-Version 1.3.0.100 (Release)
+### Version 1.3.0.100 (Release)
 - Update Microsoft.CodeAnalysis (Roslyn) to 1.2.1
 
-
-Version 1.2.0.100 (Release)
+### Version 1.2.0.100 (Release)
 - Update projects to target .NET Framework 4.5.2
 - Update Rolsyn to 1.1.1.
 - Extend FileBasedXmlDocumentationProvider to support newer .NET Framework versions.
 - Update Urls to target the new GitHub repository.
 
-
-Version 1.1.0.100 (Release)
+### Version 1.1.0.100 (Release)
 - Update Roslyn to 1.1.0.
 - Update WPF Application Framework (WAF) to 3.2.0.
 - Design: Fix circular dependency between ViewModels and DataModels
 
-
-Version 1.0.0.100 (Release)
+### Version 1.0.0.100 (Release)
 - Update Roslyn to 1.0.0.
 - Update WPF Application Framework (WAF) to 3.1.0.
 - Add support for Windows 10 in App.manifest.
 
-
-Version 1.0.0.7 (Milestone 7)
+### Version 1.0.0.7 (Milestone 7)
 - Update Roslyn to 1.0.0-rc3.
 - Fix AppendText when script calls Console.WriteLine in a separate thread.
 
-
-Version 1.0.0.6 (Milestone 6)
+### Version 1.0.0.6 (Milestone 6)
 - Fix a crash that happens when recommendation is still working and a new document tab gets opened.
 - Restore last opened files after the application restarts.
 - Load the script files on demand to improve startup performance.
@@ -234,23 +192,20 @@ Version 1.0.0.6 (Milestone 6)
 - Support goto error and copy error in the error list view.
 - Update Roslyn to 1.0.0-rc2.
   
-
-Version 1.0.0.5 (Milestone 5)
+### Version 1.0.0.5 (Milestone 5)
 - Show error markers in the code editor.
 - Improve styling of the search dialog (Ctrl+F).
 - Add context menu for cut, copy and paste.
 
-
-Version 1.0.0.4 (Milestone 4)
+### Version 1.0.0.4 (Milestone 4)
 - Reference more assemblies that can be used:
   System.Xml; System.Xml.Linq; System.Runtime.Serialization; System.Collections.Immutable
 - Performance: Load xml comments async and update ToolTip after loading.
-- Parse XML comments with embedded <see> nodes.
+- Parse XML comments with embedded `<see>` nodes.
 - Provide code samples:
   Null-conditional operator, nameof operator, auto-property initializers and string interpolation.
 
-
-Version 1.0.0.3 (Milestone 3)
+### Version 1.0.0.3 (Milestone 3)
 - Show icons in error list and completion views.
 - Set start caret position in new files.
 - Improved responsiveness of the editor during completion.
@@ -258,10 +213,8 @@ Version 1.0.0.3 (Milestone 3)
 - Fix parsing of the xml documentation string.
 - Fix: Disable close command of the running document.
 
-
-Version 1.0.0.2 (Milestone 2)
+### Version 1.0.0.2 (Milestone 2)
 - Fix information in Info dialog.
 
-
-Version 1.0.0.1 (Milestone 1)
+### Version 1.0.0.1 (Milestone 1)
 - Initial version.
