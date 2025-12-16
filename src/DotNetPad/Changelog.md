@@ -1,5 +1,11 @@
 ﻿# Changelog
 
+### Version 10.0.0.100 (Release)
+- Migrate to .NET 10.
+- Support C# 14.
+- Update to Microsoft.CodeAnalysis 5.0.0
+- Simplify code by using new C# 14 features.
+
 ### Version 9.0.2.100 (Release)
 - Fix XML document description for core types are missing #23
 - Update to Microsoft.CodeAnalysis 4.14.0
