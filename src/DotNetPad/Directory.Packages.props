@@ -8,7 +8,7 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Features" Version="5.0.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.VisualBasic.Features" Version="5.0.0" />
     <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7175" />
-    <PackageVersion Include="System.Waf.Core" Version="8.1.0" />
-    <PackageVersion Include="System.Waf.Wpf" Version="8.1.0" />
+    <PackageVersion Include="System.Waf.Core" Version="8.2.0" />
+    <PackageVersion Include="System.Waf.Wpf" Version="8.2.0" />
   </ItemGroup>
 </Project>
