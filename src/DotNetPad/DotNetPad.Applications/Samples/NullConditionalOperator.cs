@@ -35,15 +35,13 @@ internal static class NullConditionalOperator
 
 public class Person : INotifyPropertyChanged
 {
-    private string? name;
-
     public string? Name
     {
-        get { return name; }
+        get;
         set
         {
-            if (name == value) return;
-            name = value;
+            if (field == value) return;
+            field = value;
             RaisePropertyChanged();
         }
     }
