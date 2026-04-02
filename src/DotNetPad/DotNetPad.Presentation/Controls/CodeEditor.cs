@@ -148,7 +148,7 @@ public class CodeEditor : TextEditor
     private void UpdateErrorMarkers()
     {
         errorMarkerService.Clear();
-        foreach (var errorListItem in DocumentFile.Content?.ErrorList ?? Array.Empty<ErrorListItem>())
+        foreach (var errorListItem in DocumentFile.Content?.ErrorList ?? [])
         {
             var startOffset = Document.GetOffset(new(errorListItem.StartLine + 1, errorListItem.StartColumn + 1));
             var endOffset = Document.GetOffset(new(errorListItem.EndLine + 1, errorListItem.EndColumn + 1));

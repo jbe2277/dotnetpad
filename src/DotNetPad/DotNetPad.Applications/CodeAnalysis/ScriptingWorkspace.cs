@@ -54,7 +54,7 @@ internal sealed class ScriptingWorkspace(HostServices hostServices) : Workspace(
 
         var projectId = ProjectId.CreateNewId();
 
-        var references = defaultReferences.Distinct().Select(CreateReference).ToList();
+        var references = defaultReferences.Select(CreateReference).ToList();
         references.Add(CreateReference(Assembly.Load("System.Runtime, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")));
         if (language == LanguageNames.VisualBasic) { references.Add(CreateReference(typeof(VBMath).Assembly)); }
         else if (language == LanguageNames.CSharp) { references.Add(CreateReference(typeof(RuntimeBinderException).Assembly)); }

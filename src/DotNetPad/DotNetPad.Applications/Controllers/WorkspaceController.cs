@@ -137,7 +137,7 @@ internal sealed class WorkspaceController : IWorkspaceService
 
     private void RemoveProject(DocumentFile documentFile)
     {
-        if (documentIds.TryGetValue(documentFile, out var documentId))workspace.RemoveProject(documentId);
+        if (documentIds.TryGetValue(documentFile, out var documentId)) workspace.RemoveProject(documentId);
         documentIds.Remove(documentFile);
         ResetBuildResult(documentFile);
     }
