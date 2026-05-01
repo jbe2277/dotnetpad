@@ -1,13 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <UseWPF>true</UseWPF>
     <RootNamespace>Waf.DotNetPad.Presentation</RootNamespace>
     <AssemblyName>DotNetPad</AssemblyName>
     <AssemblyTitle>Waf DotNetPad</AssemblyTitle>
     <ApplicationIcon>Resources\Images\DotNetPad.ico</ApplicationIcon>
     <Platforms>AnyCPU;x64;ARM64</Platforms>
+    <WindowsPackageType>MSIX</WindowsPackageType>
+    <AppxPackage>true</AppxPackage>
+    <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
+    <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <GenerateTestArtifacts>False</GenerateTestArtifacts>
+    <AppxBundlePlatforms>x64|arm64</AppxBundlePlatforms>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Platform)' == 'x64' ">

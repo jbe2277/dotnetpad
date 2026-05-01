@@ -14,9 +14,6 @@
   </Folder>
   <Project Path="DotNetPad.Applications/DotNetPad.Applications.csproj" />
   <Project Path="DotNetPad.Domain/DotNetPad.Domain.csproj" />
-  <Project Path="DotNetPad.Packaging/DotNetPad.Packaging.wapproj" Type="c7167f0d-bc9f-4e6e-afe1-012c56b48db5">
-    <Deploy />
-  </Project>
   <Project Path="DotNetPad.Presentation/DotNetPad.Presentation.csproj">
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
