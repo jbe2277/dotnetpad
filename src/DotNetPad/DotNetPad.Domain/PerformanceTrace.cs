@@ -13,7 +13,7 @@ public sealed class PerformanceTrace : IDisposable
         start = Stopwatch.GetTimestamp();
     }
 
-    public PerformanceTrace(string name, DocumentFile document) : this(document.FileName + ": " + name) {         }
+    public PerformanceTrace(string name, DocumentFile document) : this(document.FileName + ": " + name) { }
 
     public void Dispose() => Log.Default.Trace(">>> {0}: {1} ms", name, Stopwatch.GetElapsedTime(start).TotalMilliseconds);
 }
