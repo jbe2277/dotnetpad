@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <NsDepCopConfig IsEnabled="true" ChildCanDependOnParentImplicitly="true">
+  <!-- SEE ALSO: ./Architecture.md -->
+
   <!-- Global -->
   <Allowed From="*" To="System.*" />
 
