@@ -25,6 +25,7 @@
   <Allowed From="Waf.DotNetPad.Applications.Controllers" To="Waf.DotNetPad.Applications.Host" />
   <Allowed From="Waf.DotNetPad.Applications.Controllers" To="Waf.DotNetPad.Applications.Services" />
   <Allowed From="Waf.DotNetPad.Applications.Controllers" To="Waf.DotNetPad.Applications.ViewModels" />
+  
   <Allowed From="Waf.DotNetPad.Applications.Services" To="Waf.DotNetPad.Applications.Views" />
 
   <Allowed From="Waf.DotNetPad.Applications.ViewModels" To="Waf.DotNetPad.Applications.DataModels" />
