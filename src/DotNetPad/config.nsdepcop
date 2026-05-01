@@ -5,11 +5,16 @@
   <!-- Global -->
   <Allowed From="*" To="System.*" />
 
+  
   <!-- Domain -->
   <Disallowed From="Waf.DotNetPad.Domain.*" To="System.Windows.*" />
+  <Disallowed From="Waf.DotNetPad.Domain.*" To="System.Waf.Presentation.*" />
+  <Disallowed From="Waf.DotNetPad.Domain.*" To="System.Waf.Applications.*" />
 
+  
   <!-- Applications -->
   <Disallowed From="Waf.DotNetPad.Applications.*" To="/^System\.Windows\.(?!Input(?:\.|$)).+/" />
+  <Disallowed From="Waf.DotNetPad.Applications.*" To="System.Waf.Presentation.*" />
 
   <Allowed From="Waf.DotNetPad.Applications" To="Autofac.*" />
   <Allowed From="Waf.DotNetPad.Applications.*" To="Microsoft.CodeAnalysis.*" />
@@ -32,6 +37,7 @@
   <Allowed From="Waf.DotNetPad.Applications.ViewModels" To="Waf.DotNetPad.Applications.Services" />
   <Allowed From="Waf.DotNetPad.Applications.ViewModels" To="Waf.DotNetPad.Applications.Views" />
 
+  
   <!-- Presentation -->
   <Allowed From="Waf.DotNetPad.Presentation" To="Autofac.*" />
   <Allowed From="Waf.DotNetPad.Presentation.*" To="ICSharpCode.AvalonEdit.*" />
