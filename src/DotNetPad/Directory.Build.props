@@ -12,6 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)config.nsdepcop" Link="config.nsdepcop" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="System.Collections.ObjectModel" />
     <Using Include="System.Collections.Specialized" />
     <Using Include="System.ComponentModel" />
