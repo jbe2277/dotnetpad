@@ -23,13 +23,6 @@
   <Allowed From="Waf.DotNetPad.Applications.Controllers" To="Waf.DotNetPad.Applications.Host" />
   <Allowed From="Waf.DotNetPad.Applications.Controllers" To="Waf.DotNetPad.Applications.Services" />
   <Allowed From="Waf.DotNetPad.Applications.Controllers" To="Waf.DotNetPad.Applications.ViewModels" />
-  <Allowed From="Waf.DotNetPad.Applications.Controllers" To="Waf.DotNetPad.Applications.Views" />
-
-  <Allowed From="Waf.DotNetPad.Applications.DataModels" To="Waf.DotNetPad.Applications.Services" />
-
-  <Allowed From="Waf.DotNetPad.Applications.Host" To="Waf.DotNetPad.Applications.Services" />
-
-  <Allowed From="Waf.DotNetPad.Applications.Services" To="Waf.DotNetPad.Applications.DataModels" />
   <Allowed From="Waf.DotNetPad.Applications.Services" To="Waf.DotNetPad.Applications.Views" />
 
   <Allowed From="Waf.DotNetPad.Applications.ViewModels" To="Waf.DotNetPad.Applications.DataModels" />
@@ -46,15 +39,8 @@
   <Allowed From="Waf.DotNetPad.Presentation.*" To="Waf.DotNetPad.Presentation.Properties" />
   <Allowed From="Waf.DotNetPad.Presentation" To="Waf.DotNetPad.Presentation.*" />
 
-  <Allowed From="Waf.DotNetPad.Presentation.Controls" To="Waf.DotNetPad.Presentation.Services" />
-
   <Allowed From="Waf.DotNetPad.Presentation.Converters" To="Waf.DotNetPad.Presentation.Controls" />
-  <Allowed From="Waf.DotNetPad.Presentation.Converters" To="Waf.DotNetPad.Presentation.Services" />
 
   <Allowed From="Waf.DotNetPad.Presentation.Views" To="Waf.DotNetPad.Presentation.Controls" />
   <Allowed From="Waf.DotNetPad.Presentation.Views" To="Waf.DotNetPad.Presentation.Converters" />
-  <Allowed From="Waf.DotNetPad.Presentation.Views" To="Waf.DotNetPad.Presentation.Services" />
-
-  <Allowed From="Waf.DotNetPad.Presentation.DesignData" To="Waf.DotNetPad.Presentation.Controls" />
-  <Allowed From="Waf.DotNetPad.Presentation.DesignData" To="Waf.DotNetPad.Presentation.Services" />
 </NsDepCopConfig>
