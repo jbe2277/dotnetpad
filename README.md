@@ -3,3 +3,6 @@ Please see [jbe2277.github.io/dotnetpad](https://jbe2277.github.io/dotnetpad) fo
 
 ## Changelog
 See [Changelog.md](src/DotNetPad/Changelog.md)
+
+## Architecture
+See [Architecture.md](src/DotNetPad/Architecture.md)
