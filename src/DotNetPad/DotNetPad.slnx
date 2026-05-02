@@ -17,5 +17,6 @@
   <Project Path="DotNetPad.Presentation/DotNetPad.Presentation.csproj">
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
+    <Deploy />
   </Project>
 </Solution>
