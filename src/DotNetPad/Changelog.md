@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+### Version 10.0.1.100 (Release)
+- Improve C# sample NullConditionalOperator
+- Fix PerformanceTrace and improve timing precision
+- Update System.Waf to version 8.2.0
+
 ### Version 10.0.0.100 (Release)
 - Migrate to .NET 10.
 - Support C# 14.
